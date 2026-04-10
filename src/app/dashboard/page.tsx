@@ -117,9 +117,11 @@ export default async function DashboardPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <Button asChild size="sm" variant="outline" className="border-amber-300 text-amber-800 hover:bg-amber-100">
-              <Link href="/dashboard/settings">Go to Settings</Link>
-            </Button>
+            <Link href="/dashboard/settings">
+              <Button size="sm" variant="outline" className="border-amber-300 text-amber-700 hover:bg-amber-100">
+                Go to Settings
+              </Button>
+            </Link>
           </CardContent>
         </Card>
       )}
@@ -151,9 +153,9 @@ export default async function DashboardPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Button asChild>
-            <Link href="/agents">Browse Agents</Link>
-          </Button>
+          <Link href="/agents">
+            <Button>Browse Agents</Button>
+          </Link>
         </CardContent>
       </Card>
     </div>
