@@ -7,7 +7,8 @@
 
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -137,10 +138,19 @@ export function AgentWorkspaceShell({
   children,
 }: {
   agent: AgentData;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const pathname = usePathname();
   const [copilotOpen, setCopilotOpen] = useState(false);
+
+  // Cierra el panel del Copilot con la tecla Escape
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setCopilotOpen(false);
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, []);
 
   // Ítems de navegación del sidebar del agente
   const navItems = [
@@ -151,7 +161,7 @@ export function AgentWorkspaceShell({
     { label: "Team",         href: `/dashboard/agents/${agent.id}/team`,          icon: <IconTeam /> },
     { label: "Settings",     href: `/dashboard/agents/${agent.id}/settings`,      icon: <IconSettings /> },
     { label: "Usage",        href: `/dashboard/agents/${agent.id}/usage`,         icon: <IconUsage /> },
-  ] as const;
+  ];
 
   // Chat es activo solo con match exacto para no solaparse con /work, /team, etc.
   const isActive = (href: string) =>
