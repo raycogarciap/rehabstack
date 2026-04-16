@@ -148,7 +148,9 @@ export async function createConnectAccount({
   const account = await stripe.accounts.create({
     type: "express",
     email,
-    display_name: name,
+    business_profile: {
+      name,
+    },
     capabilities: {
       transfers: { requested: true },
     },
