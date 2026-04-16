@@ -30,11 +30,14 @@ export async function POST(req: NextRequest) {
     agentId?: string;
   };
 
-  const { priceId, agentId } = body;
+  const { priceId } = body;
+  // agentId es opcional — suscripciones de plataforma (pricing page) no tienen agente.
+  // Se normaliza a "platform" para identificarlas en el webhook y en la DB.
+  const agentId = body.agentId ?? "platform";
 
-  if (!priceId || !agentId) {
+  if (!priceId) {
     return NextResponse.json(
-      { error: "priceId y agentId son requeridos." },
+      { error: "priceId es requerido." },
       { status: 400 }
     );
   }
