@@ -23,7 +23,7 @@ function getStripe(): Stripe {
       throw new Error("STRIPE_SECRET_KEY no está definido en las variables de entorno.");
     }
     _stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2025-03-31.basil",
+      apiVersion: "2026-03-25.dahlia",
       // Identifica las llamadas de la plataforma en el dashboard de Stripe
       appInfo: {
         name: "RehabStack",
