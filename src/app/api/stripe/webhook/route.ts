@@ -126,10 +126,23 @@ async function handleEvent(event: Stripe.Event): Promise<void> {
  * en la tabla users para reutilizarlo en futuros checkouts y el portal.
  */
 async function onCheckoutCompleted(session: Stripe.Checkout.Session): Promise<void> {
+  // ── Log completo de todos los valores extraídos ───────────
+  // Imprime todo para que podamos diagnosticar qué llega del webhook.
+  console.info("[webhook] checkout.session.completed — session.id:", session.id);
+  console.info("[webhook] session.metadata:", JSON.stringify(session.metadata));
+  console.info("[webhook] session.customer (raw):", session.customer);
+  console.info("[webhook] session.subscription (raw):", session.subscription);
+
+  // Verificar service role key
+  console.info("[webhook] SUPABASE_SERVICE_ROLE_KEY configurado:", !!process.env.SUPABASE_SERVICE_ROLE_KEY);
+
   const { userId, agentId, priceId } = session.metadata ?? {};
 
-  if (!userId || !agentId || !priceId) {
-    console.error("[webhook] checkout.session.completed: metadata incompleta:", session.metadata);
+  // ── Validar metadata ──────────────────────────────────────
+  console.info("[webhook] metadata extraída — userId:", userId, "| agentId:", agentId, "| priceId:", priceId);
+
+  if (!userId || !priceId) {
+    console.error("[webhook] metadata incompleta: falta userId o priceId.", session.metadata);
     return;
   }
 
@@ -142,36 +155,50 @@ async function onCheckoutCompleted(session: Stripe.Checkout.Session): Promise<vo
     ? session.customer
     : session.customer?.id ?? null;
 
+  console.info("[webhook] stripeSubscriptionId resuelto:", stripeSubscriptionId);
+  console.info("[webhook] stripeCustomerId resuelto:", stripeCustomerId);
+
   const supabase = getServiceClient();
   const tier     = resolveTier(priceId);
 
-  // Upsert de la suscripción — usa stripe_subscription_id como clave de conflicto.
-  // agentId puede ser "marketplace" para suscripciones de plataforma.
-  const { error: subError } = await supabase
+  console.info("[webhook] tier resuelto:", tier, "para priceId:", priceId);
+
+  // ── Upsert de suscripción ─────────────────────────────────
+  // agent_id es NULL cuando agentId es "marketplace" (suscripción de plataforma)
+  // para evitar FK violations — la columna agent_id referencia agents(id) UUID.
+  const agentIdValue = (agentId && agentId !== "marketplace") ? agentId : null;
+
+  const upsertPayload = {
+    user_id:                userId,
+    agent_id:               agentIdValue,
+    stripe_subscription_id: stripeSubscriptionId,
+    stripe_customer_id:     stripeCustomerId,
+    status:                 "active",
+    tier,
+  };
+
+  console.info("[webhook] Intentando upsert en subscriptions:", JSON.stringify(upsertPayload));
+
+  const { data: subData, error: subError } = await supabase
     .from("subscriptions")
-    .upsert(
-      {
-        user_id:                userId,
-        agent_id:               agentId,
-        stripe_subscription_id: stripeSubscriptionId,
-        stripe_customer_id:     stripeCustomerId,
-        status:                 "active",
-        tier,
-      },
-      { onConflict: "stripe_subscription_id" }
-    );
+    .upsert(upsertPayload, { onConflict: "stripe_subscription_id" })
+    .select();
 
   if (subError) {
-    console.error("[webhook] Error al hacer upsert de subscripción:", {
+    // Logear todos los campos del error de Supabase para diagnóstico completo
+    console.error("[webhook] FALLO upsert en subscriptions:", {
       code:    subError.code,
       message: subError.message,
+      details: subError.details,
+      hint:    subError.hint,
       userId,
+      stripeSubscriptionId,
     });
   } else {
-    console.info("[webhook] Suscripción creada/actualizada para userId:", userId, "tier:", tier);
+    console.info("[webhook] Suscripción insertada/actualizada:", JSON.stringify(subData));
   }
 
-  // Guardar stripe_customer_id en users si no estaba ya guardado
+  // ── Actualizar stripe_customer_id en users ────────────────
   if (stripeCustomerId) {
     const { error: userError } = await supabase
       .from("users")
@@ -179,7 +206,14 @@ async function onCheckoutCompleted(session: Stripe.Checkout.Session): Promise<vo
       .eq("id", userId);
 
     if (userError) {
-      console.error("[webhook] Error al guardar stripe_customer_id en users:", userError.message);
+      console.error("[webhook] Error al guardar stripe_customer_id en users:", {
+        code:    userError.code,
+        message: userError.message,
+        details: userError.details,
+        userId,
+      });
+    } else {
+      console.info("[webhook] stripe_customer_id actualizado en users para userId:", userId);
     }
   }
 }
