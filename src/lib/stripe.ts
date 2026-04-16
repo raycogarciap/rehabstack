@@ -58,10 +58,35 @@ export const PRODUCT_IDS = {
 // ============================================================
 
 /**
+ * Crea un Customer en Stripe para un usuario de RehabStack.
+ * Llamar esto antes de createCheckoutSession cuando el usuario
+ * no tiene stripe_customer_id guardado (requerido por Accounts V2).
+ *
+ * @returns El ID del customer creado (ej: "cus_xxx")
+ */
+export async function createStripeCustomer({
+  email,
+  userId,
+}: {
+  email: string;
+  userId: string;
+}): Promise<string> {
+  const stripe = getStripe();
+
+  const customer = await stripe.customers.create({
+    email,
+    metadata: { userId },
+  });
+
+  return customer.id;
+}
+
+/**
  * Crea una Stripe Checkout Session para suscripción.
  *
- * Si el usuario ya tiene stripe_customer_id en Supabase, lo reutiliza
- * para que Stripe pre-rellene datos y conserve el historial de pagos.
+ * Requiere un stripeCustomerId existente — Accounts V2 no permite
+ * crear customers inline con customer_email en modo suscripción.
+ * Usar createStripeCustomer() en el route antes de llamar a esta función.
  *
  * @returns URL de redirección al Checkout de Stripe
  */
@@ -69,42 +94,28 @@ export async function createCheckoutSession({
   userId,
   priceId,
   agentId,
-  customerEmail,
   stripeCustomerId,
 }: {
   userId: string;
   priceId: string;
   agentId: string;
-  customerEmail: string;
-  stripeCustomerId?: string | null;
+  stripeCustomerId: string;
 }): Promise<string> {
   const stripe = getStripe();
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
-  const sessionParams: Stripe.Checkout.SessionCreateParams = {
+  const session = await stripe.checkout.sessions.create({
     mode: "subscription",
+    customer: stripeCustomerId,
     line_items: [{ price: priceId, quantity: 1 }],
-    // Redirige al dashboard con indicador de éxito para mostrar mensaje
     success_url: `${siteUrl}/dashboard/agents?success=true`,
-    // Regresa al marketplace si el usuario cancela
-    cancel_url: `${siteUrl}/agents`,
-    // Metadata propagada al webhook checkout.session.completed
+    cancel_url:  `${siteUrl}/agents`,
     metadata: { userId, agentId, priceId },
-    // Permite al webhook recuperar la suscripción expandida
     subscription_data: {
       metadata: { userId, agentId },
     },
-  };
-
-  // Reutilizar customer existente o crear uno nuevo por email
-  if (stripeCustomerId) {
-    sessionParams.customer = stripeCustomerId;
-  } else {
-    sessionParams.customer_email = customerEmail;
-  }
-
-  const session = await stripe.checkout.sessions.create(sessionParams);
+  });
 
   if (!session.url) {
     throw new Error("Stripe no devolvió una URL de Checkout.");

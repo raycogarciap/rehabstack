@@ -12,50 +12,51 @@
 //   checkout.session.completed        → crear registro en subscriptions + guardar stripe_customer_id
 //   customer.subscription.updated     → actualizar status de la suscripción
 //   customer.subscription.deleted     → marcar suscripción como cancelled
-//   account.updated (Connect)         → actualizar estado de la cuenta Connect del creador
+//   account.updated (Connect)         → actualizar stripe_connect_id del creador
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 
+// ── Forzar lectura dinámica (no cachear este endpoint) ────────
+export const dynamic = "force-dynamic";
+
 // ── Cliente Supabase con service_role (bypassa RLS) ───────────
-// Se instancia aquí, no en lib/supabase/server, porque ese usa cookies
-// de sesión del usuario. El webhook no tiene usuario — es el sistema.
+// No usa cookies — las operaciones son del sistema, no de un usuario.
 function getServiceClient() {
-  const url   = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const key   = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-  return createClient(url, key, {
-    auth: { persistSession: false },
-  });
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { persistSession: false } }
+  );
 }
 
-// ── Singleton de Stripe ───────────────────────────────────────
+// ── Cliente Stripe ────────────────────────────────────────────
 function getStripe() {
   return new Stripe(process.env.STRIPE_SECRET_KEY!, {
     apiVersion: "2025-03-31.basil",
   });
 }
 
-// ── Forzar lectura dinámica (no cachear este endpoint) ────────
-export const dynamic = "force-dynamic";
-
 // ============================================================
 // HANDLER PRINCIPAL
+// Firma: POST(request: Request) — requerida por Next.js App Router
 // ============================================================
-export async function POST(req: NextRequest) {
+export async function POST(request: Request) {
   // ── 1. Leer body crudo para verificar firma ───────────────
-  // En App Router el body NO tiene bodyParser automático —
-  // req.text() devuelve el payload tal como llega de Stripe.
-  const body = await req.text();
-  const sig  = req.headers.get("stripe-signature");
+  // DEBE ser request.text() — si se parsea con .json() la firma falla
+  // porque Stripe verifica el payload exactamente como llega por la red.
+  const body = await request.text();
+  const sig  = request.headers.get("stripe-signature");
 
   if (!sig) {
+    console.error("[webhook] Falta el header stripe-signature.");
     return NextResponse.json({ error: "Falta stripe-signature." }, { status: 400 });
   }
 
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
   if (!webhookSecret) {
-    console.error("[webhook] STRIPE_WEBHOOK_SECRET no configurado.");
+    console.error("[webhook] STRIPE_WEBHOOK_SECRET no está configurado.");
     return NextResponse.json({ error: "Webhook no configurado." }, { status: 500 });
   }
 
@@ -65,16 +66,21 @@ export async function POST(req: NextRequest) {
     event = getStripe().webhooks.constructEvent(body, sig, webhookSecret);
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Firma inválida.";
-    console.error("[webhook] Verificación fallida:", msg);
+    console.error("[webhook] Verificación de firma fallida:", msg);
     return NextResponse.json({ error: msg }, { status: 400 });
   }
 
-  // ── 3. Responder 200 rápido; Stripe reintenta si no recibe respuesta ──
-  // El trabajo pesado se hace en la misma llamada (no hay fondo/queue todavía),
-  // pero la respuesta ya se envió — Stripe no esperará el resultado async.
-  handleEvent(event).catch((err) =>
-    console.error(`[webhook] Error procesando ${event.type}:`, err)
-  );
+  // ── 3. Procesar evento y responder ────────────────────────
+  // IMPORTANTE: se AWAITA handleEvent antes de devolver 200.
+  // En Vercel (serverless), el proceso termina al devolver la respuesta —
+  // un fire-and-forget mataría los handlers de Supabase antes de que completen.
+  try {
+    await handleEvent(event);
+  } catch (err) {
+    console.error(`[webhook] Error no capturado en ${event.type}:`, err);
+    // Devolver 500 para que Stripe reintente el evento
+    return NextResponse.json({ error: "Error interno procesando el evento." }, { status: 500 });
+  }
 
   return NextResponse.json({ received: true });
 }
@@ -82,7 +88,9 @@ export async function POST(req: NextRequest) {
 // ============================================================
 // ROUTER DE EVENTOS
 // ============================================================
-async function handleEvent(event: Stripe.Event) {
+async function handleEvent(event: Stripe.Event): Promise<void> {
+  console.info(`[webhook] Procesando evento: ${event.type} (${event.id})`);
+
   switch (event.type) {
     case "checkout.session.completed":
       await onCheckoutCompleted(event.data.object as Stripe.Checkout.Session);
@@ -102,6 +110,7 @@ async function handleEvent(event: Stripe.Event) {
 
     default:
       // Evento no manejado — ignorar silenciosamente
+      console.info(`[webhook] Evento no manejado: ${event.type}`);
       break;
   }
 }
@@ -113,43 +122,56 @@ async function handleEvent(event: Stripe.Event) {
 /**
  * checkout.session.completed
  * Se dispara cuando el usuario completa el pago en Stripe Checkout.
- * Crea el registro de suscripción en Supabase y guarda el stripe_customer_id
+ * Crea el registro de suscripción en Supabase y actualiza stripe_customer_id
  * en la tabla users para reutilizarlo en futuros checkouts y el portal.
  */
-async function onCheckoutCompleted(session: Stripe.Checkout.Session) {
+async function onCheckoutCompleted(session: Stripe.Checkout.Session): Promise<void> {
   const { userId, agentId, priceId } = session.metadata ?? {};
 
   if (!userId || !agentId || !priceId) {
-    console.error("[webhook] checkout.session.completed: metadata incompleta.", session.metadata);
+    console.error("[webhook] checkout.session.completed: metadata incompleta:", session.metadata);
     return;
   }
 
-  const stripeSubscriptionId = session.subscription as string | null;
-  const stripeCustomerId     = session.customer     as string | null;
+  // Extraer IDs con tipos correctos del SDK v22
+  const stripeSubscriptionId = typeof session.subscription === "string"
+    ? session.subscription
+    : session.subscription?.id ?? null;
+
+  const stripeCustomerId = typeof session.customer === "string"
+    ? session.customer
+    : session.customer?.id ?? null;
 
   const supabase = getServiceClient();
+  const tier     = resolveTier(priceId);
 
-  // Determinar el tier a partir del priceId
-  const tier = resolveTier(priceId);
-
-  // Insertar o actualizar suscripción (upsert por stripe_subscription_id)
-  const { error: subError } = await supabase.from("subscriptions").upsert(
-    {
-      user_id:                userId,
-      agent_id:               agentId,
-      stripe_subscription_id: stripeSubscriptionId,
-      stripe_customer_id:     stripeCustomerId,
-      status:                 "active",
-      tier,
-    },
-    { onConflict: "stripe_subscription_id" }
-  );
+  // Upsert de la suscripción — usa stripe_subscription_id como clave de conflicto.
+  // agentId puede ser "marketplace" para suscripciones de plataforma.
+  const { error: subError } = await supabase
+    .from("subscriptions")
+    .upsert(
+      {
+        user_id:                userId,
+        agent_id:               agentId,
+        stripe_subscription_id: stripeSubscriptionId,
+        stripe_customer_id:     stripeCustomerId,
+        status:                 "active",
+        tier,
+      },
+      { onConflict: "stripe_subscription_id" }
+    );
 
   if (subError) {
-    console.error("[webhook] Error al crear subscripción:", subError.message);
+    console.error("[webhook] Error al hacer upsert de subscripción:", {
+      code:    subError.code,
+      message: subError.message,
+      userId,
+    });
+  } else {
+    console.info("[webhook] Suscripción creada/actualizada para userId:", userId, "tier:", tier);
   }
 
-  // Guardar stripe_customer_id en users para futuras sesiones
+  // Guardar stripe_customer_id en users si no estaba ya guardado
   if (stripeCustomerId) {
     const { error: userError } = await supabase
       .from("users")
@@ -157,18 +179,17 @@ async function onCheckoutCompleted(session: Stripe.Checkout.Session) {
       .eq("id", userId);
 
     if (userError) {
-      console.error("[webhook] Error al guardar stripe_customer_id:", userError.message);
+      console.error("[webhook] Error al guardar stripe_customer_id en users:", userError.message);
     }
   }
 }
 
 /**
  * customer.subscription.updated
- * Stripe envía este evento en renovaciones, cambios de plan,
- * cancelaciones programadas (cancel_at_period_end = true), etc.
- * Actualiza el status en Supabase para reflejar el estado real.
+ * Se dispara en renovaciones, cambios de plan y cancelaciones programadas.
+ * Actualiza el status en Supabase para reflejar el estado real en Stripe.
  */
-async function onSubscriptionUpdated(subscription: Stripe.Subscription) {
+async function onSubscriptionUpdated(subscription: Stripe.Subscription): Promise<void> {
   const supabase = getServiceClient();
 
   const { error } = await supabase
@@ -177,17 +198,22 @@ async function onSubscriptionUpdated(subscription: Stripe.Subscription) {
     .eq("stripe_subscription_id", subscription.id);
 
   if (error) {
-    console.error("[webhook] Error al actualizar suscripción:", error.message);
+    console.error("[webhook] Error al actualizar suscripción:", {
+      subscriptionId: subscription.id,
+      status:         subscription.status,
+      error:          error.message,
+    });
+  } else {
+    console.info("[webhook] Suscripción actualizada:", subscription.id, "→", subscription.status);
   }
 }
 
 /**
  * customer.subscription.deleted
- * Se dispara cuando la suscripción termina definitivamente
- * (fin del período si cancel_at_period_end, o cancelación inmediata).
- * Marca la suscripción como cancelled.
+ * Se dispara cuando la suscripción termina definitivamente.
+ * Marca la suscripción como "cancelled" en Supabase.
  */
-async function onSubscriptionDeleted(subscription: Stripe.Subscription) {
+async function onSubscriptionDeleted(subscription: Stripe.Subscription): Promise<void> {
   const supabase = getServiceClient();
 
   const { error } = await supabase
@@ -196,34 +222,39 @@ async function onSubscriptionDeleted(subscription: Stripe.Subscription) {
     .eq("stripe_subscription_id", subscription.id);
 
   if (error) {
-    console.error("[webhook] Error al cancelar suscripción:", error.message);
+    console.error("[webhook] Error al cancelar suscripción:", {
+      subscriptionId: subscription.id,
+      error:          error.message,
+    });
+  } else {
+    console.info("[webhook] Suscripción cancelada:", subscription.id);
   }
 }
 
 /**
  * account.updated (Connect)
- * Stripe envía este evento cuando el estado de la cuenta Express cambia.
- * Útil para detectar cuando el creador completa el onboarding
- * (charges_enabled = true) o cuando hay restricciones.
+ * Se dispara cuando el estado de una cuenta Express cambia.
+ * Guarda el stripe_connect_id en la tabla users si aún no está.
  */
-async function onConnectAccountUpdated(account: Stripe.Account) {
-  // Buscar el usuario por stripe_connect_id para actualizarlo
-  const supabase = getServiceClient();
-
-  // Solo loguear por ahora — la columna connect ya fue guardada al crear la cuenta.
-  // En el futuro: actualizar un campo connect_status si se añade a la tabla.
+async function onConnectAccountUpdated(account: Stripe.Account): Promise<void> {
   if (account.charges_enabled) {
-    console.info(`[webhook] Connect account ${account.id} completó onboarding.`);
+    console.info("[webhook] Connect account completó onboarding:", account.id);
   }
 
-  // Actualizar stripe_connect_id si por algún motivo no se guardó antes
+  // Solo actualizar si la cuenta tiene email y el usuario aún no tiene connect_id guardado
   const email = account.email;
-  if (email) {
-    await supabase
-      .from("users")
-      .update({ stripe_connect_id: account.id })
-      .eq("email", email)
-      .is("stripe_connect_id", null); // Solo actualiza si aún no tiene ID
+  if (!email) return;
+
+  const supabase = getServiceClient();
+
+  const { error } = await supabase
+    .from("users")
+    .update({ stripe_connect_id: account.id })
+    .eq("email", email)
+    .is("stripe_connect_id", null);
+
+  if (error) {
+    console.error("[webhook] Error al guardar stripe_connect_id:", error.message);
   }
 }
 
@@ -232,8 +263,8 @@ async function onConnectAccountUpdated(account: Stripe.Account) {
 // ============================================================
 
 /**
- * Resuelve el tier de suscripción a partir del priceId.
- * Usa las variables de entorno para no hardcodear IDs.
+ * Resuelve el tier a partir del priceId usando variables de entorno.
+ * No hardcodea IDs de Stripe en el código.
  */
 function resolveTier(priceId: string): string {
   if (priceId === process.env.STRIPE_PRICE_STARTER)      return "starter";

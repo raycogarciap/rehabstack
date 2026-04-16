@@ -36,9 +36,12 @@ export function CheckoutButton({
     setError(null);
 
     try {
+      // credentials: "include" asegura que las cookies de sesión de Supabase
+      // se envíen con el request (necesario para que el route lea la sesión)
       const res = await fetch("/api/stripe/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({
           priceId,
           agentId: "marketplace", // suscripción de plataforma
