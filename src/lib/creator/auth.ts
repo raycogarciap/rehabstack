@@ -18,7 +18,8 @@ interface VerifiedCreator {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface VerifiedCreatorAndAgent extends VerifiedCreator {
+interface VerifiedCreatorAndAgent extends Omit<VerifiedCreator, "status"> {
+  status: 401 | 403 | 404 | null;
   // any preserva la tipificación implícita de Supabase para queries sin tipo DB explícito
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   agent: any | null;
