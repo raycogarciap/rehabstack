@@ -50,6 +50,12 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
+  // Exponer el pathname a los Server Components vía header.
+  // Usado por el creator layout para detectar /creator/onboarding y evitar
+  // el redirect de role en esa ruta específica (el onboarding es donde el
+  // usuario OBTIENE el role de creator, por lo que no puede exigírselo antes).
+  supabaseResponse.headers.set('x-pathname', pathname)
+
   // Propagar headers de next-intl a la respuesta de Supabase
   intlResponse.headers.forEach((value, key) => {
     supabaseResponse.headers.set(key, value)

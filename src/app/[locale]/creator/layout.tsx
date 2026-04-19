@@ -5,6 +5,7 @@
 
 import { Suspense } from 'react'
 import { redirect } from 'next/navigation'
+import { headers } from 'next/headers'
 import { getLocale } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { CreatorSidebarNav } from '@/components/creator/creator-sidebar-nav'
@@ -40,6 +41,13 @@ async function CreatorNav() {
   const supabase = await createClient()
   const locale = await getLocale()
 
+  // Leer el pathname desde el header establecido por el middleware.
+  // /creator/onboarding es la ruta donde el usuario OBTIENE el role de creator,
+  // por lo que no puede exigírsele el role antes de entrar.
+  const headersList = await headers()
+  const pathname = headersList.get('x-pathname') ?? ''
+  const isOnboarding = pathname.includes('/creator/onboarding')
+
   // 1. Verificar autenticación
   const {
     data: { user },
@@ -49,25 +57,44 @@ async function CreatorNav() {
     redirect(`/${locale}/login`)
   }
 
-  // 2. Verificar role del usuario en la tabla users
+  // 2. En la página de onboarding, cualquier usuario autenticado puede acceder.
+  //    No verificar role ni renderizar el sidebar del creator.
+  if (isOnboarding) {
+    return null
+  }
+
+  // 3. En el resto de /creator/*, verificar role='creator'
   const { data: profile } = await supabase
     .from('users')
     .select('role, email')
     .eq('id', user.id)
     .single()
 
-  // Si el role no es 'creator', redirigir al flujo de onboarding del creator
   if (!profile || profile.role !== 'creator') {
     redirect(`/${locale}/creator/onboarding`)
   }
 
-  // 3. Renderizar el sidebar con el email del usuario
+  // 4. Renderizar el sidebar con el email del usuario
   return <CreatorSidebarNav userEmail={profile.email ?? user.email ?? ''} />
 }
 
 // ─── Layout principal exportado ───────────────────────────────────────────────
 
-export default function CreatorLayout({ children }: { children: React.ReactNode }) {
+export default async function CreatorLayout({ children }: { children: React.ReactNode }) {
+  // Determinar si estamos en onboarding para suprimir el sidebar y sus offsets
+  const headersList = await headers()
+  const pathname = headersList.get('x-pathname') ?? ''
+  const isOnboarding = pathname.includes('/creator/onboarding')
+
+  if (isOnboarding) {
+    // Onboarding: layout mínimo sin sidebar ni offsets
+    return (
+      <div className="min-h-screen bg-neutral-50">
+        {children}
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-neutral-50">
       {/* Sidebar envuelto en Suspense para mostrar skeleton durante la carga */}
