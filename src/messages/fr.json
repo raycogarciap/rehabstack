@@ -12,7 +12,6 @@
     "blog": "Blog",
     "tagline": "Marketplace d'Agents IA pour les Professionnels de Réadaptation"
   },
-
   "home": {
     "hero": {
       "headline": "Agents IA pour les Professionnels de Réadaptation",
@@ -48,7 +47,6 @@
       "button": "Commencer gratuitement"
     }
   },
-
   "agents": {
     "metaTitle": "Agents IA pour Professionnels de Réadaptation | RehabStack",
     "metaDescription": "Parcourez les agents IA pour kinésithérapeutes, ergothérapeutes et professionnels de réadaptation.",
@@ -104,7 +102,6 @@
       "perMonth": "/mois"
     }
   },
-
   "pricing": {
     "metaTitle": "Tarifs | RehabStack",
     "metaDescription": "Tarifs simples et transparents pour les agents IA de kinésithérapie et réadaptation. Essai gratuit 14 jours.",
@@ -167,7 +164,6 @@
       "a5": "RehabStack est construit sur une infrastructure compatible HIPAA. Toutes les données sont chiffrées en transit et au repos. Nous ne partageons jamais les données des patients."
     }
   },
-
   "auth": {
     "login": {
       "metaTitle": "Se Connecter | RehabStack",
@@ -222,7 +218,6 @@
       "other": "Autre"
     }
   },
-
   "dashboard": {
     "nav": {
       "dashboard": "Tableau de bord",
@@ -273,7 +268,6 @@
       "errorSession": "Échec de l'initialisation de la session. Veuillez recharger la page."
     }
   },
-
   "common": {
     "loading": "Chargement…",
     "error": "Une erreur s'est produite.",
@@ -290,5 +284,22 @@
     "perMonth": "/mois",
     "free": "Gratuit",
     "copyright": "© {year} Soulistica LLC · DBA RehabStack"
+  },
+  "platformAgents": {
+    "content-engine": {
+      "name": "Content Engine",
+      "shortDescription": "Transformez vos notes vocales, photos et vidéos en contenu professionnel pour les réseaux sociaux, des supports éducatifs pour les patients et des textes marketing.",
+      "description": "Content Engine est votre assistant marketing propulsé par l'IA, conçu pour les professionnels de la rééducation. Déposez un mémo vocal enregistré en voiture, une courte vidéo d'exercice ou une photo de la clinique, et Content Engine les transforme en légendes Instagram soignées, brochures pour patients, sections de newsletters, et bien plus encore. Il maîtrise la terminologie de la rééducation, parle votre spécialité et maintient la cohérence de votre image de marque sur toutes les plateformes. Arrêtez de passer vos soirées à rédiger du contenu et concentrez-vous sur vos patients."
+    },
+    "ce-matcher": {
+      "name": "CE Matcher",
+      "shortDescription": "Trouvez les formations continues parfaites, adaptées à votre spécialité, aux exigences de votre licence, à votre lieu de résidence et à votre budget.",
+      "description": "CE Matcher élimine les heures que vous passez à chercher des formations continues qui correspondent réellement à votre vie. Indiquez-lui l'état de votre licence, la date limite de renouvellement, votre domaine de spécialité, votre budget et le format souhaité (présentiel, en ligne ou hybride), et il affiche les formations les plus adaptées parmi des centaines de prestataires. Il suit vos crédits de formation continue, vous alerte à l'ouverture des périodes de renouvellement et suggère même des parcours de formation menant à des certifications avancées. Ne cherchez plus jamais des formations à la dernière minute."
+    },
+    "course-creator": {
+      "name": "Course Creator",
+      "shortDescription": "Transformez votre expertise clinique en une formation en ligne structurée grâce à la conception pédagogique guidée par l'IA, des diaporamas et des questions d'évaluation.",
+      "description": "Course Creator aide les professionnels de la rééducation à valoriser leur expertise en créant des formations en ligne professionnelles en un temps record. Décrivez votre domaine de connaissance clinique, votre public cible et vos objectifs pédagogiques, et Course Creator génère un plan de cours complet, des scripts de leçons, une structure de diaporamas, des questions d'évaluation et même une stratégie tarifaire suggérée. Que vous souhaitiez vendre sur votre propre site ou publier sur une grande plateforme, Course Creator vous donne la structure pour passer d'expert à formateur sans partir d'une page blanche."
+    }
   }
 }

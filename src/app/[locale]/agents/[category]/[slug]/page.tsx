@@ -23,6 +23,16 @@ import {
   type AgentReview,
 } from '@/types/agents'
 
+// ── Constantes de agentes de plataforma ──────────────────────────────────────
+
+// Slugs de agentes propios de la plataforma con contenido traducible
+const PLATFORM_SLUGS = ['content-engine', 'ce-matcher', 'course-creator'] as const
+type PlatformSlug = typeof PLATFORM_SLUGS[number]
+
+function isPlatformSlug(slug: string): slug is PlatformSlug {
+  return PLATFORM_SLUGS.includes(slug as PlatformSlug)
+}
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 // Calcula el promedio de calificaciones redondeado a 1 decimal
@@ -72,15 +82,23 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { category, slug } = await params
-  const agent = await fetchAgent(category, slug)
+  const [agent, t] = await Promise.all([
+    fetchAgent(category, slug),
+    getTranslations('agents'),
+  ])
   if (!agent) return { title: 'Agent Not Found | RehabStack' }
+
+  // Para agentes de plataforma, usar la descripción corta traducida como meta description
+  const metaDescription = isPlatformSlug(agent.slug)
+    ? t(`platformAgents.${agent.slug}.shortDescription`)
+    : (agent.short_description ?? undefined)
 
   return {
     title: `${agent.name} | RehabStack`,
-    description: agent.short_description ?? undefined,
+    description: metaDescription,
     openGraph: {
       title: `${agent.name} | RehabStack`,
-      description: agent.short_description ?? undefined,
+      description: metaDescription,
       type: 'website',
     },
   }
@@ -246,13 +264,17 @@ export default async function AgentDetailPage({ params }: Props) {
         <div className="flex flex-col gap-10 lg:flex-row">
           {/* Columna principal */}
           <div className="min-w-0 flex-1 space-y-10">
-            {/* Descripción larga */}
-            {agent.description && (
+            {/* Descripción larga — traducida para agentes de plataforma, de BD para el resto */}
+            {(agent.description || isPlatformSlug(agent.slug)) && (
               <section aria-labelledby="description-heading">
                 <h2 id="description-heading" className="text-lg font-semibold text-neutral-900">
                   {t('detail.about')}
                 </h2>
-                <p className="mt-3 text-neutral-600 leading-relaxed">{agent.description}</p>
+                <p className="mt-3 text-neutral-600 leading-relaxed">
+                  {isPlatformSlug(agent.slug)
+                    ? t(`platformAgents.${agent.slug}.description`)
+                    : agent.description}
+                </p>
               </section>
             )}
 

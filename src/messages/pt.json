@@ -12,7 +12,6 @@
     "blog": "Blog",
     "tagline": "Marketplace de Agentes IA para Profissionais de Reabilitação"
   },
-
   "home": {
     "hero": {
       "headline": "Agentes IA para Profissionais de Reabilitação",
@@ -48,7 +47,6 @@
       "button": "Começar gratuitamente"
     }
   },
-
   "agents": {
     "metaTitle": "Agentes IA para Profissionais de Reabilitação | RehabStack",
     "metaDescription": "Explore agentes IA para fisioterapeutas, terapeutas ocupacionais e profissionais de reabilitação.",
@@ -104,7 +102,6 @@
       "perMonth": "/mês"
     }
   },
-
   "pricing": {
     "metaTitle": "Preços | RehabStack",
     "metaDescription": "Preços simples e transparentes para agentes IA de fisioterapia e reabilitação. Comece grátis por 14 dias.",
@@ -167,7 +164,6 @@
       "a5": "O RehabStack é construído com infraestrutura compatível com HIPAA. Todos os dados são criptografados em trânsito e em repouso. Nunca compartilhamos dados de pacientes."
     }
   },
-
   "auth": {
     "login": {
       "metaTitle": "Entrar | RehabStack",
@@ -222,7 +218,6 @@
       "other": "Outra"
     }
   },
-
   "dashboard": {
     "nav": {
       "dashboard": "Painel",
@@ -273,7 +268,6 @@
       "errorSession": "Falha ao iniciar a sessão. Por favor, recarregue a página."
     }
   },
-
   "common": {
     "loading": "Carregando…",
     "error": "Ocorreu um erro.",
@@ -290,5 +284,22 @@
     "perMonth": "/mês",
     "free": "Grátis",
     "copyright": "© {year} Soulistica LLC · DBA RehabStack"
+  },
+  "platformAgents": {
+    "content-engine": {
+      "name": "Content Engine",
+      "shortDescription": "Transforme notas de voz, fotos e vídeos em conteúdo profissional para redes sociais, materiais educativos para pacientes e textos de marketing.",
+      "description": "Content Engine é o seu assistente de marketing com IA, criado para profissionais de reabilitação. Envie uma nota de voz do carro, um vídeo rápido de um exercício ou uma foto da clínica, e o Content Engine transforma tudo em legendas polidas para o Instagram, folhetos para pacientes, seções de boletins e muito mais. Ele entende a terminologia de reabilitação, fala a sua especialidade e mantém a consistência da sua marca em todas as plataformas. Pare de passar as noites escrevendo conteúdo e foque nos seus pacientes."
+    },
+    "ce-matcher": {
+      "name": "CE Matcher",
+      "shortDescription": "Encontre os cursos de educação continuada perfeitos, adaptados à sua especialidade, requisitos de licença, localização e orçamento.",
+      "description": "CE Matcher elimina as horas que você passa procurando educação continuada que realmente se encaixa na sua vida. Informe o estado da sua licença, prazo de renovação, área de especialidade, orçamento e formato preferido (presencial, online ou híbrido), e ele exibe os cursos mais adequados de centenas de provedores. Acompanha seus créditos de educação continuada, avisa quando os períodos de renovação se abrem e sugere sequências de cursos para avançar em direção a certificações avançadas. Nunca mais corra atrás de cursos de última hora."
+    },
+    "course-creator": {
+      "name": "Course Creator",
+      "shortDescription": "Transforme sua experiência clínica em um curso online estruturado com design curricular guiado por IA, apresentações e questões de avaliação.",
+      "description": "Course Creator ajuda profissionais de reabilitação a monetizar sua expertise criando cursos online profissionais em uma fração do tempo. Descreva sua área de conhecimento clínico, seu público-alvo e seus objetivos de aprendizagem, e o Course Creator gera um currículo completo, roteiros de aulas, estrutura de slides, questões de avaliação e até uma estratégia de precificação sugerida. Seja para vender no seu próprio site ou publicar em uma plataforma conhecida, o Course Creator oferece a estrutura para você ir de especialista a educador sem começar do zero."
+    }
   }
 }

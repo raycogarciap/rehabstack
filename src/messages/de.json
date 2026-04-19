@@ -12,7 +12,6 @@
     "blog": "Blog",
     "tagline": "KI-Agenten-Marktplatz für Rehabilitationsfachleute"
   },
-
   "home": {
     "hero": {
       "headline": "KI-Agenten für Rehabilitationsfachleute",
@@ -48,7 +47,6 @@
       "button": "Kostenlos loslegen"
     }
   },
-
   "agents": {
     "metaTitle": "KI-Agenten für Rehabilitationsfachleute | RehabStack",
     "metaDescription": "Entdecken Sie KI-Agenten für Physiotherapeuten, Ergotherapeuten und Rehabilitationsfachleute.",
@@ -104,7 +102,6 @@
       "perMonth": "/Monat"
     }
   },
-
   "pricing": {
     "metaTitle": "Preise | RehabStack",
     "metaDescription": "Einfache, transparente Preise für KI-Agenten in Physiotherapie und Rehabilitation. 14 Tage kostenlos.",
@@ -167,7 +164,6 @@
       "a5": "RehabStack basiert auf HIPAA-konformer Infrastruktur. Alle Daten werden bei der Übertragung und Speicherung verschlüsselt. Patientendaten werden niemals weitergegeben."
     }
   },
-
   "auth": {
     "login": {
       "metaTitle": "Anmelden | RehabStack",
@@ -222,7 +218,6 @@
       "other": "Sonstiges"
     }
   },
-
   "dashboard": {
     "nav": {
       "dashboard": "Dashboard",
@@ -273,7 +268,6 @@
       "errorSession": "Sitzung konnte nicht gestartet werden. Bitte laden Sie die Seite neu."
     }
   },
-
   "common": {
     "loading": "Lädt…",
     "error": "Ein Fehler ist aufgetreten.",
@@ -290,5 +284,22 @@
     "perMonth": "/Monat",
     "free": "Kostenlos",
     "copyright": "© {year} Soulistica LLC · DBA RehabStack"
+  },
+  "platformAgents": {
+    "content-engine": {
+      "name": "Content Engine",
+      "shortDescription": "Verwandeln Sie Sprachnotizen, Fotos und Videos in professionelle Social-Media-Inhalte, Patientenedukationsmaterialien und Marketingtexte.",
+      "description": "Content Engine ist Ihr KI-gestützter Marketing-Assistent für Rehabilitationsfachleute. Laden Sie eine Sprachnotiz aus dem Auto, ein kurzes Übungsvideo oder ein Foto aus der Klinik hoch, und Content Engine verwandelt es in polierte Instagram-Bildunterschriften, Patientenbroschüren, Newsletter-Abschnitte und vieles mehr. Es versteht die Fachterminologie der Rehabilitation, spricht Ihre Spezialisierung und sorgt für eine einheitliche Markendarstellung auf allen Plattformen. Hören Sie auf, Abende mit dem Schreiben von Inhalten zu verbringen, und kümmern Sie sich um Ihre Patienten."
+    },
+    "ce-matcher": {
+      "name": "CE Matcher",
+      "shortDescription": "Finden Sie die perfekten Fortbildungskurse, die zu Ihrer Fachrichtung, Ihren Lizenzanforderungen, Ihrem Standort und Ihrem Budget passen.",
+      "description": "CE Matcher eliminiert die Stunden, die Sie mit der Suche nach Fortbildungen verbringen, die wirklich zu Ihrem Leben passen. Geben Sie Ihren Lizenzstaat, den Erneuerungstermin, Ihren Fachschwerpunkt, Ihr Budget und das bevorzugte Format (Präsenz, online oder hybrid) an, und es zeigt Ihnen die am besten geeigneten Kurse aus Hunderten von Anbietern. Es verfolgt Ihre Fortbildungspunkte, benachrichtigt Sie, wenn Verlängerungszeiträume beginnen, und schlägt sogar Kurssequenzen vor, die zu erweiterten Zertifizierungen führen. Suchen Sie nie wieder in letzter Minute nach Fortbildungen."
+    },
+    "course-creator": {
+      "name": "Course Creator",
+      "shortDescription": "Verwandeln Sie Ihr klinisches Fachwissen in einen strukturierten Online-Kurs mit KI-gesteuertem Curriculum-Design, Präsentationsfolien und Prüfungsfragen.",
+      "description": "Course Creator hilft Rehabilitationsfachleuten, ihr Fachwissen zu monetarisieren, indem sie in einem Bruchteil der Zeit professionelle Online-Kurse erstellen. Beschreiben Sie Ihr klinisches Wissensgebiet, Ihre Zielgruppe und Ihre Lernziele, und Course Creator generiert eine vollständige Lehrplanübersicht, Unterrichtsskripte, eine Folienstruktur, Quizfragen und sogar eine empfohlene Preisstrategie. Ob Sie auf Ihrer eigenen Website verkaufen oder auf einer großen Plattform veröffentlichen möchten, Course Creator gibt Ihnen das Gerüst, um ohne leere Seite vom Experten zum Kursleiter zu werden."
+    }
   }
 }

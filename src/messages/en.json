@@ -12,7 +12,6 @@
     "blog": "Blog",
     "tagline": "AI Agent Marketplace for Rehab Professionals"
   },
-
   "home": {
     "hero": {
       "headline": "AI Agents for Rehab Professionals",
@@ -48,7 +47,6 @@
       "button": "Get started free"
     }
   },
-
   "agents": {
     "metaTitle": "AI Agents for Rehab Professionals | RehabStack",
     "metaDescription": "Browse AI agents built for physical therapists, occupational therapists, and rehabilitation professionals. Filter by specialty, language, and price.",
@@ -104,7 +102,6 @@
       "perMonth": "/month"
     }
   },
-
   "pricing": {
     "metaTitle": "Pricing | RehabStack",
     "metaDescription": "Simple, transparent pricing for AI agents built for physical therapy and rehabilitation professionals. Start free for 14 days.",
@@ -167,7 +164,6 @@
       "a5": "RehabStack is built with HIPAA-aware infrastructure. All data is encrypted in transit and at rest. We never share patient data."
     }
   },
-
   "auth": {
     "login": {
       "metaTitle": "Sign In | RehabStack",
@@ -222,7 +218,6 @@
       "other": "Other"
     }
   },
-
   "dashboard": {
     "nav": {
       "dashboard": "Dashboard",
@@ -273,7 +268,6 @@
       "errorSession": "Failed to initialize session. Please refresh the page."
     }
   },
-
   "common": {
     "loading": "Loading…",
     "error": "An error occurred.",
@@ -290,5 +284,22 @@
     "perMonth": "/month",
     "free": "Free",
     "copyright": "© {year} Soulistica LLC · DBA RehabStack"
+  },
+  "platformAgents": {
+    "content-engine": {
+      "name": "Content Engine",
+      "shortDescription": "Transform voice notes, photos, and videos into professional social media content, patient education materials, and marketing copy.",
+      "description": "Content Engine is your AI-powered marketing assistant built for rehab professionals. Drop in a voice memo from your car, a quick video of a patient exercise, or a photo from the clinic — and Content Engine turns it into polished Instagram captions, patient handouts, newsletter sections, and more. It understands rehab terminology, speaks your specialty, and keeps your brand consistent across every platform. Stop spending evenings writing content. Let Content Engine handle the words while you handle the patients."
+    },
+    "ce-matcher": {
+      "name": "CE Matcher",
+      "shortDescription": "Find the perfect continuing education courses matched to your specialty, license requirements, location, and budget.",
+      "description": "CE Matcher eliminates the hours you spend searching for continuing education that actually fits your life. Tell it your license state, renewal deadline, specialty focus, budget, and preferred format — live, online, or hybrid — and it surfaces the best-matched courses from hundreds of providers. It tracks your CE credits, alerts you when renewal windows open, and even suggests course sequences that build toward advanced certifications. Never scramble for last-minute CE again."
+    },
+    "course-creator": {
+      "name": "Course Creator",
+      "shortDescription": "Turn your clinical expertise into a structured online course with AI-guided curriculum design, slide decks, and assessment questions.",
+      "description": "Course Creator helps rehab professionals monetize their expertise by building professional online courses in a fraction of the time. Describe your clinical knowledge area, your target audience, and your learning objectives — Course Creator generates a full curriculum outline, lesson scripts, slide deck structure, quiz questions, and even a suggested pricing strategy. Whether you want to sell on your own site or list on a major platform, Course Creator gives you the scaffolding to go from expert to educator without starting from a blank page."
+    }
   }
 }
