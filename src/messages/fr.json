@@ -57,6 +57,8 @@
     "searchPlaceholder": "Rechercher des agents…",
     "found": "{count, plural, one {# agent trouvé} other {# agents trouvés}}",
     "filters": {
+      "title": "Filtres",
+      "clearAll": "Effacer tout",
       "category": "Catégorie",
       "language": "Langue",
       "modelProvider": "Fournisseur de Modèle",

@@ -57,6 +57,8 @@
     "searchPlaceholder": "البحث عن وكلاء…",
     "found": "{count, plural, one {# وكيل موجود} other {# وكلاء موجودون}}",
     "filters": {
+      "title": "فلاتر",
+      "clearAll": "مسح الكل",
       "category": "الفئة",
       "language": "اللغة",
       "modelProvider": "مزود النموذج",

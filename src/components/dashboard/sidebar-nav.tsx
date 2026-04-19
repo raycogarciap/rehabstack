@@ -1,7 +1,7 @@
 // Client Component: navegación del sidebar del dashboard.
-// Usa usePathname de next-intl (sin prefijo de locale) y Link de next-intl
-// para que los hrefs se añadan automáticamente el locale activo.
-// También incluye el LocaleSwitcher para cambiar idioma desde el sidebar.
+// Usa Link y usePathname de @/i18n/navigation para que los hrefs lleven
+// automáticamente el locale activo, y useTranslations para los labels.
+// El selector de idioma vive en el layout (barra superior), no aquí.
 
 'use client'
 
@@ -10,9 +10,8 @@ import { useTranslations } from 'next-intl'
 import { Link, usePathname } from '@/i18n/navigation'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
-import { LocaleSwitcher } from '@/components/locale-switcher'
 
-// Iconos SVG inline para los enlaces de navegación
+// Iconos SVG inline
 const IconDashboard = () => (
   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h7v7H3zm11 0h7v7h-7zM3 14h7v7H3zm11 0h7v7h-7z" />
@@ -46,7 +45,6 @@ const IconSignOut = () => (
 )
 
 interface SidebarNavProps {
-  // Email del usuario autenticado — pasado desde el Server Component del layout
   userEmail: string
 }
 
@@ -56,7 +54,7 @@ export function SidebarNav({ userEmail }: SidebarNavProps) {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  // Los hrefs son sin locale — Link de @/i18n/navigation añade el locale automáticamente
+  // Los hrefs sin locale — Link de @/i18n/navigation añade el locale automáticamente
   const NAV_LINKS = [
     { label: t('dashboard'), href: '/dashboard',         icon: <IconDashboard /> },
     { label: t('myAgents'), href: '/dashboard/agents',   icon: <IconAgents /> },
@@ -64,7 +62,6 @@ export function SidebarNav({ userEmail }: SidebarNavProps) {
     { label: t('settings'), href: '/dashboard/settings', icon: <IconSettings /> },
   ] as const
 
-  // /dashboard solo activo con match exacto; subrutas usan startsWith
   const isActive = (href: string) =>
     href === '/dashboard' ? pathname === href : pathname.startsWith(href)
 
@@ -85,7 +82,6 @@ export function SidebarNav({ userEmail }: SidebarNavProps) {
           Rehab<span className="text-blue-600">Stack</span>
         </span>
 
-        {/* Botón hamburguesa */}
         <button
           onClick={() => setMobileOpen((prev) => !prev)}
           aria-label="Toggle menu"
@@ -120,16 +116,13 @@ export function SidebarNav({ userEmail }: SidebarNavProps) {
             ))}
           </nav>
           <Separator className="my-3" />
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center justify-between">
             <span className="truncate text-xs text-neutral-500">{userEmail}</span>
-            <div className="flex items-center gap-2 shrink-0">
-              <LocaleSwitcher />
-              <form action="/api/auth/signout" method="POST">
-                <Button type="submit" variant="ghost" size="sm" className="text-red-600 hover:text-red-700 hover:bg-red-50">
-                  {t('signOut')}
-                </Button>
-              </form>
-            </div>
+            <form action="/api/auth/signout" method="POST">
+              <Button type="submit" variant="ghost" size="sm" className="text-red-600 hover:text-red-700 hover:bg-red-50">
+                {t('signOut')}
+              </Button>
+            </form>
           </div>
         </div>
       )}
@@ -157,16 +150,9 @@ export function SidebarNav({ userEmail }: SidebarNavProps) {
           </div>
         </nav>
 
-        {/* Footer del sidebar: selector de idioma, email, y logout */}
-        <div className="border-t border-neutral-100 px-3 py-3 space-y-2">
-          {/* Selector de idioma */}
-          <div className="px-3">
-            <LocaleSwitcher className="w-full rounded-md border border-neutral-200 bg-white px-2 py-1.5 text-sm text-neutral-700 hover:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-blue-400/20 cursor-pointer" />
-          </div>
-
-          <p className="truncate px-3 text-xs text-neutral-500">{userEmail}</p>
-
-          {/* Formulario POST al API route de signout — funciona sin JavaScript */}
+        {/* Footer del sidebar: email del usuario y logout */}
+        <div className="border-t border-neutral-100 px-3 py-3">
+          <p className="mb-2 truncate px-3 text-xs text-neutral-500">{userEmail}</p>
           <form action="/api/auth/signout" method="POST">
             <Button
               type="submit"

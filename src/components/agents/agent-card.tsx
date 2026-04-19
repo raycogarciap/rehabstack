@@ -1,11 +1,11 @@
 // src/components/agents/agent-card.tsx
 // Tarjeta reutilizable de agente para el grid del marketplace.
-// Server Component — solo display, sin estado.
-// Muestra: nombre, creador, categoría, descripción corta, precio,
-// rating promedio, primeros 3 idiomas y badge de cumplimiento.
+// Server Component async — usa getTranslations para todos los labels de UI.
+// El contenido del agente (nombre, descripción) viene de la BD sin traducir.
 
 import Link from 'next/link'
 import { ShieldCheck, Star } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 import {
   Card,
   CardContent,
@@ -16,13 +16,13 @@ import {
 } from '@/components/ui/card'
 import { type AgentSummary, CATEGORY_META } from '@/types/agents'
 
-// Calcula el rating promedio a partir del array de reseñas verificadas
+// Calcula el rating promedio redondeado a 1 decimal
 function avgRating(reviews: { rating: number }[]): number | null {
   if (!reviews.length) return null
   return Math.round((reviews.reduce((s, r) => s + r.rating, 0) / reviews.length) * 10) / 10
 }
 
-// Renderiza estrellitas (llenas/vacías) para el rating
+// Renderiza estrellas (llenas/vacías) para el rating
 function StarRating({ rating }: { rating: number }) {
   return (
     <span className="flex items-center gap-0.5" aria-label={`${rating} out of 5 stars`}>
@@ -38,24 +38,21 @@ function StarRating({ rating }: { rating: number }) {
   )
 }
 
-// Mapa de código de idioma → etiqueta
+// Mapa de código de idioma → etiqueta abreviada (siempre en mayúsculas, universal)
 const LANGUAGE_LABELS: Record<string, string> = {
-  en: 'EN',
-  es: 'ES',
-  pt: 'PT',
-  fr: 'FR',
-  de: 'DE',
-  ar: 'AR',
+  en: 'EN', es: 'ES', pt: 'PT', fr: 'FR', de: 'DE', ar: 'AR',
 }
 
 interface AgentCardProps {
   agent: AgentSummary
 }
 
-export function AgentCard({ agent }: AgentCardProps) {
+// Componente async: puede llamar getTranslations directamente
+export async function AgentCard({ agent }: AgentCardProps) {
+  const t = await getTranslations('agents')
+
   const rating = avgRating(agent.reviews)
   const categoryMeta = CATEGORY_META[agent.category]
-  // Muestra solo los primeros 3 idiomas en la tarjeta
   const displayLanguages = (agent.languages ?? []).slice(0, 3)
   const href = `/agents/${agent.category}/${agent.slug}`
 
@@ -69,17 +66,17 @@ export function AgentCard({ agent }: AgentCardProps) {
           </span>
           {agent.compliance_badge && (
             <span
-              title="Compliance verified"
-              aria-label="Compliance verified"
+              title={t('card.verified')}
+              aria-label={t('card.verified')}
               className="flex items-center gap-1 text-xs font-medium text-emerald-600"
             >
               <ShieldCheck className="size-3.5" aria-hidden="true" />
-              Verified
+              {t('card.verified')}
             </span>
           )}
         </div>
 
-        {/* Nombre del agente */}
+        {/* Nombre del agente — viene de la BD, no se traduce */}
         <CardTitle className="mt-2 text-base font-semibold text-neutral-900">
           {agent.name}
         </CardTitle>
@@ -93,16 +90,16 @@ export function AgentCard({ agent }: AgentCardProps) {
       </CardHeader>
 
       <CardContent className="flex flex-col gap-3">
-        {/* Descripción corta */}
+        {/* Descripción corta — viene de la BD */}
         <p className="line-clamp-2 text-sm text-neutral-600">
           {agent.short_description ?? ''}
         </p>
 
-        {/* Rating */}
+        {/* Rating o mensaje sin reseñas */}
         {rating !== null ? (
           <StarRating rating={rating} />
         ) : (
-          <span className="text-xs text-neutral-400">No reviews yet</span>
+          <span className="text-xs text-neutral-400">{t('card.noReviews')}</span>
         )}
 
         {/* Idiomas soportados */}
@@ -124,8 +121,8 @@ export function AgentCard({ agent }: AgentCardProps) {
         {/* Precio */}
         <span className="text-sm font-semibold text-neutral-900">
           {agent.pricing_usd != null && agent.pricing_usd > 0
-            ? `$${agent.pricing_usd}/mo`
-            : 'Free'}
+            ? `$${agent.pricing_usd}${t('card.perMonth')}`
+            : t('card.free')}
         </span>
 
         {/* Botón "Learn More" — Link envuelve el botón, sin asChild */}
@@ -134,7 +131,7 @@ export function AgentCard({ agent }: AgentCardProps) {
             type="button"
             className="rounded-lg bg-blue-600 px-3.5 py-1.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
           >
-            Learn More
+            {t('card.learnMore')}
           </button>
         </Link>
       </CardFooter>

@@ -1,46 +1,15 @@
 // src/components/agents/agent-filter-sidebar.tsx
 // Sidebar de filtros del marketplace — Client Component.
-// Lee los filtros activos desde props (pasados por el Server Component padre).
+// Lee filtros activos desde props (pasados por el Server Component padre).
 // Al cambiar un filtro, actualiza la URL con useRouter sin recargar la página.
+// Usa useTranslations para todos los labels de UI.
 
 'use client'
 
 import { useCallback } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import type { MarketplaceFilters } from '@/types/agents'
-
-// ── Opciones de filtro ────────────────────────────────────────────────────────
-
-const CATEGORIES = [
-  { value: 'grow-your-practice',  label: 'Grow Your Practice' },
-  { value: 'monetize-expertise',  label: 'Monetize Expertise' },
-  { value: 'find-training',       label: 'Find Training' },
-  { value: 'documentation',       label: 'Documentation' },
-  { value: 'treatment-planning',  label: 'Treatment Planning' },
-  { value: 'outcomes',            label: 'Outcomes' },
-]
-
-const LANGUAGES = [
-  { value: 'en', label: 'English' },
-  { value: 'es', label: 'Spanish' },
-  { value: 'pt', label: 'Portuguese' },
-  { value: 'fr', label: 'French' },
-  { value: 'de', label: 'German' },
-  { value: 'ar', label: 'Arabic' },
-]
-
-const PROVIDERS = [
-  { value: 'Anthropic', label: 'Anthropic' },
-  { value: 'OpenAI',    label: 'OpenAI' },
-  { value: 'Multi',     label: 'Multi-Provider' },
-]
-
-const PRICE_RANGES = [
-  { value: 'free',  label: 'Free' },
-  { value: '1-29',  label: '$1 – $29' },
-  { value: '30-59', label: '$30 – $59' },
-  { value: '60+',   label: '$60+' },
-]
 
 // ── Componente de grupo de filtros ────────────────────────────────────────────
 
@@ -86,17 +55,51 @@ function FilterGroup({ title, options, filterKey, activeValue, onSelect }: Filte
 // ── Sidebar principal ─────────────────────────────────────────────────────────
 
 interface AgentFilterSidebarProps {
-  // Filtros activos pasados desde el Server Component (basados en searchParams)
   filters: MarketplaceFilters
 }
 
 export function AgentFilterSidebar({ filters }: AgentFilterSidebarProps) {
+  const t = useTranslations('agents')
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  // Actualiza un único parámetro de filtro en la URL.
-  // value = null → elimina el filtro.
+  // Categorías con labels traducidos — valores en inglés (BD) + labels i18n
+  const CATEGORIES = [
+    { value: 'grow-your-practice',  label: t('categories.growYourPractice') },
+    { value: 'monetize-expertise',  label: t('categories.monetizeExpertise') },
+    { value: 'find-training',       label: t('categories.findTraining') },
+    { value: 'documentation',       label: t('categories.documentation') },
+    { value: 'treatment-planning',  label: t('categories.treatmentPlanning') },
+    { value: 'outcomes',            label: t('categories.outcomes') },
+  ]
+
+  // Idiomas de soporte del agente — etiquetas en el idioma de la UI
+  const LANGUAGES = [
+    { value: 'en', label: 'English' },
+    { value: 'es', label: 'Spanish' },
+    { value: 'pt', label: 'Portuguese' },
+    { value: 'fr', label: 'French' },
+    { value: 'de', label: 'German' },
+    { value: 'ar', label: 'Arabic' },
+  ]
+
+  // Proveedores de modelo — nombres propios, sin traducción
+  const PROVIDERS = [
+    { value: 'Anthropic', label: 'Anthropic' },
+    { value: 'OpenAI',    label: 'OpenAI' },
+    { value: 'Multi',     label: 'Multi-Provider' },
+  ]
+
+  // Rangos de precio — "Free" traducido, rangos numéricos universales
+  const PRICE_RANGES = [
+    { value: 'free',  label: t('card.free') },
+    { value: '1-29',  label: '$1 – $29' },
+    { value: '30-59', label: '$30 – $59' },
+    { value: '60+',   label: '$60+' },
+  ]
+
+  // Actualiza un único parámetro de filtro en la URL (null = eliminar)
   const updateFilter = useCallback(
     (key: string, value: string | null) => {
       const params = new URLSearchParams(searchParams.toString())
@@ -124,20 +127,20 @@ export function AgentFilterSidebar({ filters }: AgentFilterSidebarProps) {
     <nav aria-label="Filter agents" className="space-y-6">
       {/* Cabecera + botón limpiar */}
       <div className="flex items-center justify-between">
-        <span className="text-sm font-semibold text-neutral-900">Filters</span>
+        <span className="text-sm font-semibold text-neutral-900">{t('filters.title')}</span>
         {hasActiveFilters && (
           <button
             type="button"
             onClick={clearAll}
             className="text-xs text-blue-600 hover:underline"
           >
-            Clear all
+            {t('filters.clearAll')}
           </button>
         )}
       </div>
 
       <FilterGroup
-        title="Category"
+        title={t('filters.category')}
         options={CATEGORIES}
         filterKey="category"
         activeValue={filters.category}
@@ -145,7 +148,7 @@ export function AgentFilterSidebar({ filters }: AgentFilterSidebarProps) {
       />
 
       <FilterGroup
-        title="Language"
+        title={t('filters.language')}
         options={LANGUAGES}
         filterKey="language"
         activeValue={filters.language}
@@ -153,7 +156,7 @@ export function AgentFilterSidebar({ filters }: AgentFilterSidebarProps) {
       />
 
       <FilterGroup
-        title="Model Provider"
+        title={t('filters.modelProvider')}
         options={PROVIDERS}
         filterKey="provider"
         activeValue={filters.provider}
@@ -161,7 +164,7 @@ export function AgentFilterSidebar({ filters }: AgentFilterSidebarProps) {
       />
 
       <FilterGroup
-        title="Price Range"
+        title={t('filters.price')}
         options={PRICE_RANGES}
         filterKey="price"
         activeValue={filters.price}
