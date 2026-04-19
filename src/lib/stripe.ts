@@ -133,13 +133,18 @@ export async function createCheckoutSession({
  *
  * La cuenta Express permite a Stripe gestionar el KYC y los payouts,
  * RehabStack retiene solo el porcentaje de comisión.
+ *
+ * @param state Token CSRF que Stripe incluirá en el return_url para
+ *              validación en el callback. Generado en /api/stripe/connect.
  */
 export async function createConnectAccount({
   email,
   name,
+  state,
 }: {
   email: string;
   name: string;
+  state: string;
 }): Promise<{ accountId: string; onboardingUrl: string }> {
   const stripe = getStripe();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -157,11 +162,14 @@ export async function createConnectAccount({
     metadata: { rehabstack_user_email: email },
   });
 
+  // Incluir state en return_url para validación CSRF en el callback
+  const returnUrl = `${siteUrl}/api/stripe/connect/callback?state=${encodeURIComponent(state)}`;
+
   // Generar enlace de onboarding (expira en ~10 min, Stripe lo gestiona)
   const accountLink = await stripe.accountLinks.create({
     account: account.id,
     refresh_url: `${siteUrl}/api/stripe/connect/callback?refresh=true`,
-    return_url:  `${siteUrl}/api/stripe/connect/callback`,
+    return_url:  returnUrl,
     type: "account_onboarding",
   });
 
@@ -171,19 +179,51 @@ export async function createConnectAccount({
 /**
  * Genera un nuevo enlace de onboarding para una cuenta Connect
  * que ya existe pero no completó el proceso (ej: sesión expirada).
+ *
+ * @param state Token CSRF incluido en el return_url.
  */
-export async function createConnectAccountLink(accountId: string): Promise<string> {
+export async function createConnectAccountLink(
+  accountId: string,
+  state: string,
+): Promise<string> {
   const stripe = getStripe();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
+  const returnUrl = `${siteUrl}/api/stripe/connect/callback?state=${encodeURIComponent(state)}`;
 
   const accountLink = await stripe.accountLinks.create({
     account: accountId,
     refresh_url: `${siteUrl}/api/stripe/connect/callback?refresh=true`,
-    return_url:  `${siteUrl}/api/stripe/connect/callback`,
+    return_url:  returnUrl,
     type: "account_onboarding",
   });
 
   return accountLink.url;
+}
+
+/**
+ * Verifica si una cuenta Connect completó el onboarding en Stripe.
+ * Usar en el callback antes de promover el rol del usuario a 'creator'.
+ *
+ * @returns true si details_submitted = true en Stripe
+ */
+export async function isConnectAccountOnboarded(accountId: string): Promise<boolean> {
+  const stripe = getStripe();
+  const account = await stripe.accounts.retrieve(accountId);
+  return account.details_submitted === true;
+}
+
+/**
+ * Genera un login link de Stripe Connect Express para que el creador
+ * acceda a su dashboard de payouts en Stripe.
+ *
+ * Solo válido para cuentas Express que ya completaron el onboarding.
+ * El link expira en ~5 minutos.
+ */
+export async function createConnectLoginLink(accountId: string): Promise<string> {
+  const stripe = getStripe();
+  const link = await stripe.accounts.createLoginLink(accountId);
+  return link.url;
 }
 
 // ============================================================

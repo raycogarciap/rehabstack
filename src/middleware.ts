@@ -41,7 +41,8 @@ export async function middleware(request: NextRequest) {
 
   const isProtected =
     pathAfterLocale.startsWith('dashboard') ||
-    pathAfterLocale.startsWith('admin')
+    pathAfterLocale.startsWith('admin') ||
+    pathAfterLocale.startsWith('creator')
 
   if (isProtected && !user) {
     const loginUrl = new URL(`/${locale}/login`, request.url)
