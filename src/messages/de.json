@@ -1,0 +1,292 @@
+{
+  "nav": {
+    "agents": "Agenten",
+    "pricing": "Preise",
+    "forCreators": "Für Ersteller",
+    "showcase": "Referenzen",
+    "signIn": "Anmelden",
+    "getStarted": "Loslegen",
+    "about": "Über uns",
+    "contact": "Kontakt",
+    "docs": "Dokumentation",
+    "blog": "Blog",
+    "tagline": "KI-Agenten-Marktplatz für Rehabilitationsfachleute"
+  },
+
+  "home": {
+    "hero": {
+      "headline": "KI-Agenten für Rehabilitationsfachleute",
+      "subheadline": "Der Marktplatz für Physiotherapeuten und Rehabilitationsspezialisten",
+      "ctaBrowse": "Agenten entdecken",
+      "ctaShowcase": "Referenzen ansehen"
+    },
+    "trustBadges": {
+      "hipaa": "HIPAA-konform",
+      "clinicians": "Für Kliniker entwickelt",
+      "evidenceBased": "Evidenzbasiert",
+      "multilingual": "Mehrsprachig"
+    },
+    "featuredAgents": {
+      "title": "Ausgewählte Agenten",
+      "learnMore": "Mehr erfahren"
+    },
+    "showcase": {
+      "title": "Referenzen der Praktiker"
+    },
+    "socialProof": {
+      "join": "Schließen Sie sich Tausenden von Rehabilitationsfachleuten an",
+      "stats": {
+        "agents": "KI-Agenten",
+        "specialties": "Fachgebiete",
+        "languages": "Sprachen",
+        "satisfaction": "Zufriedenheit"
+      }
+    },
+    "finalCta": {
+      "title": "Bereit, Ihre Praxis zu transformieren?",
+      "subtitle": "Starten Sie noch heute Ihre kostenlose Testversion.",
+      "button": "Kostenlos loslegen"
+    }
+  },
+
+  "agents": {
+    "metaTitle": "KI-Agenten für Rehabilitationsfachleute | RehabStack",
+    "metaDescription": "Entdecken Sie KI-Agenten für Physiotherapeuten, Ergotherapeuten und Rehabilitationsfachleute.",
+    "title": "KI-Agenten für Rehabilitationsfachleute",
+    "subtitle": "Entdecken Sie KI-Agenten, die speziell für Physiotherapie und Rehabilitation entwickelt wurden.",
+    "searchPlaceholder": "Agenten suchen…",
+    "found": "{count, plural, one {# Agent gefunden} other {# Agenten gefunden}}",
+    "filters": {
+      "category": "Kategorie",
+      "language": "Sprache",
+      "modelProvider": "Modellanbieter",
+      "price": "Preis"
+    },
+    "categories": {
+      "growYourPractice": "Praxis ausbauen",
+      "monetizeExpertise": "Expertise monetarisieren",
+      "findTraining": "Weiterbildung finden",
+      "documentation": "Dokumentation",
+      "treatmentPlanning": "Behandlungsplanung",
+      "outcomes": "Ergebnisse"
+    },
+    "card": {
+      "learnMore": "Mehr erfahren",
+      "noReviews": "Noch keine Bewertungen",
+      "perMonth": "/Monat",
+      "verified": "Verifiziert",
+      "free": "Kostenlos"
+    },
+    "empty": {
+      "title": "Keine Agenten gefunden",
+      "subtitle": "Versuchen Sie, die Filter oder Suchanfrage anzupassen.",
+      "reset": "Filter zurücksetzen"
+    },
+    "allAgents": "Alle Agenten",
+    "detail": {
+      "about": "Über diesen Agenten",
+      "quickActions": "Schnellaktionen",
+      "quickActionsSubtitle": "Starten Sie diese Aktionen direkt aus Ihrem Dashboard.",
+      "languages": "Unterstützte Sprachen",
+      "modelProvider": "Modellanbieter",
+      "poweredBy": "Betrieben von {provider}.",
+      "supportedModels": "Unterstützte Modelle: {models}.",
+      "reviews": "Bewertungen",
+      "noReviews": "Noch keine verifizierten Bewertungen. Seien Sie der Erste.",
+      "reviewsCount": "{count, plural, one {Basierend auf # verifizierten Bewertung} other {Basierend auf # verifizierten Bewertungen}}",
+      "subscribeNow": "Jetzt abonnieren",
+      "tryDemo": "Demo ausprobieren",
+      "supportsTeam": "✓ Unterstützt Team-Delegation",
+      "complianceVerified": "Compliance verifiziert",
+      "free": "Kostenlos",
+      "perMonth": "/Monat"
+    }
+  },
+
+  "pricing": {
+    "metaTitle": "Preise | RehabStack",
+    "metaDescription": "Einfache, transparente Preise für KI-Agenten in Physiotherapie und Rehabilitation. 14 Tage kostenlos.",
+    "title": "Einfache, transparente Preise",
+    "subtitle": "14 Tage kostenlos. Keine Verträge. Jederzeit kündbar.",
+    "mostPopular": "Am Beliebtesten",
+    "period": "/Monat",
+    "starter": {
+      "name": "Starter",
+      "tagline": "Ideal für Einzelpraktiker",
+      "cta": "Loslegen",
+      "features": [
+        "1 KI-Agent",
+        "200 Sitzungen / Monat",
+        "E-Mail-Support",
+        "Grundlegende Analysen",
+        "Alle Fachgebiete"
+      ]
+    },
+    "professional": {
+      "name": "Professional",
+      "tagline": "Für wachsende Praxen",
+      "cta": "Loslegen",
+      "features": [
+        "3 KI-Agenten",
+        "500 Sitzungen / Monat",
+        "Prioritätssupport",
+        "Erweiterte Analysen",
+        "Teamzusammenarbeit (2 Plätze)",
+        "Alle Fachgebiete",
+        "Benutzerdefinierte Agenteneinstellungen"
+      ]
+    },
+    "clinic": {
+      "name": "Clinic",
+      "tagline": "Für Kliniken und Gruppenpraxen",
+      "cta": "Kontakt aufnehmen",
+      "features": [
+        "Unbegrenzte KI-Agenten",
+        "Unbegrenzte Sitzungen",
+        "Dedizierter Support",
+        "Vollständige Analyse-Suite",
+        "Unbegrenzte Teamplätze",
+        "Alle Fachgebiete",
+        "White-Label-Optionen",
+        "API-Zugang"
+      ]
+    },
+    "faq": {
+      "title": "Häufig gestellte Fragen",
+      "q1": "Kann ich jederzeit kündigen?",
+      "a1": "Ja. Kündigen Sie jederzeit — keine Verträge, keine Kündigungsgebühren. Der Zugang bleibt bis zum Ende des Abrechnungszeitraums bestehen.",
+      "q2": "Gibt es eine kostenlose Testversion?",
+      "a2": "Alle Pläne beinhalten eine 14-tägige kostenlose Testversion. Keine Kreditkarte erforderlich.",
+      "q3": "Welche Fachgebiete werden unterstützt?",
+      "a3": "Alle Rehabilitationsfachgebiete: Physiotherapie, Ergotherapie, Sportrehabilitation, neurologische Rehabilitation, pädiatrische Physiotherapie und mehr.",
+      "q4": "Kann ich den Plan wechseln?",
+      "a4": "Ja. Wechseln Sie jederzeit über Ihre Abrechnungseinstellungen. Änderungen treten im nächsten Abrechnungszyklus in Kraft.",
+      "q5": "Sind meine Daten sicher?",
+      "a5": "RehabStack basiert auf HIPAA-konformer Infrastruktur. Alle Daten werden bei der Übertragung und Speicherung verschlüsselt. Patientendaten werden niemals weitergegeben."
+    }
+  },
+
+  "auth": {
+    "login": {
+      "metaTitle": "Anmelden | RehabStack",
+      "metaDescription": "Melden Sie sich bei Ihrem RehabStack-Konto an.",
+      "title": "Anmelden",
+      "subtitle": "Geben Sie Ihre E-Mail und Ihr Passwort ein, um auf Ihr Konto zuzugreifen.",
+      "email": "E-Mail",
+      "emailPlaceholder": "sie@beispiel.com",
+      "password": "Passwort",
+      "passwordPlaceholder": "••••••••",
+      "submit": "Anmelden",
+      "noAccount": "Noch kein Konto?",
+      "createOne": "Eines erstellen",
+      "or": "oder",
+      "magicLink": "Mit Magic Link anmelden",
+      "magicLinkSubtitle": "Wir senden Ihnen einen direkten Anmelde-Link — kein Passwort erforderlich.",
+      "sendMagicLink": "Magic Link senden",
+      "magicEmailPlaceholder": "sie@beispiel.com",
+      "checkEmail": "Überprüfen Sie Ihren Posteingang — der Magic Link ist unterwegs!"
+    },
+    "register": {
+      "metaTitle": "Konto erstellen | RehabStack",
+      "metaDescription": "Treten Sie RehabStack bei — dem KI-Agenten-Marktplatz für Rehabilitationsfachleute.",
+      "title": "Konto erstellen",
+      "subtitle": "Treten Sie dem Marktplatz für Rehabilitationsfachleute bei.",
+      "email": "E-Mail",
+      "emailPlaceholder": "sie@klinik.com",
+      "password": "Passwort",
+      "passwordPlaceholder": "Min. 8 Zeichen",
+      "name": "Vollständiger Name",
+      "namePlaceholder": "Dr. Maria Müller",
+      "specialty": "Fachgebiet",
+      "specialtyPlaceholder": "Wählen Sie Ihr Fachgebiet",
+      "language": "Bevorzugte Sprache",
+      "languagePlaceholder": "Sprache auswählen",
+      "submit": "Konto erstellen",
+      "hasAccount": "Haben Sie bereits ein Konto?",
+      "signIn": "Anmelden",
+      "checkEmailTitle": "Überprüfen Sie Ihre E-Mail",
+      "checkEmailSubtitle": "Wir haben Ihnen einen Bestätigungslink gesendet. Klicken Sie darauf, um Ihr Konto zu aktivieren.",
+      "almostThere": "Fast geschafft!",
+      "almostThereDesc": "Öffnen Sie Ihren Posteingang und klicken Sie auf den Link, um Ihre Registrierung abzuschließen. Der Link läuft nach 24 Stunden ab.",
+      "alreadyConfirmed": "Bereits bestätigt?"
+    },
+    "specialties": {
+      "physicalTherapy": "Physiotherapie",
+      "occupationalTherapy": "Ergotherapie",
+      "speechTherapy": "Logopädie",
+      "athleticTraining": "Sporttraining",
+      "chiropractic": "Chiropraktik",
+      "massageTherapy": "Massagetherapie",
+      "other": "Sonstiges"
+    }
+  },
+
+  "dashboard": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "myAgents": "Meine Agenten",
+      "showcase": "Referenzen",
+      "settings": "Einstellungen",
+      "signOut": "Abmelden"
+    },
+    "home": {
+      "metaTitle": "Dashboard | RehabStack",
+      "metaDescription": "Ihr RehabStack-Dashboard — verwalten Sie Agenten, Sitzungen und Referenzen.",
+      "welcome": "Willkommen zurück, {name}!",
+      "overview": "Hier ist eine Übersicht Ihrer RehabStack-Aktivität.",
+      "activeAgents": "Aktive Agenten",
+      "activeAgentsDesc": "Agenten derzeit in Verwendung",
+      "sessionsMonth": "Sitzungen diesen Monat",
+      "sessionsMonthDesc": "Gestartete KI-Gespräche",
+      "showcaseViews": "Referenz-Aufrufe",
+      "showcaseViewsDesc": "Profilaufrufe diesen Monat",
+      "completeProfile": "Profil vervollständigen",
+      "completeProfileDesc": "Fügen Sie Ihr Fachgebiet hinzu, um personalisierte Agentenempfehlungen zu erhalten.",
+      "goToSettings": "Zu den Einstellungen",
+      "exploreMarketplace": "Marktplatz erkunden",
+      "exploreMarketplaceDesc": "Entdecken Sie KI-Agenten, die speziell für Rehabilitationsfachleute entwickelt wurden.",
+      "browseAgents": "Agenten durchsuchen"
+    },
+    "agents": {
+      "metaTitle": "Meine Agenten | RehabStack",
+      "metaDescription": "Verwalten Sie Ihre abonnierten KI-Agenten.",
+      "title": "Meine Agenten",
+      "subtitle": "Verwalten und interagieren Sie mit Ihren abonnierten KI-Agenten.",
+      "empty": "Noch keine Agenten",
+      "emptyDesc": "Abonnieren Sie einen KI-Agenten vom Marktplatz, um loszulegen.",
+      "browseMarketplace": "Marktplatz durchsuchen",
+      "openDashboard": "Dashboard öffnen",
+      "dev": "Entwicklung",
+      "openMock": "Test-Agent öffnen →"
+    },
+    "workspace": {
+      "metaTitle": "Agenten-Arbeitsbereich | RehabStack",
+      "startConversation": "Starten Sie ein Gespräch oder verwenden Sie eine Schnellaktion.",
+      "sendMessage": "Nachricht…",
+      "initializing": "Sitzung wird initialisiert…",
+      "keyboardHint": "Enter zum Senden · Shift+Enter für neue Zeile",
+      "copy": "Kopieren",
+      "copied": "Kopiert!",
+      "retry": "Erneut versuchen",
+      "errorSession": "Sitzung konnte nicht gestartet werden. Bitte laden Sie die Seite neu."
+    }
+  },
+
+  "common": {
+    "loading": "Lädt…",
+    "error": "Ein Fehler ist aufgetreten.",
+    "retry": "Erneut versuchen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "comingSoon": "Dieser Bereich ist demnächst verfügbar.",
+    "learnMore": "Mehr erfahren",
+    "getStarted": "Loslegen",
+    "contactUs": "Kontaktieren Sie uns",
+    "or": "oder",
+    "perMonth": "/Monat",
+    "free": "Kostenlos",
+    "copyright": "© {year} Soulistica LLC · DBA RehabStack"
+  }
+}

@@ -1,0 +1,292 @@
+{
+  "nav": {
+    "agents": "Agents",
+    "pricing": "Pricing",
+    "forCreators": "For Creators",
+    "showcase": "Showcase",
+    "signIn": "Sign in",
+    "getStarted": "Get started",
+    "about": "About",
+    "contact": "Contact",
+    "docs": "Docs",
+    "blog": "Blog",
+    "tagline": "AI Agent Marketplace for Rehab Professionals"
+  },
+
+  "home": {
+    "hero": {
+      "headline": "AI Agents for Rehab Professionals",
+      "subheadline": "The marketplace for physical therapists and rehabilitation specialists",
+      "ctaBrowse": "Browse Agents",
+      "ctaShowcase": "View Showcase"
+    },
+    "trustBadges": {
+      "hipaa": "HIPAA-Aware",
+      "clinicians": "Built for Clinicians",
+      "evidenceBased": "Evidence-Based",
+      "multilingual": "Multilingual"
+    },
+    "featuredAgents": {
+      "title": "Featured Agents",
+      "learnMore": "Learn more"
+    },
+    "showcase": {
+      "title": "Practitioner Showcase"
+    },
+    "socialProof": {
+      "join": "Join thousands of rehabilitation professionals",
+      "stats": {
+        "agents": "AI Agents",
+        "specialties": "Specialties",
+        "languages": "Languages",
+        "satisfaction": "Satisfaction"
+      }
+    },
+    "finalCta": {
+      "title": "Ready to transform your practice?",
+      "subtitle": "Start your free trial today.",
+      "button": "Get started free"
+    }
+  },
+
+  "agents": {
+    "metaTitle": "AI Agents for Rehab Professionals | RehabStack",
+    "metaDescription": "Browse AI agents built for physical therapists, occupational therapists, and rehabilitation professionals. Filter by specialty, language, and price.",
+    "title": "AI Agents for Rehab Professionals",
+    "subtitle": "Discover AI agents built specifically for physical therapy and rehabilitation.",
+    "searchPlaceholder": "Search agents…",
+    "found": "{count, plural, one {# agent found} other {# agents found}}",
+    "filters": {
+      "category": "Category",
+      "language": "Language",
+      "modelProvider": "Model Provider",
+      "price": "Price"
+    },
+    "categories": {
+      "growYourPractice": "Grow Your Practice",
+      "monetizeExpertise": "Monetize Expertise",
+      "findTraining": "Find Training",
+      "documentation": "Documentation",
+      "treatmentPlanning": "Treatment Planning",
+      "outcomes": "Outcomes"
+    },
+    "card": {
+      "learnMore": "Learn More",
+      "noReviews": "No reviews yet",
+      "perMonth": "/month",
+      "verified": "Verified",
+      "free": "Free"
+    },
+    "empty": {
+      "title": "No agents found",
+      "subtitle": "Try adjusting your filters or search query.",
+      "reset": "Reset filters"
+    },
+    "allAgents": "All Agents",
+    "detail": {
+      "about": "About this agent",
+      "quickActions": "Quick Actions",
+      "quickActionsSubtitle": "Launch these actions directly from your dashboard.",
+      "languages": "Supported Languages",
+      "modelProvider": "Model Provider",
+      "poweredBy": "Powered by {provider}.",
+      "supportedModels": "Supported models: {models}.",
+      "reviews": "Reviews",
+      "noReviews": "No verified reviews yet. Be the first to leave a review.",
+      "reviewsCount": "{count, plural, one {Based on # verified review} other {Based on # verified reviews}}",
+      "subscribeNow": "Subscribe Now",
+      "tryDemo": "Try Demo",
+      "supportsTeam": "✓ Supports team delegation",
+      "complianceVerified": "Compliance Verified",
+      "free": "Free",
+      "perMonth": "/month"
+    }
+  },
+
+  "pricing": {
+    "metaTitle": "Pricing | RehabStack",
+    "metaDescription": "Simple, transparent pricing for AI agents built for physical therapy and rehabilitation professionals. Start free for 14 days.",
+    "title": "Simple, transparent pricing",
+    "subtitle": "Start free for 14 days. No contracts. Cancel anytime.",
+    "mostPopular": "Most Popular",
+    "period": "/month",
+    "starter": {
+      "name": "Starter",
+      "tagline": "Perfect for individual practitioners",
+      "cta": "Get Started",
+      "features": [
+        "1 AI Agent",
+        "200 sessions / month",
+        "Email support",
+        "Basic analytics",
+        "All specialties"
+      ]
+    },
+    "professional": {
+      "name": "Professional",
+      "tagline": "For growing practices",
+      "cta": "Get Started",
+      "features": [
+        "3 AI Agents",
+        "500 sessions / month",
+        "Priority support",
+        "Advanced analytics",
+        "Team collaboration (2 seats)",
+        "All specialties",
+        "Custom agent settings"
+      ]
+    },
+    "clinic": {
+      "name": "Clinic",
+      "tagline": "For clinics and group practices",
+      "cta": "Contact Us",
+      "features": [
+        "Unlimited AI Agents",
+        "Unlimited sessions",
+        "Dedicated support",
+        "Full analytics suite",
+        "Unlimited team seats",
+        "All specialties",
+        "White-label options",
+        "API access"
+      ]
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "q1": "Can I cancel anytime?",
+      "a1": "Yes. Cancel whenever you want — no contracts, no cancellation fees. You keep access until the end of the billing period.",
+      "q2": "Is there a free trial?",
+      "a2": "All plans include a 14-day free trial. No credit card required to start.",
+      "q3": "What specialties are supported?",
+      "a3": "All rehabilitation specialties: physical therapy, occupational therapy, sports rehab, neurological rehab, pediatric PT, and more.",
+      "q4": "Can I switch plans?",
+      "a4": "Yes. Upgrade or downgrade at any time from your billing settings. Changes take effect at the next billing cycle.",
+      "q5": "Is my data secure?",
+      "a5": "RehabStack is built with HIPAA-aware infrastructure. All data is encrypted in transit and at rest. We never share patient data."
+    }
+  },
+
+  "auth": {
+    "login": {
+      "metaTitle": "Sign In | RehabStack",
+      "metaDescription": "Sign in to your RehabStack account.",
+      "title": "Sign in",
+      "subtitle": "Enter your email and password to access your account.",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "••••••••",
+      "submit": "Sign in",
+      "noAccount": "Don't have an account?",
+      "createOne": "Create one",
+      "or": "or",
+      "magicLink": "Sign in with a magic link",
+      "magicLinkSubtitle": "We'll send you a one-click login link — no password needed.",
+      "sendMagicLink": "Send magic link",
+      "magicEmailPlaceholder": "you@example.com",
+      "checkEmail": "Check your inbox — the magic link is on its way!"
+    },
+    "register": {
+      "metaTitle": "Create Account | RehabStack",
+      "metaDescription": "Join RehabStack — the AI agent marketplace for rehabilitation professionals.",
+      "title": "Create your account",
+      "subtitle": "Join the marketplace for rehabilitation professionals.",
+      "email": "Email",
+      "emailPlaceholder": "you@clinic.com",
+      "password": "Password",
+      "passwordPlaceholder": "Min. 8 characters",
+      "name": "Full name",
+      "namePlaceholder": "Dr. Jane Smith",
+      "specialty": "Specialty",
+      "specialtyPlaceholder": "Select your specialty",
+      "language": "Preferred language",
+      "languagePlaceholder": "Select language",
+      "submit": "Create account",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "checkEmailTitle": "Check your email",
+      "checkEmailSubtitle": "We've sent you a confirmation link. Click it to activate your account.",
+      "almostThere": "Almost there!",
+      "almostThereDesc": "Open your inbox and click the link to complete your registration. The link expires in 24 hours.",
+      "alreadyConfirmed": "Already confirmed?"
+    },
+    "specialties": {
+      "physicalTherapy": "Physical Therapy",
+      "occupationalTherapy": "Occupational Therapy",
+      "speechTherapy": "Speech Therapy",
+      "athleticTraining": "Athletic Training",
+      "chiropractic": "Chiropractic",
+      "massageTherapy": "Massage Therapy",
+      "other": "Other"
+    }
+  },
+
+  "dashboard": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "myAgents": "My Agents",
+      "showcase": "Showcase",
+      "settings": "Settings",
+      "signOut": "Sign out"
+    },
+    "home": {
+      "metaTitle": "Dashboard | RehabStack",
+      "metaDescription": "Your RehabStack dashboard — manage agents, sessions, and showcases.",
+      "welcome": "Welcome back, {name}!",
+      "overview": "Here's an overview of your RehabStack activity.",
+      "activeAgents": "Active Agents",
+      "activeAgentsDesc": "Agents currently in use",
+      "sessionsMonth": "Sessions This Month",
+      "sessionsMonthDesc": "AI conversations started",
+      "showcaseViews": "Showcase Views",
+      "showcaseViewsDesc": "Profile views this month",
+      "completeProfile": "Complete your profile",
+      "completeProfileDesc": "Add your specialty to get personalized agent recommendations.",
+      "goToSettings": "Go to Settings",
+      "exploreMarketplace": "Explore the Marketplace",
+      "exploreMarketplaceDesc": "Discover AI agents built specifically for rehabilitation professionals.",
+      "browseAgents": "Browse Agents"
+    },
+    "agents": {
+      "metaTitle": "My Agents | RehabStack",
+      "metaDescription": "Manage your subscribed AI agents.",
+      "title": "My Agents",
+      "subtitle": "Manage and interact with your subscribed AI agents.",
+      "empty": "No agents yet",
+      "emptyDesc": "Subscribe to an AI agent from the marketplace to get started.",
+      "browseMarketplace": "Browse Marketplace",
+      "openDashboard": "Open Dashboard",
+      "dev": "Development",
+      "openMock": "Open Mock Agent →"
+    },
+    "workspace": {
+      "metaTitle": "Agent Workspace | RehabStack",
+      "startConversation": "Start a conversation or use a Quick Action below.",
+      "sendMessage": "Message…",
+      "initializing": "Initializing session…",
+      "keyboardHint": "Enter to send · Shift+Enter for new line",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "retry": "Retry",
+      "errorSession": "Failed to initialize session. Please refresh the page."
+    }
+  },
+
+  "common": {
+    "loading": "Loading…",
+    "error": "An error occurred.",
+    "retry": "Retry",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "next": "Next",
+    "comingSoon": "This section is coming soon.",
+    "learnMore": "Learn more",
+    "getStarted": "Get started",
+    "contactUs": "Contact us",
+    "or": "or",
+    "perMonth": "/month",
+    "free": "Free",
+    "copyright": "© {year} Soulistica LLC · DBA RehabStack"
+  }
+}

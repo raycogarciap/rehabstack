@@ -1,0 +1,292 @@
+{
+  "nav": {
+    "agents": "Agentes",
+    "pricing": "Precios",
+    "forCreators": "Para Creadores",
+    "showcase": "Portafolios",
+    "signIn": "Iniciar sesión",
+    "getStarted": "Comenzar",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "docs": "Documentación",
+    "blog": "Blog",
+    "tagline": "Marketplace de Agentes IA para Profesionales de Rehabilitación"
+  },
+
+  "home": {
+    "hero": {
+      "headline": "Agentes IA para Profesionales de Rehabilitación",
+      "subheadline": "El marketplace para fisioterapeutas y especialistas en rehabilitación",
+      "ctaBrowse": "Explorar Agentes",
+      "ctaShowcase": "Ver Portafolios"
+    },
+    "trustBadges": {
+      "hipaa": "Compatible con HIPAA",
+      "clinicians": "Diseñado para Clínicos",
+      "evidenceBased": "Basado en Evidencia",
+      "multilingual": "Multilingüe"
+    },
+    "featuredAgents": {
+      "title": "Agentes Destacados",
+      "learnMore": "Saber más"
+    },
+    "showcase": {
+      "title": "Portafolios de Profesionales"
+    },
+    "socialProof": {
+      "join": "Únete a miles de profesionales de rehabilitación",
+      "stats": {
+        "agents": "Agentes IA",
+        "specialties": "Especialidades",
+        "languages": "Idiomas",
+        "satisfaction": "Satisfacción"
+      }
+    },
+    "finalCta": {
+      "title": "¿Listo para transformar tu práctica?",
+      "subtitle": "Comienza tu prueba gratuita hoy.",
+      "button": "Comenzar gratis"
+    }
+  },
+
+  "agents": {
+    "metaTitle": "Agentes IA para Profesionales de Rehabilitación | RehabStack",
+    "metaDescription": "Explora agentes IA para fisioterapeutas, terapeutas ocupacionales y profesionales de rehabilitación.",
+    "title": "Agentes IA para Profesionales de Rehabilitación",
+    "subtitle": "Descubre agentes IA diseñados específicamente para fisioterapia y rehabilitación.",
+    "searchPlaceholder": "Buscar agentes…",
+    "found": "{count, plural, one {# agente encontrado} other {# agentes encontrados}}",
+    "filters": {
+      "category": "Categoría",
+      "language": "Idioma",
+      "modelProvider": "Proveedor de Modelo",
+      "price": "Precio"
+    },
+    "categories": {
+      "growYourPractice": "Hacer Crecer tu Práctica",
+      "monetizeExpertise": "Monetizar Experiencia",
+      "findTraining": "Encontrar Formación",
+      "documentation": "Documentación",
+      "treatmentPlanning": "Planificación de Tratamiento",
+      "outcomes": "Resultados"
+    },
+    "card": {
+      "learnMore": "Saber Más",
+      "noReviews": "Sin reseñas aún",
+      "perMonth": "/mes",
+      "verified": "Verificado",
+      "free": "Gratis"
+    },
+    "empty": {
+      "title": "No se encontraron agentes",
+      "subtitle": "Intenta ajustar los filtros o la búsqueda.",
+      "reset": "Restablecer filtros"
+    },
+    "allAgents": "Todos los Agentes",
+    "detail": {
+      "about": "Sobre este agente",
+      "quickActions": "Acciones Rápidas",
+      "quickActionsSubtitle": "Lanza estas acciones directamente desde tu panel.",
+      "languages": "Idiomas Soportados",
+      "modelProvider": "Proveedor de Modelo",
+      "poweredBy": "Desarrollado por {provider}.",
+      "supportedModels": "Modelos soportados: {models}.",
+      "reviews": "Reseñas",
+      "noReviews": "Aún no hay reseñas verificadas. Sé el primero en dejar una.",
+      "reviewsCount": "{count, plural, one {Basado en # reseña verificada} other {Basado en # reseñas verificadas}}",
+      "subscribeNow": "Suscribirse Ahora",
+      "tryDemo": "Probar Demo",
+      "supportsTeam": "✓ Soporta delegación de equipo",
+      "complianceVerified": "Cumplimiento Verificado",
+      "free": "Gratis",
+      "perMonth": "/mes"
+    }
+  },
+
+  "pricing": {
+    "metaTitle": "Precios | RehabStack",
+    "metaDescription": "Precios simples y transparentes para agentes IA de fisioterapia y rehabilitación. Comienza gratis 14 días.",
+    "title": "Precios simples y transparentes",
+    "subtitle": "Comienza gratis 14 días. Sin contratos. Cancela cuando quieras.",
+    "mostPopular": "Más Popular",
+    "period": "/mes",
+    "starter": {
+      "name": "Starter",
+      "tagline": "Perfecto para profesionales individuales",
+      "cta": "Comenzar",
+      "features": [
+        "1 Agente IA",
+        "200 sesiones / mes",
+        "Soporte por email",
+        "Analíticas básicas",
+        "Todas las especialidades"
+      ]
+    },
+    "professional": {
+      "name": "Professional",
+      "tagline": "Para prácticas en crecimiento",
+      "cta": "Comenzar",
+      "features": [
+        "3 Agentes IA",
+        "500 sesiones / mes",
+        "Soporte prioritario",
+        "Analíticas avanzadas",
+        "Colaboración en equipo (2 asientos)",
+        "Todas las especialidades",
+        "Configuración personalizada de agentes"
+      ]
+    },
+    "clinic": {
+      "name": "Clinic",
+      "tagline": "Para clínicas y grupos de práctica",
+      "cta": "Contáctanos",
+      "features": [
+        "Agentes IA ilimitados",
+        "Sesiones ilimitadas",
+        "Soporte dedicado",
+        "Suite completa de analíticas",
+        "Asientos de equipo ilimitados",
+        "Todas las especialidades",
+        "Opciones de marca blanca",
+        "Acceso a API"
+      ]
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "q1": "¿Puedo cancelar en cualquier momento?",
+      "a1": "Sí. Cancela cuando quieras — sin contratos, sin cargos por cancelación. Mantienes el acceso hasta el final del período de facturación.",
+      "q2": "¿Hay una prueba gratuita?",
+      "a2": "Todos los planes incluyen una prueba gratuita de 14 días. No se requiere tarjeta de crédito para comenzar.",
+      "q3": "¿Qué especialidades están soportadas?",
+      "a3": "Todas las especialidades de rehabilitación: fisioterapia, terapia ocupacional, rehabilitación deportiva, rehabilitación neurológica, fisioterapia pediátrica y más.",
+      "q4": "¿Puedo cambiar de plan?",
+      "a4": "Sí. Sube o baja de plan en cualquier momento desde tu configuración de facturación. Los cambios tienen efecto en el siguiente ciclo.",
+      "q5": "¿Están seguros mis datos?",
+      "a5": "RehabStack está construido con infraestructura compatible con HIPAA. Todos los datos están cifrados en tránsito y en reposo. Nunca compartimos datos de pacientes."
+    }
+  },
+
+  "auth": {
+    "login": {
+      "metaTitle": "Iniciar Sesión | RehabStack",
+      "metaDescription": "Inicia sesión en tu cuenta de RehabStack.",
+      "title": "Iniciar sesión",
+      "subtitle": "Introduce tu email y contraseña para acceder a tu cuenta.",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "tu@ejemplo.com",
+      "password": "Contraseña",
+      "passwordPlaceholder": "••••••••",
+      "submit": "Iniciar sesión",
+      "noAccount": "¿No tienes cuenta?",
+      "createOne": "Créala aquí",
+      "or": "o",
+      "magicLink": "Iniciar sesión con enlace mágico",
+      "magicLinkSubtitle": "Te enviaremos un enlace de acceso directo — sin contraseña.",
+      "sendMagicLink": "Enviar enlace mágico",
+      "magicEmailPlaceholder": "tu@ejemplo.com",
+      "checkEmail": "Revisa tu bandeja de entrada — ¡el enlace mágico está en camino!"
+    },
+    "register": {
+      "metaTitle": "Crear Cuenta | RehabStack",
+      "metaDescription": "Únete a RehabStack — el marketplace de agentes IA para profesionales de rehabilitación.",
+      "title": "Crea tu cuenta",
+      "subtitle": "Únete al marketplace para profesionales de rehabilitación.",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "tu@clinica.com",
+      "password": "Contraseña",
+      "passwordPlaceholder": "Mín. 8 caracteres",
+      "name": "Nombre completo",
+      "namePlaceholder": "Dr. Juan García",
+      "specialty": "Especialidad",
+      "specialtyPlaceholder": "Selecciona tu especialidad",
+      "language": "Idioma preferido",
+      "languagePlaceholder": "Selecciona idioma",
+      "submit": "Crear cuenta",
+      "hasAccount": "¿Ya tienes cuenta?",
+      "signIn": "Iniciar sesión",
+      "checkEmailTitle": "Revisa tu correo",
+      "checkEmailSubtitle": "Te hemos enviado un enlace de confirmación. Haz clic para activar tu cuenta.",
+      "almostThere": "¡Casi listo!",
+      "almostThereDesc": "Abre tu bandeja de entrada y haz clic en el enlace para completar tu registro. El enlace expira en 24 horas.",
+      "alreadyConfirmed": "¿Ya confirmaste?"
+    },
+    "specialties": {
+      "physicalTherapy": "Fisioterapia",
+      "occupationalTherapy": "Terapia Ocupacional",
+      "speechTherapy": "Logopedia",
+      "athleticTraining": "Entrenamiento Deportivo",
+      "chiropractic": "Quiropráctica",
+      "massageTherapy": "Masoterapia",
+      "other": "Otra"
+    }
+  },
+
+  "dashboard": {
+    "nav": {
+      "dashboard": "Panel",
+      "myAgents": "Mis Agentes",
+      "showcase": "Portafolio",
+      "settings": "Configuración",
+      "signOut": "Cerrar sesión"
+    },
+    "home": {
+      "metaTitle": "Panel | RehabStack",
+      "metaDescription": "Tu panel de RehabStack — gestiona agentes, sesiones y portafolios.",
+      "welcome": "¡Bienvenido de nuevo, {name}!",
+      "overview": "Aquí tienes un resumen de tu actividad en RehabStack.",
+      "activeAgents": "Agentes Activos",
+      "activeAgentsDesc": "Agentes en uso actualmente",
+      "sessionsMonth": "Sesiones Este Mes",
+      "sessionsMonthDesc": "Conversaciones IA iniciadas",
+      "showcaseViews": "Vistas del Portafolio",
+      "showcaseViewsDesc": "Vistas del perfil este mes",
+      "completeProfile": "Completa tu perfil",
+      "completeProfileDesc": "Añade tu especialidad para obtener recomendaciones de agentes personalizadas.",
+      "goToSettings": "Ir a Configuración",
+      "exploreMarketplace": "Explorar el Marketplace",
+      "exploreMarketplaceDesc": "Descubre agentes IA diseñados específicamente para profesionales de rehabilitación.",
+      "browseAgents": "Explorar Agentes"
+    },
+    "agents": {
+      "metaTitle": "Mis Agentes | RehabStack",
+      "metaDescription": "Gestiona tus agentes IA suscritos.",
+      "title": "Mis Agentes",
+      "subtitle": "Gestiona e interactúa con tus agentes IA suscritos.",
+      "empty": "Aún no tienes agentes",
+      "emptyDesc": "Suscríbete a un agente IA desde el marketplace para comenzar.",
+      "browseMarketplace": "Explorar Marketplace",
+      "openDashboard": "Abrir Panel",
+      "dev": "Desarrollo",
+      "openMock": "Abrir Agente de Prueba →"
+    },
+    "workspace": {
+      "metaTitle": "Workspace del Agente | RehabStack",
+      "startConversation": "Inicia una conversación o usa una Acción Rápida.",
+      "sendMessage": "Mensaje…",
+      "initializing": "Iniciando sesión…",
+      "keyboardHint": "Enter para enviar · Shift+Enter para nueva línea",
+      "copy": "Copiar",
+      "copied": "¡Copiado!",
+      "retry": "Reintentar",
+      "errorSession": "Error al iniciar la sesión. Por favor, recarga la página."
+    }
+  },
+
+  "common": {
+    "loading": "Cargando…",
+    "error": "Ha ocurrido un error.",
+    "retry": "Reintentar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "comingSoon": "Esta sección estará disponible próximamente.",
+    "learnMore": "Saber más",
+    "getStarted": "Comenzar",
+    "contactUs": "Contáctanos",
+    "or": "o",
+    "perMonth": "/mes",
+    "free": "Gratis",
+    "copyright": "© {year} Soulistica LLC · DBA RehabStack"
+  }
+}
