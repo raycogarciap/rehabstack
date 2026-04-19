@@ -4,9 +4,8 @@
 // Inicia el proceso de onboarding de Stripe Connect Express para creadores.
 //
 // Seguridad:
-//   - Requiere autenticación.
-//   - Requiere una aplicación de creador con status='approved' en la tabla
-//     creator_applications. Impide que usuarios comunes creen cuentas Connect.
+//   - Requiere autenticación. Cualquier usuario autenticado puede iniciar
+//     el onboarding de Stripe Connect y convertirse en creator.
 //   - Genera un token de estado (CSRF) guardado en cookie httpOnly. El callback
 //     valida este token antes de promover el rol del usuario a 'creator'.
 //
@@ -33,35 +32,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "No autorizado." }, { status: 401 });
   }
 
-  // ── 2. Verificar que existe una aplicación de creador aprobada ────────────
-  // Solo usuarios con creator_applications.status = 'approved' pueden iniciar
-  // el onboarding de Stripe Connect. Impide auto-promoción de rol.
-  const { data: application, error: appError } = await supabase
-    .from("creator_applications")
-    .select("status")
-    .eq("email", user.email)
-    .maybeSingle();
-
-  if (appError) {
-    console.error("[connect] Error al verificar aplicación:", appError.message);
-    return NextResponse.json(
-      { error: "Error al verificar el estado de tu aplicación." },
-      { status: 500 }
-    );
-  }
-
-  if (!application || application.status !== "approved") {
-    return NextResponse.json(
-      {
-        error:
-          "Tu aplicación como creador no ha sido aprobada aún. " +
-          "Recibirás un email cuando sea revisada.",
-      },
-      { status: 403 }
-    );
-  }
-
-  // ── 3. Obtener perfil del usuario ─────────────────────────────────────────
+  // ── 2. Obtener perfil del usuario ─────────────────────────────────────────
   const { data: profile, error: profileError } = await supabase
     .from("users")
     .select("email, name, stripe_connect_id")
