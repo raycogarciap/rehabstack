@@ -1,12 +1,8 @@
 // Middleware de Next.js — Edge Runtime.
 // Combina next-intl (locale routing) con Supabase (auth).
 //
-// MIGRACIÓN PARCIAL — estado actual:
-//   ✅ Migradas a [locale]: login, register, pricing, agents
-//   ⏳ Pendientes:          dashboard, workspace, admin
-//
-// Las rutas pendientes utilizan el bloque UNMIGRATED para evitar 404
-// hasta que sean movidas al directorio [locale] en el siguiente paso.
+// Todas las páginas públicas y privadas están migradas a [locale].
+// El middleware aplica locale routing a todas las rutas no-API.
 
 import createMiddleware from 'next-intl/middleware'
 import { type NextRequest, NextResponse } from 'next/server'
@@ -15,46 +11,17 @@ import { updateSession } from '@/lib/supabase/middleware'
 
 const intlMiddleware = createMiddleware(routing)
 
-// Rutas de página aún NO migradas a la estructura [locale].
-// Mientras esté aquí, el locale routing NO se aplica a estas rutas.
-// Eliminar cada entrada al migrar la ruta correspondiente.
-const UNMIGRATED = ['/dashboard', '/admin']
-
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // ── 1. Rutas de API ─────────────────────────────────────────────────────────
-  // Sin locale prefix — Supabase session refresh únicamente
+  // Sin locale prefix — solo Supabase session refresh
   if (pathname.startsWith('/api/')) {
     const { supabaseResponse } = await updateSession(request)
     return supabaseResponse
   }
 
-  // ── 2. Limpieza temporal: /{locale}/dashboard → /dashboard ──────────────────
-  // Cuando el usuario llega a /en/dashboard (p. ej. por un Link locale-aware),
-  // lo redirigimos a /dashboard hasta que esa ruta esté migrada.
-  const localePrefixForUnmigrated = pathname.match(
-    /^\/([a-z]{2}(?:-[A-Z]{2})?)(\/(?:dashboard|admin)(\/|$))/
-  )
-  if (localePrefixForUnmigrated) {
-    const pathWithoutLocale = pathname.slice(localePrefixForUnmigrated[1].length + 1)
-    return NextResponse.redirect(new URL(pathWithoutLocale, request.url))
-  }
-
-  // ── 3. Rutas no migradas (/dashboard, /admin) ────────────────────────────────
-  // Solo auth protection + Supabase session, sin locale routing
-  if (UNMIGRATED.some((p) => pathname.startsWith(p))) {
-    const { supabaseResponse, user } = await updateSession(request)
-    if (!user) {
-      // Redirige al login de la UI en inglés (o el locale por defecto)
-      const loginUrl = new URL('/en/login', request.url)
-      loginUrl.searchParams.set('redirectTo', pathname)
-      return NextResponse.redirect(loginUrl)
-    }
-    return supabaseResponse
-  }
-
-  // ── 4. Rutas migradas: locale routing + Supabase ─────────────────────────────
+  // ── 2. Todas las demás rutas — locale routing + Supabase ────────────────────
   const intlResponse = intlMiddleware(request)
 
   // Redirect de locale (ej. / → /en/) → devolver inmediatamente
@@ -65,7 +32,7 @@ export async function middleware(request: NextRequest) {
   // Refrescar sesión de Supabase
   const { supabaseResponse, user } = await updateSession(request)
 
-  // Auth protection para rutas locale-prefixed (cuando se migren dashboard/admin)
+  // Auth protection para rutas protegidas (/dashboard, /admin)
   const localeMatch = pathname.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)(\/|$)/)
   const locale = localeMatch?.[1] ?? routing.defaultLocale
   const pathAfterLocale = localeMatch
@@ -73,8 +40,8 @@ export async function middleware(request: NextRequest) {
     : pathname
 
   const isProtected =
-    pathAfterLocale.startsWith('/dashboard') ||
-    pathAfterLocale.startsWith('/admin')
+    pathAfterLocale.startsWith('dashboard') ||
+    pathAfterLocale.startsWith('admin')
 
   if (isProtected && !user) {
     const loginUrl = new URL(`/${locale}/login`, request.url)
@@ -82,7 +49,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  // Propagar headers de next-intl (x-next-intl-locale, etc.) a la respuesta de Supabase
+  // Propagar headers de next-intl a la respuesta de Supabase
   intlResponse.headers.forEach((value, key) => {
     supabaseResponse.headers.set(key, value)
   })

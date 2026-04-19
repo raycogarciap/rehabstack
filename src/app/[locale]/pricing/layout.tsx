@@ -2,6 +2,7 @@
 
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
+import { LocaleSwitcher } from '@/components/locale-switcher'
 
 async function PublicNav() {
   const t = await getTranslations('nav')
@@ -20,6 +21,7 @@ async function PublicNav() {
         </nav>
 
         <div className="flex items-center gap-3 text-sm font-medium">
+          <LocaleSwitcher />
           <Link href="/login"
             className="hidden text-neutral-600 hover:text-neutral-900 transition-colors sm:block">
             {t('signIn')}
