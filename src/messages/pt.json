@@ -488,6 +488,20 @@
       "fullDocs": "Ver Documentação Completa"
     }
   },
+  "assistant": {
+    "title": "Assistente RehabStack",
+    "placeholder": "Pergunte qualquer coisa...",
+    "send": "Enviar",
+    "thinking": "Pensando...",
+    "minimize": "Minimizar",
+    "open": "Converse conosco",
+    "openingMessage": "Olá! Sou o Assistente RehabStack. Posso ajudar você a encontrar o agente de IA certo para sua prática. O que você deseja melhorar?",
+    "suggestedPrompts": {
+      "agents": "Que agentes vocês têm?",
+      "pricing": "Quanto custa?",
+      "help": "Preciso de ajuda com criação de conteúdo"
+    }
+  },
   "admin": {
     "nav": {
       "title": "Painel Admin",

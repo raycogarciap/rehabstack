@@ -4,6 +4,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { getVerifiedAdmin } from "@/lib/admin/auth";
+import { invalidateKnowledgeCache } from "@/lib/assistant-knowledge";
 
 // ─── Tipos ───────────────────────────────────────────────────────────────────
 
@@ -130,7 +131,16 @@ export async function PATCH(
       );
     }
 
-    // 8. Devolver el agente actualizado
+    // 8. Si la acción fue 'approve', invalidar la caché del asistente IA
+    //    para que aprenda sobre el nuevo agente en la próxima conversación.
+    if (action === "approve") {
+      // Fire-and-forget — no bloquear la respuesta si falla
+      invalidateKnowledgeCache().catch((err) =>
+        console.warn("[admin/agents/[id]] Error al invalidar caché del asistente:", err)
+      );
+    }
+
+    // 9. Devolver el agente actualizado
     return NextResponse.json(updatedAgent, { status: 200 });
   } catch (err) {
     // Error inesperado del servidor

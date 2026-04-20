@@ -11,6 +11,7 @@ import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { locales } from '@/i18n/config'
 import type { Locale } from '@/i18n/config'
+import { AssistantProvider } from '@/components/assistant/assistant-provider'
 
 interface Props {
   children: React.ReactNode
@@ -31,6 +32,9 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <NextIntlClientProvider messages={messages}>
       {children}
+      {/* Asistente IA flotante — aparece en todas las páginas públicas.
+          AssistantProvider se excluye automáticamente en /dashboard, /admin, /creator, /workspace */}
+      <AssistantProvider />
     </NextIntlClientProvider>
   )
 }
