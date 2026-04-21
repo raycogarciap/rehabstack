@@ -3,6 +3,7 @@
 // Barra inferior con copyright y selector visual de idioma
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
+import { FooterLanguageSwitcher } from "./FooterLanguageSwitcher";
 
 // SVG inline — lucide-react v1.8.0 no incluye iconos de redes sociales
 function IconInstagram() {
@@ -31,9 +32,6 @@ function IconTwitter() {
     </svg>
   );
 }
-
-// Idiomas disponibles — solo visual en el footer
-const LANGUAGES = ["EN", "ES", "PT", "FR", "DE", "AR"];
 
 export async function Footer() {
   const t = await getTranslations("homepage");
@@ -165,17 +163,8 @@ export async function Footer() {
             {t("footer.copyright")}
           </p>
 
-          {/* Pills de idioma — solo visual */}
-          <div className="flex gap-4">
-            {LANGUAGES.map((lang) => (
-              <span
-                key={lang}
-                className="text-xs text-[#64748B] hover:text-white cursor-pointer transition-colors"
-              >
-                {lang}
-              </span>
-            ))}
-          </div>
+          {/* Selector de idioma funcional — Client Component */}
+          <FooterLanguageSwitcher />
 
         </div>
       </div>
