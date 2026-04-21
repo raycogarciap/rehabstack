@@ -10,7 +10,12 @@
     "contact": "Contact",
     "docs": "Docs",
     "blog": "Blog",
-    "tagline": "AI Agent Marketplace for Rehab Professionals"
+    "tagline": "AI Agent Marketplace for Rehab Professionals",
+    "howItWorks": "How It Works",
+    "documentation": "Documentation",
+    "listYourAgent": "List Your Agent",
+    "creatorDashboard": "Creator Dashboard",
+    "logIn": "Log in"
   },
   "home": {
     "hero": {
@@ -621,6 +626,211 @@
       "activeAgents": "Active Agents",
       "pendingReview": "Pending Review",
       "totalRevenue": "Total Revenue"
+    }
+  },
+  "homepage": {
+    "announcementBar": {
+      "text": "Now available in 6 languages.",
+      "subtext": "AI assistants for physiotherapists, chiropractors & osteopaths worldwide."
+    },
+    "hero": {
+      "headline": "Grow your practice while you focus on patients.",
+      "subheadline": "RehabStack gives you specialized AI assistants that create your social media content, find your next training course, and build online courses from your expertise — so you can grow without working more hours.",
+      "ctaHowItWorks": "See How It Works",
+      "ctaBrowse": "Browse AI Assistants",
+      "trustLine1": "Built exclusively for rehabilitation professionals",
+      "trustLine2": "Works in English, Spanish, Portuguese + 3 more languages",
+      "trustLine3": "Trusted by physiotherapists, chiropractors & osteopaths worldwide"
+    },
+    "problem": {
+      "eyebrow": "Sound familiar?",
+      "headline": "The challenges every rehabilitation professional knows.",
+      "subheadline": "You didn't spend years studying to become a content creator, course hunter, or curriculum designer.",
+      "card1": {
+        "badge": "Content Creation",
+        "headline": "You know you should post on social media... but when?",
+        "body": "You finish work exhausted. Your competitor posts every day. You know content drives new patients, but you don't have 5 hours a week to create it."
+      },
+      "card2": {
+        "badge": "Finding Courses",
+        "headline": "You want to keep learning... but finding the right course is a job in itself.",
+        "body": "The best in-person trainings fill up in days. You hear about them too late. You don't know what's being offered in Barcelona or São Paulo next quarter."
+      },
+      "card3": {
+        "badge": "Monetizing Expertise",
+        "headline": "You could teach a course... but where do you start?",
+        "body": "You've been treating shoulders for 15 years. Other clinicians ask you for advice. You could monetize that expertise, but building a course feels like a second job."
+      }
+    },
+    "howItWorks": {
+      "eyebrow": "How It Works",
+      "headline": "From signup to results in under 5 minutes.",
+      "subheadline": "No technical setup. No learning curve. Just talk to your AI assistant and get professional results.",
+      "step1": {
+        "label": "Step 1",
+        "headline": "Choose an AI assistant for your goal.",
+        "body": "Browse the marketplace and pick the assistant that matches your need — content creation, course finding, or expertise monetization. Start your 48-hour free trial with no charge until it ends."
+      },
+      "step2": {
+        "label": "Step 2",
+        "headline": "Talk to it like a colleague.",
+        "body": "Record a voice note, upload a photo, or just type. Your AI assistant understands rehabilitation. It knows your specialty, your language, and your style."
+      },
+      "step3": {
+        "label": "Step 3",
+        "headline": "Get professional results, ready to use.",
+        "body": "Content packages ready to post. Courses found and trip plans prepared. Full course curriculums built from your expertise. Review, approve, and publish."
+      },
+      "cta": "Browse AI Assistants →"
+    },
+    "featuredAgents": {
+      "eyebrow": "AI Assistants",
+      "headline": "Three assistants. Three practice problems solved.",
+      "subheadline": "Each one built specifically for rehabilitation professionals. Start any with a 48-hour free trial.",
+      "mostPopular": "Most Popular",
+      "startTrial": "Start Free Trial",
+      "learnMore": "Learn more →",
+      "agent1": {
+        "badge": "Grow Your Practice",
+        "name": "Content Engine",
+        "tagline": "Turn voice notes into professional clinical content.",
+        "description": "Record a 2-minute voice note about a patient case and get a full week of Instagram carousels, LinkedIn posts, video scripts, and blog drafts — all in your voice.",
+        "feature1": "Social media content ready to post",
+        "feature2": "Works in your language and tone",
+        "feature3": "Instagram, LinkedIn, video scripts & more",
+        "feature4": "VA-ready task briefs included",
+        "price": "$299",
+        "pricePeriod": "/month",
+        "priceAnnual": "or $249/mo billed annually"
+      },
+      "agent2": {
+        "badge": "Find Training",
+        "name": "CE Concierge",
+        "tagline": "Find your next course before the seats are gone.",
+        "description": "Scans global course providers, matches courses to your specialty and career goals, then plans your entire trip with cost estimates — before registrations close.",
+        "feature1": "Global course database updated weekly",
+        "feature2": "Specialty and language matched",
+        "feature3": "Full trip planning with cost estimates",
+        "feature4": "Early seat alerts for high-demand courses",
+        "price": "$179",
+        "pricePeriod": "/month",
+        "priceAnnual": "or $149/mo billed annually"
+      },
+      "agent3": {
+        "badge": "Monetize Expertise",
+        "name": "Course Creator",
+        "tagline": "Turn your expertise into an online course.",
+        "description": "Record brain-dump sessions about your specialty and get a full curriculum with scripts, slides outlines, quizzes, a sales page, and a launch campaign — ready to publish.",
+        "feature1": "Full curriculum from your voice notes",
+        "feature2": "Scripts, slides, quizzes included",
+        "feature3": "Sales page and launch campaign",
+        "feature4": "Works for any rehabilitation specialty",
+        "price": "$499",
+        "pricePeriod": "/month",
+        "priceAnnual": "or $419/mo billed annually"
+      }
+    },
+    "showcase": {
+      "eyebrow": "Real Results",
+      "headline": "Practitioners seeing real results.",
+      "wantToBeFeature": "Want to be featured? Share your results.",
+      "testimonial1": {
+        "quote": "I went from posting once a month to every day. My Instagram following doubled and I get 3x more new patient inquiries than before.",
+        "result": "3x more patient inquiries in 6 weeks"
+      },
+      "testimonial2": {
+        "quote": "It found a dry needling masterclass in Berlin I had no idea existed. Registration closed the next day — I would have missed it completely.",
+        "result": "Found 4 relevant courses in first week"
+      },
+      "testimonial3": {
+        "quote": "I recorded 6 voice notes during my lunch breaks. Eight weeks later I had a full pelvic floor rehab course ready to sell.",
+        "result": "First course launched in 8 weeks"
+      }
+    },
+    "specialties": {
+      "eyebrow": "Built For Your Specialty",
+      "headline": "Built for your specialty.",
+      "subheadline": "RehabStack AI assistants understand your clinical context, your terminology, and your patients.",
+      "specialty1": { "name": "Sports Physiotherapy", "description": "Injury prevention, performance, return-to-sport content" },
+      "specialty2": { "name": "Musculoskeletal Rehabilitation", "description": "MSK conditions, manual therapy, exercise prescription" },
+      "specialty3": { "name": "Chiropractic", "description": "Spinal health, adjustment techniques, patient education" },
+      "specialty4": { "name": "Pelvic Floor & Women's Health", "description": "Sensitive condition content, multilingual patient education" },
+      "specialty5": { "name": "Osteopathy", "description": "Holistic approach, structural assessment, lifestyle content" },
+      "specialty6": { "name": "Pediatric & Neurological", "description": "Developmental conditions, family communication, evidence-based content" }
+    },
+    "creators": {
+      "eyebrow": "For Builders & Creators",
+      "headline": "Build and list your own AI assistants for rehabilitation professionals.",
+      "body": "The rehabilitation industry has no AI assistant marketplace. Zero direct competitors. We drive users via Instagram, SEO, and the conference circuit — you keep 75–80% of every subscription.",
+      "ctaList": "Start Listing Agents",
+      "ctaDocs": "Read the Docs",
+      "stat1Value": "75–80%",
+      "stat1Label": "Revenue share you keep",
+      "stat2Value": "24h",
+      "stat2Label": "Time to list your first agent",
+      "stat3Value": "6",
+      "stat3Label": "Languages your agent reaches",
+      "stat4Value": "0",
+      "stat4Label": "Direct competitors in this market"
+    },
+    "blogPreview": {
+      "eyebrow": "From the Blog",
+      "headline": "Latest from RehabStack.",
+      "viewAll": "View all posts →",
+      "post1": {
+        "category": "Articles",
+        "title": "How AI Assistants Are Transforming Clinical Content Creation",
+        "excerpt": "Physiotherapists are using AI assistants to create professional clinical content from quick voice notes. Here's what's working.",
+        "date": "April 15, 2026",
+        "readTime": "5 min read"
+      },
+      "post2": {
+        "category": "News",
+        "title": "RehabStack Now Available in 6 Languages",
+        "excerpt": "French, German, and Arabic join English, Spanish, and Portuguese. AI assistants for rehabilitation professionals, worldwide.",
+        "date": "April 8, 2026",
+        "readTime": "2 min read"
+      },
+      "post3": {
+        "category": "Media",
+        "title": "Watch: Content Engine Creates a Week of Posts in 4 Minutes",
+        "excerpt": "A sports physiotherapist records a voice note about ACL rehabilitation. Watch what the Content Engine produces.",
+        "date": "April 1, 2026",
+        "readTime": "4 min watch"
+      }
+    },
+    "finalCta": {
+      "badge": "48-Hour Free Trial · Card Required · Cancel Anytime",
+      "headline": "Your practice growth shouldn't depend on how many hours you work.",
+      "subheadline": "Start with the Content Engine and see your first content package in under 5 minutes.",
+      "cta": "Start Your Free Trial →",
+      "emailTeaser": "Not ready yet?",
+      "emailSubtext": "Get weekly insights on AI for rehabilitation professionals. No spam, unsubscribe anytime.",
+      "emailPlaceholder": "your@email.com",
+      "emailButton": "Subscribe"
+    },
+    "footer": {
+      "tagline": "AI assistants built exclusively for physiotherapists, chiropractors, and osteopaths.",
+      "copyright": "© 2026 Soulistica LLC · DBA RehabStack",
+      "product": "Product",
+      "resources": "Resources",
+      "company": "Company",
+      "legal": "Legal",
+      "links": {
+        "agents": "Agents",
+        "showcase": "Showcase",
+        "howItWorks": "How It Works",
+        "pricing": "Pricing",
+        "blog": "Blog",
+        "documentation": "Documentation",
+        "community": "Community",
+        "about": "About",
+        "contact": "Contact",
+        "forCreators": "For Creators",
+        "terms": "Terms of Service",
+        "privacy": "Privacy Policy",
+        "creatorAgreement": "Creator Agreement"
+      }
     }
   }
 }

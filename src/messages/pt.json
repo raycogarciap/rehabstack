@@ -10,7 +10,12 @@
     "contact": "Contato",
     "docs": "Documentação",
     "blog": "Blog",
-    "tagline": "Marketplace de Agentes IA para Profissionais de Reabilitação"
+    "tagline": "Marketplace de Agentes IA para Profissionais de Reabilitação",
+    "howItWorks": "Como Funciona",
+    "documentation": "Documentação",
+    "listYourAgent": "Publicar seu Agente",
+    "creatorDashboard": "Painel do Criador",
+    "logIn": "Entrar"
   },
   "home": {
     "hero": {
@@ -621,6 +626,131 @@
       "activeAgents": "Agentes Ativos",
       "pendingReview": "Aguardando Revisão",
       "totalRevenue": "Receita Total"
+    }
+  },
+  "homepage": {
+    "announcementBar": {
+      "text": "Agora disponível em 6 idiomas.",
+      "subtext": "Assistentes de IA para fisioterapeutas, quiropraxistas e osteopatas em todo o mundo."
+    },
+    "hero": {
+      "headline": "Faça sua clínica crescer enquanto você cuida dos pacientes.",
+      "subheadline": "A RehabStack oferece assistentes de IA especializados que criam seu conteúdo para redes sociais, encontram seu próximo curso e constroem cursos online a partir da sua experiência — para você crescer sem trabalhar mais horas.",
+      "ctaHowItWorks": "Ver como funciona",
+      "ctaBrowse": "Explorar assistentes de IA",
+      "trustLine1": "Criado exclusivamente para profissionais de reabilitação",
+      "trustLine2": "Funciona em inglês, espanhol, português e mais 3 idiomas",
+      "trustLine3": "Confiado por fisioterapeutas, quiropraxistas e osteopatas em todo o mundo"
+    },
+    "problem": {
+      "eyebrow": "Parece familiar?",
+      "headline": "Os desafios que todo profissional de reabilitação conhece.",
+      "subheadline": "Você não passou anos estudando para se tornar criador de conteúdo, caçador de cursos ou designer de currículos.",
+      "card1": {
+        "badge": "Criação de conteúdo",
+        "headline": "Você sabe que deveria postar nas redes sociais... mas quando?",
+        "body": "Você termina o trabalho exausto. Seu concorrente posta todo dia. Você sabe que conteúdo atrai novos pacientes, mas não tem 5 horas por semana para criá-lo."
+      },
+      "card2": {
+        "badge": "Busca de cursos",
+        "headline": "Você quer continuar aprendendo... mas encontrar o curso certo é um trabalho por si só.",
+        "body": "Os melhores treinamentos presenciais esgotam em dias. Você fica sabendo tarde demais. Não sabe o que será oferecido em Barcelona ou São Paulo no próximo trimestre."
+      },
+      "card3": {
+        "badge": "Monetizar expertise",
+        "headline": "Você poderia ministrar um curso... mas por onde começa?",
+        "body": "Você trata ombros há 15 anos. Outros clínicos pedem seu conselho. Você poderia monetizar essa expertise, mas criar um curso parece um segundo emprego."
+      }
+    },
+    "howItWorks": {
+      "eyebrow": "Como funciona",
+      "headline": "Do cadastro aos resultados em menos de 5 minutos.",
+      "subheadline": "Sem configuração técnica. Sem curva de aprendizado. Apenas converse com seu assistente de IA e obtenha resultados profissionais.",
+      "step1": { "label": "Passo 1", "headline": "Escolha um assistente de IA para seu objetivo.", "body": "Navegue pelo marketplace e escolha o assistente que atende à sua necessidade — criação de conteúdo, busca de cursos ou monetização de expertise. Comece seu teste gratuito de 48 horas sem cobrança até o fim." },
+      "step2": { "label": "Passo 2", "headline": "Fale com ele como um colega.", "body": "Grave uma nota de voz, faça upload de uma foto ou simplesmente escreva. Seu assistente de IA entende reabilitação. Conhece sua especialidade, seu idioma e seu estilo." },
+      "step3": { "label": "Passo 3", "headline": "Obtenha resultados profissionais, prontos para usar.", "body": "Pacotes de conteúdo prontos para publicar. Cursos encontrados e planos de viagem preparados. Currículos completos construídos a partir da sua expertise. Revise, aprove e publique." },
+      "cta": "Explorar assistentes de IA →"
+    },
+    "featuredAgents": {
+      "eyebrow": "Assistentes de IA",
+      "headline": "Três assistentes. Três problemas de prática resolvidos.",
+      "subheadline": "Cada um criado especificamente para profissionais de reabilitação. Comece qualquer um com teste gratuito de 48 horas.",
+      "mostPopular": "Mais popular",
+      "startTrial": "Iniciar teste gratuito",
+      "learnMore": "Saiba mais →",
+      "agent1": {
+        "badge": "Faça sua clínica crescer", "name": "Content Engine", "tagline": "Transforme notas de voz em conteúdo clínico profissional.",
+        "description": "Grave uma nota de voz de 2 minutos sobre um caso clínico e obtenha uma semana completa de carrosséis no Instagram, posts no LinkedIn, roteiros de vídeo e rascunhos de blog — tudo na sua voz.",
+        "feature1": "Conteúdo para redes sociais pronto para publicar", "feature2": "Funciona no seu idioma e tom", "feature3": "Instagram, LinkedIn, roteiros de vídeo e mais", "feature4": "Briefings de tarefas para assistentes incluídos",
+        "price": "$299", "pricePeriod": "/mês", "priceAnnual": "ou $249/mês cobrado anualmente"
+      },
+      "agent2": {
+        "badge": "Encontre treinamento", "name": "CE Concierge", "tagline": "Encontre seu próximo curso antes que as vagas acabem.",
+        "description": "Analisa provedores de cursos globais, encontra os que combinam com sua especialidade e objetivos de carreira, e planeja toda a viagem com estimativas de custos — antes que as inscrições fechem.",
+        "feature1": "Banco de dados global de cursos atualizado semanalmente", "feature2": "Combinado por especialidade e idioma", "feature3": "Planejamento completo de viagem com estimativas de custos", "feature4": "Alertas antecipados de vagas para cursos de alta demanda",
+        "price": "$179", "pricePeriod": "/mês", "priceAnnual": "ou $149/mês cobrado anualmente"
+      },
+      "agent3": {
+        "badge": "Monetize sua expertise", "name": "Course Creator", "tagline": "Transforme sua expertise em um curso online.",
+        "description": "Grave sessões de brainstorming sobre sua especialidade e obtenha um currículo completo com roteiros, esboços de slides, questionários, página de vendas e campanha de lançamento — pronto para publicar.",
+        "feature1": "Currículo completo a partir das suas notas de voz", "feature2": "Roteiros, slides e questionários incluídos", "feature3": "Página de vendas e campanha de lançamento", "feature4": "Funciona para qualquer especialidade de reabilitação",
+        "price": "$499", "pricePeriod": "/mês", "priceAnnual": "ou $419/mês cobrado anualmente"
+      }
+    },
+    "showcase": {
+      "eyebrow": "Resultados reais",
+      "headline": "Profissionais com resultados reais.",
+      "wantToBeFeature": "Quer ser destaque? Compartilhe seus resultados.",
+      "testimonial1": { "quote": "Passei de postar uma vez por mês para postar todo dia. Meu número de seguidores no Instagram dobrou e recebo 3 vezes mais consultas de novos pacientes.", "result": "3 vezes mais consultas de pacientes em 6 semanas" },
+      "testimonial2": { "quote": "Encontrou uma masterclass de agulhamento seco em Berlim que eu não sabia que existia. As inscrições fecharam no dia seguinte — eu teria perdido completamente.", "result": "4 cursos relevantes encontrados na primeira semana" },
+      "testimonial3": { "quote": "Gravei 6 notas de voz durante meus intervalos de almoço. Oito semanas depois eu tinha um curso completo de reabilitação do assoalho pélvico pronto para vender.", "result": "Primeiro curso lançado em 8 semanas" }
+    },
+    "specialties": {
+      "eyebrow": "Feito para sua especialidade",
+      "headline": "Feito para sua especialidade.",
+      "subheadline": "Os assistentes de IA da RehabStack entendem seu contexto clínico, sua terminologia e seus pacientes.",
+      "specialty1": { "name": "Fisioterapia Esportiva", "description": "Prevenção de lesões, desempenho, conteúdo de retorno ao esporte" },
+      "specialty2": { "name": "Reabilitação Musculoesquelética", "description": "Condições MSK, terapia manual, prescrição de exercícios" },
+      "specialty3": { "name": "Quiropraxia", "description": "Saúde da coluna, técnicas de ajuste, educação do paciente" },
+      "specialty4": { "name": "Assoalho Pélvico e Saúde Feminina", "description": "Conteúdo sobre condições sensíveis, educação multilíngue do paciente" },
+      "specialty5": { "name": "Osteopatia", "description": "Abordagem holística, avaliação estrutural, conteúdo de estilo de vida" },
+      "specialty6": { "name": "Pediátrica e Neurológica", "description": "Condições do desenvolvimento, comunicação familiar, conteúdo baseado em evidências" }
+    },
+    "creators": {
+      "eyebrow": "Para criadores e desenvolvedores",
+      "headline": "Crie e liste seus próprios assistentes de IA para profissionais de reabilitação.",
+      "body": "A indústria de reabilitação não tem marketplace de assistentes de IA. Zero concorrência direta. Levamos usuários via Instagram, SEO e o circuito de conferências — você fica com 75–80% de cada assinatura.",
+      "ctaList": "Começar a listar agentes", "ctaDocs": "Ler a documentação",
+      "stat1Value": "75–80%", "stat1Label": "Receita que você fica",
+      "stat2Value": "24h", "stat2Label": "Tempo para listar seu primeiro agente",
+      "stat3Value": "6", "stat3Label": "Idiomas que seu agente alcança",
+      "stat4Value": "0", "stat4Label": "Concorrentes diretos neste mercado"
+    },
+    "blogPreview": {
+      "eyebrow": "Do blog", "headline": "Novidades da RehabStack.", "viewAll": "Ver todos os posts →",
+      "post1": { "category": "Artigos", "title": "Como os assistentes de IA estão transformando a criação de conteúdo clínico", "excerpt": "Fisioterapeutas usam assistentes de IA para criar conteúdo clínico profissional a partir de notas de voz rápidas. Veja o que está funcionando.", "date": "15 de abril de 2026", "readTime": "5 min de leitura" },
+      "post2": { "category": "Notícias", "title": "RehabStack agora disponível em 6 idiomas", "excerpt": "Francês, alemão e árabe se juntam ao inglês, espanhol e português. Assistentes de IA para profissionais de reabilitação no mundo todo.", "date": "8 de abril de 2026", "readTime": "2 min de leitura" },
+      "post3": { "category": "Mídia", "title": "Assista: Content Engine cria uma semana de posts em 4 minutos", "excerpt": "Uma fisioterapeuta esportiva grava uma nota de voz sobre reabilitação do LCA. Veja o que o Content Engine produz.", "date": "1 de abril de 2026", "readTime": "4 min de vídeo" }
+    },
+    "finalCta": {
+      "badge": "Teste gratuito de 48 horas · Cartão obrigatório · Cancele quando quiser",
+      "headline": "O crescimento da sua clínica não deveria depender de quantas horas você trabalha.",
+      "subheadline": "Comece com o Content Engine e veja seu primeiro pacote de conteúdo em menos de 5 minutos.",
+      "cta": "Iniciar seu teste gratuito →",
+      "emailTeaser": "Ainda não está pronto?",
+      "emailSubtext": "Receba insights semanais sobre IA para profissionais de reabilitação. Sem spam, cancele quando quiser.",
+      "emailPlaceholder": "voce@email.com", "emailButton": "Inscrever-se"
+    },
+    "footer": {
+      "tagline": "Assistentes de IA criados exclusivamente para fisioterapeutas, quiropraxistas e osteopatas.",
+      "copyright": "© 2026 Soulistica LLC · DBA RehabStack",
+      "product": "Produto", "resources": "Recursos", "company": "Empresa", "legal": "Jurídico",
+      "links": {
+        "agents": "Agentes", "showcase": "Cases de sucesso", "howItWorks": "Como funciona", "pricing": "Preços",
+        "blog": "Blog", "documentation": "Documentação", "community": "Comunidade",
+        "about": "Sobre nós", "contact": "Contato", "forCreators": "Para criadores",
+        "terms": "Termos de serviço", "privacy": "Política de privacidade", "creatorAgreement": "Acordo para criadores"
+      }
     }
   }
 }

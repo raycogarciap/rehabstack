@@ -10,7 +10,12 @@
     "contact": "Contact",
     "docs": "Documentation",
     "blog": "Blog",
-    "tagline": "Marketplace d'Agents IA pour les Professionnels de Réadaptation"
+    "tagline": "Marketplace d'Agents IA pour les Professionnels de Réadaptation",
+    "howItWorks": "Comment ça marche",
+    "documentation": "Documentation",
+    "listYourAgent": "Lister votre Agent",
+    "creatorDashboard": "Tableau de bord Créateur",
+    "logIn": "Se connecter"
   },
   "home": {
     "hero": {
@@ -621,6 +626,131 @@
       "activeAgents": "Agents Actifs",
       "pendingReview": "En attente de révision",
       "totalRevenue": "Revenus Totaux"
+    }
+  },
+  "homepage": {
+    "announcementBar": {
+      "text": "Maintenant disponible en 6 langues.",
+      "subtext": "Assistants IA pour kinésithérapeutes, chiropracteurs et ostéopathes du monde entier."
+    },
+    "hero": {
+      "headline": "Développez votre cabinet en vous concentrant sur vos patients.",
+      "subheadline": "RehabStack vous donne des assistants IA spécialisés qui créent votre contenu pour les réseaux sociaux, trouvent votre prochain cours et construisent des formations en ligne à partir de votre expertise — pour que vous puissiez croître sans travailler plus d'heures.",
+      "ctaHowItWorks": "Voir comment ça marche",
+      "ctaBrowse": "Découvrir les assistants IA",
+      "trustLine1": "Conçu exclusivement pour les professionnels de la rééducation",
+      "trustLine2": "Fonctionne en anglais, espagnol, portugais et 3 autres langues",
+      "trustLine3": "Utilisé par des kinésithérapeutes, chiropracteurs et ostéopathes du monde entier"
+    },
+    "problem": {
+      "eyebrow": "Ça vous parle ?",
+      "headline": "Les défis que tout professionnel de la rééducation connaît.",
+      "subheadline": "Vous n'avez pas passé des années à étudier pour devenir créateur de contenu, chasseur de cours ou concepteur de programmes.",
+      "card1": {
+        "badge": "Création de contenu",
+        "headline": "Vous savez que vous devriez publier sur les réseaux sociaux... mais quand ?",
+        "body": "Vous terminez le travail épuisé. Votre concurrent publie chaque jour. Vous savez que le contenu attire de nouveaux patients, mais vous n'avez pas 5 heures par semaine pour le créer."
+      },
+      "card2": {
+        "badge": "Recherche de cours",
+        "headline": "Vous voulez continuer à apprendre... mais trouver le bon cours est un travail en soi.",
+        "body": "Les meilleures formations en présentiel se remplissent en quelques jours. Vous l'apprenez trop tard. Vous ne savez pas ce qui sera proposé à Barcelone ou São Paulo le trimestre prochain."
+      },
+      "card3": {
+        "badge": "Monétiser son expertise",
+        "headline": "Vous pourriez donner un cours... mais par où commencer ?",
+        "body": "Vous traitez des épaules depuis 15 ans. D'autres cliniciens vous demandent conseil. Vous pourriez monétiser cette expertise, mais créer un cours ressemble à un deuxième emploi."
+      }
+    },
+    "howItWorks": {
+      "eyebrow": "Comment ça marche",
+      "headline": "De l'inscription aux résultats en moins de 5 minutes.",
+      "subheadline": "Aucune configuration technique. Aucune courbe d'apprentissage. Parlez simplement à votre assistant IA et obtenez des résultats professionnels.",
+      "step1": { "label": "Étape 1", "headline": "Choisissez un assistant IA adapté à votre objectif.", "body": "Parcourez le marketplace et choisissez l'assistant qui correspond à votre besoin — création de contenu, recherche de cours ou monétisation d'expertise. Commencez votre essai gratuit de 48 heures sans frais jusqu'à la fin." },
+      "step2": { "label": "Étape 2", "headline": "Parlez-lui comme à un collègue.", "body": "Enregistrez une note vocale, téléchargez une photo ou tapez simplement. Votre assistant IA comprend la rééducation. Il connaît votre spécialité, votre langue et votre style." },
+      "step3": { "label": "Étape 3", "headline": "Obtenez des résultats professionnels, prêts à l'emploi.", "body": "Des packages de contenu prêts à publier. Des cours trouvés et des plans de voyage préparés. Des programmes complets construits à partir de votre expertise. Révisez, approuvez et publiez." },
+      "cta": "Découvrir les assistants IA →"
+    },
+    "featuredAgents": {
+      "eyebrow": "Assistants IA",
+      "headline": "Trois assistants. Trois problèmes de pratique résolus.",
+      "subheadline": "Chacun conçu spécifiquement pour les professionnels de la rééducation. Commencez avec un essai gratuit de 48 heures.",
+      "mostPopular": "Le plus populaire",
+      "startTrial": "Démarrer l'essai gratuit",
+      "learnMore": "En savoir plus →",
+      "agent1": {
+        "badge": "Développez votre cabinet", "name": "Content Engine", "tagline": "Transformez vos notes vocales en contenu clinique professionnel.",
+        "description": "Enregistrez une note vocale de 2 minutes sur un cas patient et obtenez une semaine complète de carrousels Instagram, publications LinkedIn, scripts vidéo et ébauches de blog — tout dans votre voix.",
+        "feature1": "Contenu pour les réseaux sociaux prêt à publier", "feature2": "Fonctionne dans votre langue et votre ton", "feature3": "Instagram, LinkedIn, scripts vidéo et plus", "feature4": "Briefings de tâches pour assistants inclus",
+        "price": "$299", "pricePeriod": "/mois", "priceAnnual": "ou $249/mois facturé annuellement"
+      },
+      "agent2": {
+        "badge": "Trouvez une formation", "name": "CE Concierge", "tagline": "Trouvez votre prochain cours avant que les places ne soient prises.",
+        "description": "Analyse les prestataires de cours mondiaux, trouve ceux qui correspondent à votre spécialité et vos objectifs de carrière, puis planifie tout le voyage avec des estimations de coûts — avant la clôture des inscriptions.",
+        "feature1": "Base de données mondiale de cours mise à jour chaque semaine", "feature2": "Correspondance par spécialité et langue", "feature3": "Planification complète du voyage avec estimations de coûts", "feature4": "Alertes précoces de places pour les cours très demandés",
+        "price": "$179", "pricePeriod": "/mois", "priceAnnual": "ou $149/mois facturé annuellement"
+      },
+      "agent3": {
+        "badge": "Monétisez votre expertise", "name": "Course Creator", "tagline": "Transformez votre expertise en cours en ligne.",
+        "description": "Enregistrez des sessions de brainstorming sur votre spécialité et obtenez un programme complet avec scripts, plans de diapositives, quiz, page de vente et campagne de lancement — prêt à publier.",
+        "feature1": "Programme complet à partir de vos notes vocales", "feature2": "Scripts, diapositives et quiz inclus", "feature3": "Page de vente et campagne de lancement", "feature4": "Fonctionne pour toute spécialité de rééducation",
+        "price": "$499", "pricePeriod": "/mois", "priceAnnual": "ou $419/mois facturé annuellement"
+      }
+    },
+    "showcase": {
+      "eyebrow": "Résultats concrets",
+      "headline": "Des praticiens qui obtiennent de vrais résultats.",
+      "wantToBeFeature": "Vous voulez être mis en avant ? Partagez vos résultats.",
+      "testimonial1": { "quote": "Je suis passé de publier une fois par mois à publier chaque jour. Mon nombre d'abonnés Instagram a doublé et je reçois 3 fois plus de demandes de nouveaux patients.", "result": "3 fois plus de demandes de patients en 6 semaines" },
+      "testimonial2": { "quote": "Il a trouvé une masterclass d'acupuncture sèche à Berlin dont je n'avais aucune idée. Les inscriptions ont fermé le lendemain — je l'aurais complètement raté.", "result": "4 cours pertinents trouvés la première semaine" },
+      "testimonial3": { "quote": "J'ai enregistré 6 notes vocales pendant mes pauses déjeuner. Huit semaines plus tard, j'avais un cours complet de rééducation du plancher pelvien prêt à vendre.", "result": "Premier cours lancé en 8 semaines" }
+    },
+    "specialties": {
+      "eyebrow": "Conçu pour votre spécialité",
+      "headline": "Conçu pour votre spécialité.",
+      "subheadline": "Les assistants IA de RehabStack comprennent votre contexte clinique, votre terminologie et vos patients.",
+      "specialty1": { "name": "Kinésithérapie du sport", "description": "Prévention des blessures, performance, contenu de retour au sport" },
+      "specialty2": { "name": "Rééducation musculo-squelettique", "description": "Pathologies MSK, thérapie manuelle, prescription d'exercices" },
+      "specialty3": { "name": "Chiropractie", "description": "Santé vertébrale, techniques d'ajustement, éducation des patients" },
+      "specialty4": { "name": "Plancher pelvien et santé féminine", "description": "Contenu sur les conditions sensibles, éducation multilingue des patients" },
+      "specialty5": { "name": "Ostéopathie", "description": "Approche holistique, évaluation structurelle, contenu sur le mode de vie" },
+      "specialty6": { "name": "Pédiatrique et neurologique", "description": "Conditions du développement, communication familiale, contenu fondé sur des preuves" }
+    },
+    "creators": {
+      "eyebrow": "Pour les créateurs et développeurs",
+      "headline": "Créez et listez vos propres assistants IA pour les professionnels de la rééducation.",
+      "body": "L'industrie de la rééducation n'a pas de marketplace d'assistants IA. Zéro concurrence directe. Nous amenons des utilisateurs via Instagram, le SEO et le circuit des conférences — vous gardez 75–80% de chaque abonnement.",
+      "ctaList": "Commencer à lister des agents", "ctaDocs": "Lire la documentation",
+      "stat1Value": "75–80%", "stat1Label": "Part des revenus que vous gardez",
+      "stat2Value": "24h", "stat2Label": "Temps pour lister votre premier agent",
+      "stat3Value": "6", "stat3Label": "Langues que votre agent atteint",
+      "stat4Value": "0", "stat4Label": "Concurrents directs sur ce marché"
+    },
+    "blogPreview": {
+      "eyebrow": "Du blog", "headline": "Dernières nouvelles de RehabStack.", "viewAll": "Voir tous les articles →",
+      "post1": { "category": "Articles", "title": "Comment les assistants IA transforment la création de contenu clinique", "excerpt": "Les kinésithérapeutes utilisent des assistants IA pour créer du contenu clinique professionnel à partir de notes vocales rapides. Voici ce qui fonctionne.", "date": "15 avril 2026", "readTime": "5 min de lecture" },
+      "post2": { "category": "Actualités", "title": "RehabStack maintenant disponible en 6 langues", "excerpt": "Le français, l'allemand et l'arabe rejoignent l'anglais, l'espagnol et le portugais. Des assistants IA pour les professionnels de la rééducation dans le monde entier.", "date": "8 avril 2026", "readTime": "2 min de lecture" },
+      "post3": { "category": "Médias", "title": "Vidéo : Content Engine crée une semaine de posts en 4 minutes", "excerpt": "Une kinésithérapeute du sport enregistre une note vocale sur la rééducation du LCA. Regardez ce que produit Content Engine.", "date": "1er avril 2026", "readTime": "4 min de vidéo" }
+    },
+    "finalCta": {
+      "badge": "Essai gratuit 48 heures · Carte requise · Annulez quand vous voulez",
+      "headline": "La croissance de votre cabinet ne devrait pas dépendre du nombre d'heures que vous travaillez.",
+      "subheadline": "Commencez avec Content Engine et voyez votre premier package de contenu en moins de 5 minutes.",
+      "cta": "Commencer votre essai gratuit →",
+      "emailTeaser": "Pas encore prêt ?",
+      "emailSubtext": "Recevez des insights hebdomadaires sur l'IA pour les professionnels de la rééducation. Sans spam, désabonnez-vous quand vous voulez.",
+      "emailPlaceholder": "vous@email.com", "emailButton": "S'abonner"
+    },
+    "footer": {
+      "tagline": "Assistants IA conçus exclusivement pour les kinésithérapeutes, chiropracteurs et ostéopathes.",
+      "copyright": "© 2026 Soulistica LLC · DBA RehabStack",
+      "product": "Produit", "resources": "Ressources", "company": "Entreprise", "legal": "Mentions légales",
+      "links": {
+        "agents": "Agents", "showcase": "Témoignages", "howItWorks": "Comment ça marche", "pricing": "Tarifs",
+        "blog": "Blog", "documentation": "Documentation", "community": "Communauté",
+        "about": "À propos", "contact": "Contact", "forCreators": "Pour les créateurs",
+        "terms": "Conditions d'utilisation", "privacy": "Politique de confidentialité", "creatorAgreement": "Accord créateur"
+      }
     }
   }
 }

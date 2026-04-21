@@ -8,26 +8,10 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Menu, X, Globe, ChevronDown } from "lucide-react";
 
-// Items del menú principal (sin "For Creators" que tiene dropdown propio)
-const NAV_LINKS = [
-  { label: "Agents", href: "/agents" },
-  { label: "Showcase", href: "/showcase" },
-  { label: "How It Works", href: "/how-it-works" },
-  { label: "Blog", href: "/blog" },
-  { label: "About", href: "/about" },
-];
-
-// Items del dropdown "For Creators"
-const CREATOR_LINKS = [
-  { label: "Documentation", href: "/docs" },
-  { label: "List Your Agent", href: "/for-creators" },
-  { label: "Creator Dashboard", href: "/creator" },
-];
-
-// Idiomas soportados con bandera y etiqueta
+// Idiomas soportados con bandera y etiqueta — estáticos, no se traducen
 const LANGUAGES = [
   { code: "en", label: "English", flag: "🇬🇧" },
   { code: "es", label: "Español", flag: "🇪🇸" },
@@ -41,6 +25,7 @@ export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations("nav");
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [creatorDropdownOpen, setCreatorDropdownOpen] = useState(false);
@@ -94,6 +79,22 @@ export function Navbar() {
     });
   }
 
+  // Items del menú principal — construidos con t() para que se traduzcan
+  const NAV_LINKS = [
+    { label: t("agents"), href: "/agents" },
+    { label: t("showcase"), href: "/showcase" },
+    { label: t("howItWorks"), href: "/how-it-works" },
+    { label: t("blog"), href: "/blog" },
+    { label: t("about"), href: "/about" },
+  ];
+
+  // Items del dropdown "For Creators" — también traducidos
+  const CREATOR_LINKS = [
+    { label: t("documentation"), href: "/docs" },
+    { label: t("listYourAgent"), href: "/for-creators" },
+    { label: t("creatorDashboard"), href: "/creator" },
+  ];
+
   return (
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -133,7 +134,7 @@ export function Navbar() {
                 aria-expanded={creatorDropdownOpen}
                 aria-haspopup="true"
               >
-                For Creators
+                {t("forCreators")}
                 <ChevronDown
                   className={`h-4 w-4 transition-transform ${
                     creatorDropdownOpen ? "rotate-180" : ""
@@ -143,7 +144,7 @@ export function Navbar() {
 
               {/* Panel del dropdown de creadores */}
               {creatorDropdownOpen && (
-                <div className="absolute left-0 mt-1 w-48 rounded-lg bg-white shadow-lg border border-gray-100 py-1 z-50">
+                <div className="absolute left-0 mt-1 w-52 rounded-lg bg-white shadow-lg border border-gray-100 py-1 z-50">
                   {CREATOR_LINKS.map((link) => (
                     <Link
                       key={link.href}
@@ -170,7 +171,7 @@ export function Navbar() {
               href="/login"
               className="text-[#64748B] hover:text-[#4F46E5] font-medium transition-colors text-sm"
             >
-              Log in
+              {t("logIn")}
             </Link>
 
             {/* Selector de idioma con dropdown funcional */}
@@ -217,7 +218,7 @@ export function Navbar() {
               href="/register"
               className="inline-flex items-center px-4 py-2 rounded-lg bg-[#4F46E5] text-white text-sm font-medium hover:bg-[#3730A3] transition-colors"
             >
-              Get Started
+              {t("getStarted")}
             </Link>
           </div>
 
@@ -262,13 +263,13 @@ export function Navbar() {
                   : "text-[#64748B] hover:text-[#1E293B] hover:bg-gray-50"
               }`}
             >
-              Log in
+              {t("logIn")}
             </Link>
 
             {/* Sección "For Creators" en móvil — expandida directamente */}
             <div className="pt-1">
               <p className="px-3 py-1 text-xs font-semibold text-[#64748B] uppercase tracking-wider">
-                For Creators
+                {t("forCreators")}
               </p>
               {CREATOR_LINKS.map((link) => (
                 <Link
@@ -316,7 +317,7 @@ export function Navbar() {
                 onClick={() => setMobileOpen(false)}
                 className="flex w-full items-center justify-center px-4 py-2.5 rounded-lg bg-[#4F46E5] text-white text-sm font-medium hover:bg-[#3730A3] transition-colors"
               >
-                Get Started
+                {t("getStarted")}
               </Link>
             </div>
           </div>

@@ -10,7 +10,12 @@
     "contact": "Kontakt",
     "docs": "Dokumentation",
     "blog": "Blog",
-    "tagline": "KI-Agenten-Marktplatz für Rehabilitationsfachleute"
+    "tagline": "KI-Agenten-Marktplatz für Rehabilitationsfachleute",
+    "howItWorks": "So funktioniert es",
+    "documentation": "Dokumentation",
+    "listYourAgent": "Ihren Agenten listen",
+    "creatorDashboard": "Ersteller-Dashboard",
+    "logIn": "Anmelden"
   },
   "home": {
     "hero": {
@@ -621,6 +626,131 @@
       "activeAgents": "Aktive Agenten",
       "pendingReview": "Ausstehende Prüfung",
       "totalRevenue": "Gesamteinnahmen"
+    }
+  },
+  "homepage": {
+    "announcementBar": {
+      "text": "Jetzt in 6 Sprachen verfügbar.",
+      "subtext": "KI-Assistenten für Physiotherapeuten, Chiropraktiker und Osteopathen weltweit."
+    },
+    "hero": {
+      "headline": "Lassen Sie Ihre Praxis wachsen, während Sie sich auf Ihre Patienten konzentrieren.",
+      "subheadline": "RehabStack bietet Ihnen spezialisierte KI-Assistenten, die Ihre Social-Media-Inhalte erstellen, Ihren nächsten Kurs finden und Online-Kurse aus Ihrer Expertise aufbauen — damit Sie wachsen können, ohne mehr Stunden zu arbeiten.",
+      "ctaHowItWorks": "So funktioniert es",
+      "ctaBrowse": "KI-Assistenten entdecken",
+      "trustLine1": "Ausschließlich für Rehabilitationsfachleute entwickelt",
+      "trustLine2": "Funktioniert auf Englisch, Spanisch, Portugiesisch und 3 weiteren Sprachen",
+      "trustLine3": "Vertraut von Physiotherapeuten, Chiropraktikern und Osteopathen weltweit"
+    },
+    "problem": {
+      "eyebrow": "Klingt vertraut?",
+      "headline": "Die Herausforderungen, die jeder Rehabilitationsfachmann kennt.",
+      "subheadline": "Sie haben nicht jahrelang studiert, um Content Creator, Kurssucher oder Lehrplandesigner zu werden.",
+      "card1": {
+        "badge": "Content-Erstellung",
+        "headline": "Sie wissen, dass Sie in sozialen Medien posten sollten... aber wann?",
+        "body": "Sie beenden die Arbeit erschöpft. Ihr Konkurrent postet täglich. Sie wissen, dass Content neue Patienten bringt, aber Sie haben keine 5 Stunden pro Woche dafür."
+      },
+      "card2": {
+        "badge": "Kurssuche",
+        "headline": "Sie möchten weiterlernen... aber den richtigen Kurs zu finden ist eine Arbeit für sich.",
+        "body": "Die besten Präsenzschulungen sind in Tagen ausgebucht. Sie erfahren es zu spät. Sie wissen nicht, was nächstes Quartal in Barcelona oder São Paulo angeboten wird."
+      },
+      "card3": {
+        "badge": "Expertise monetarisieren",
+        "headline": "Sie könnten einen Kurs unterrichten... aber wo fangen Sie an?",
+        "body": "Sie behandeln seit 15 Jahren Schultern. Andere Kliniker fragen Sie um Rat. Sie könnten diese Expertise monetarisieren, aber einen Kurs aufzubauen fühlt sich wie ein zweiter Job an."
+      }
+    },
+    "howItWorks": {
+      "eyebrow": "So funktioniert es",
+      "headline": "Von der Anmeldung zu Ergebnissen in unter 5 Minuten.",
+      "subheadline": "Kein technisches Setup. Keine Lernkurve. Sprechen Sie einfach mit Ihrem KI-Assistenten und erhalten Sie professionelle Ergebnisse.",
+      "step1": { "label": "Schritt 1", "headline": "Wählen Sie einen KI-Assistenten für Ihr Ziel.", "body": "Stöbern Sie im Marketplace und wählen Sie den Assistenten, der Ihrem Bedarf entspricht — Content-Erstellung, Kurssuche oder Expertise-Monetarisierung. Starten Sie Ihre 48-Stunden-Gratisprobe ohne Kosten bis zum Ende." },
+      "step2": { "label": "Schritt 2", "headline": "Sprechen Sie mit ihm wie mit einem Kollegen.", "body": "Nehmen Sie eine Sprachnotiz auf, laden Sie ein Foto hoch oder tippen Sie einfach. Ihr KI-Assistent versteht Rehabilitation. Er kennt Ihre Fachrichtung, Ihre Sprache und Ihren Stil." },
+      "step3": { "label": "Schritt 3", "headline": "Erhalten Sie professionelle Ergebnisse, sofort einsetzbar.", "body": "Content-Pakete zum Veröffentlichen. Kurse gefunden und Reisepläne vorbereitet. Vollständige Lehrpläne aus Ihrer Expertise. Überprüfen, genehmigen und veröffentlichen." },
+      "cta": "KI-Assistenten entdecken →"
+    },
+    "featuredAgents": {
+      "eyebrow": "KI-Assistenten",
+      "headline": "Drei Assistenten. Drei Praxisprobleme gelöst.",
+      "subheadline": "Jeder speziell für Rehabilitationsfachleute entwickelt. Starten Sie jeden mit einer 48-Stunden-Gratisprobe.",
+      "mostPopular": "Am beliebtesten",
+      "startTrial": "Gratisprobe starten",
+      "learnMore": "Mehr erfahren →",
+      "agent1": {
+        "badge": "Praxis ausbauen", "name": "Content Engine", "tagline": "Verwandeln Sie Sprachnotizen in professionelle klinische Inhalte.",
+        "description": "Nehmen Sie eine 2-minütige Sprachnotiz über einen Patientenfall auf und erhalten Sie eine volle Woche an Instagram-Karussells, LinkedIn-Posts, Videoskripten und Blog-Entwürfen — alles in Ihrer Stimme.",
+        "feature1": "Social-Media-Inhalte sofort veröffentlichungsbereit", "feature2": "Funktioniert in Ihrer Sprache und Ihrem Ton", "feature3": "Instagram, LinkedIn, Videoskripte und mehr", "feature4": "Aufgabenbriefings für Assistenten inklusive",
+        "price": "$299", "pricePeriod": "/Monat", "priceAnnual": "oder $249/Monat jährlich abgerechnet"
+      },
+      "agent2": {
+        "badge": "Fortbildung finden", "name": "CE Concierge", "tagline": "Finden Sie Ihren nächsten Kurs, bevor die Plätze weg sind.",
+        "description": "Durchsucht globale Kursanbieter, findet passende Kurse für Ihre Fachrichtung und Karriereziele und plant die gesamte Reise mit Kostenschätzungen — bevor die Anmeldungen schließen.",
+        "feature1": "Globale Kursdatenbank wöchentlich aktualisiert", "feature2": "Fachrichtungs- und sprachbasierte Übereinstimmung", "feature3": "Vollständige Reiseplanung mit Kostenschätzungen", "feature4": "Frühe Platzbenachrichtigungen für gefragte Kurse",
+        "price": "$179", "pricePeriod": "/Monat", "priceAnnual": "oder $149/Monat jährlich abgerechnet"
+      },
+      "agent3": {
+        "badge": "Expertise monetarisieren", "name": "Course Creator", "tagline": "Verwandeln Sie Ihre Expertise in einen Online-Kurs.",
+        "description": "Nehmen Sie Brainstorming-Sessions zu Ihrer Fachrichtung auf und erhalten Sie einen vollständigen Lehrplan mit Skripten, Folienentwürfen, Quiz, Verkaufsseite und Startkampagne — bereit zum Veröffentlichen.",
+        "feature1": "Vollständiger Lehrplan aus Ihren Sprachnotizen", "feature2": "Skripte, Folien und Quiz inklusive", "feature3": "Verkaufsseite und Startkampagne", "feature4": "Funktioniert für jede Rehabilitationsfachrichtung",
+        "price": "$499", "pricePeriod": "/Monat", "priceAnnual": "oder $419/Monat jährlich abgerechnet"
+      }
+    },
+    "showcase": {
+      "eyebrow": "Echte Ergebnisse",
+      "headline": "Therapeuten mit echten Ergebnissen.",
+      "wantToBeFeature": "Möchten Sie vorgestellt werden? Teilen Sie Ihre Ergebnisse.",
+      "testimonial1": { "quote": "Ich bin von einmal im Monat zu täglich posten übergegangen. Meine Instagram-Follower haben sich verdoppelt und ich erhalte 3-mal mehr Anfragen von neuen Patienten.", "result": "3-mal mehr Patientenanfragen in 6 Wochen" },
+      "testimonial2": { "quote": "Er fand eine Dry-Needling-Masterclass in Berlin, von der ich keine Ahnung hatte. Die Anmeldungen schlossen am nächsten Tag — ich hätte es völlig verpasst.", "result": "4 relevante Kurse in der ersten Woche gefunden" },
+      "testimonial3": { "quote": "Ich nahm 6 Sprachnotizen während meiner Mittagspausen auf. Acht Wochen später hatte ich einen vollständigen Beckenbodenreha-Kurs zum Verkaufen.", "result": "Erster Kurs in 8 Wochen gestartet" }
+    },
+    "specialties": {
+      "eyebrow": "Für Ihre Fachrichtung entwickelt",
+      "headline": "Für Ihre Fachrichtung entwickelt.",
+      "subheadline": "Die KI-Assistenten von RehabStack verstehen Ihren klinischen Kontext, Ihre Terminologie und Ihre Patienten.",
+      "specialty1": { "name": "Sportphysiotherapie", "description": "Verletzungsprävention, Leistung, Return-to-Sport-Inhalte" },
+      "specialty2": { "name": "Muskuloskelettale Rehabilitation", "description": "MSK-Erkrankungen, manuelle Therapie, Trainingsplanung" },
+      "specialty3": { "name": "Chiropraktik", "description": "Wirbelsäulengesundheit, Adjustierungstechniken, Patientenaufklärung" },
+      "specialty4": { "name": "Beckenboden & Frauengesundheit", "description": "Inhalte zu sensiblen Erkrankungen, mehrsprachige Patientenaufklärung" },
+      "specialty5": { "name": "Osteopathie", "description": "Ganzheitlicher Ansatz, strukturelle Beurteilung, Lifestyle-Inhalte" },
+      "specialty6": { "name": "Pädiatrie & Neurologie", "description": "Entwicklungsstörungen, Familienkommunikation, evidenzbasierte Inhalte" }
+    },
+    "creators": {
+      "eyebrow": "Für Entwickler und Ersteller",
+      "headline": "Erstellen und listen Sie Ihre eigenen KI-Assistenten für Rehabilitationsfachleute.",
+      "body": "Die Rehabilitationsbranche hat keinen KI-Assistenten-Marktplatz. Null direkte Konkurrenz. Wir bringen Nutzer über Instagram, SEO und den Konferenzkreis — Sie behalten 75–80% jedes Abonnements.",
+      "ctaList": "Agenten listen beginnen", "ctaDocs": "Dokumentation lesen",
+      "stat1Value": "75–80%", "stat1Label": "Einnahmenanteil, den Sie behalten",
+      "stat2Value": "24h", "stat2Label": "Zeit zum Listen Ihres ersten Agenten",
+      "stat3Value": "6", "stat3Label": "Sprachen, die Ihr Agent erreicht",
+      "stat4Value": "0", "stat4Label": "Direkte Konkurrenten auf diesem Markt"
+    },
+    "blogPreview": {
+      "eyebrow": "Aus dem Blog", "headline": "Neuigkeiten von RehabStack.", "viewAll": "Alle Beiträge ansehen →",
+      "post1": { "category": "Artikel", "title": "Wie KI-Assistenten die klinische Content-Erstellung transformieren", "excerpt": "Physiotherapeuten nutzen KI-Assistenten, um professionelle klinische Inhalte aus schnellen Sprachnotizen zu erstellen. Das funktioniert.", "date": "15. April 2026", "readTime": "5 Min. Lesezeit" },
+      "post2": { "category": "Neuigkeiten", "title": "RehabStack jetzt in 6 Sprachen verfügbar", "excerpt": "Französisch, Deutsch und Arabisch gesellen sich zu Englisch, Spanisch und Portugiesisch. KI-Assistenten für Rehabilitationsfachleute weltweit.", "date": "8. April 2026", "readTime": "2 Min. Lesezeit" },
+      "post3": { "category": "Medien", "title": "Video: Content Engine erstellt eine Woche Posts in 4 Minuten", "excerpt": "Eine Sportphysiotherapeutin nimmt eine Sprachnotiz über ACL-Rehabilitation auf. Sehen Sie, was Content Engine produziert.", "date": "1. April 2026", "readTime": "4 Min. Video" }
+    },
+    "finalCta": {
+      "badge": "48-Stunden-Gratisprobe · Karte erforderlich · Jederzeit kündbar",
+      "headline": "Das Wachstum Ihrer Praxis sollte nicht davon abhängen, wie viele Stunden Sie arbeiten.",
+      "subheadline": "Beginnen Sie mit Content Engine und sehen Sie Ihr erstes Content-Paket in unter 5 Minuten.",
+      "cta": "Gratisprobe starten →",
+      "emailTeaser": "Noch nicht bereit?",
+      "emailSubtext": "Erhalten Sie wöchentliche Einblicke zu KI für Rehabilitationsfachleute. Kein Spam, jederzeit abmelden.",
+      "emailPlaceholder": "sie@email.com", "emailButton": "Abonnieren"
+    },
+    "footer": {
+      "tagline": "KI-Assistenten, die ausschließlich für Physiotherapeuten, Chiropraktiker und Osteopathen entwickelt wurden.",
+      "copyright": "© 2026 Soulistica LLC · DBA RehabStack",
+      "product": "Produkt", "resources": "Ressourcen", "company": "Unternehmen", "legal": "Rechtliches",
+      "links": {
+        "agents": "Agenten", "showcase": "Referenzen", "howItWorks": "So funktioniert es", "pricing": "Preise",
+        "blog": "Blog", "documentation": "Dokumentation", "community": "Community",
+        "about": "Über uns", "contact": "Kontakt", "forCreators": "Für Ersteller",
+        "terms": "Nutzungsbedingungen", "privacy": "Datenschutzrichtlinie", "creatorAgreement": "Ersteller-Vereinbarung"
+      }
     }
   }
 }
