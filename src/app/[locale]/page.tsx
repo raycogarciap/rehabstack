@@ -1,7 +1,6 @@
 // Página principal localizada de RehabStack
+// AnnouncementBar y Navbar vienen del layout — no se importan aquí
 // Cada sección es un componente independiente en src/components/homepage/
-import { AnnouncementBar } from "@/components/homepage/AnnouncementBar";
-import { Navbar } from "@/components/homepage/Navbar";
 import { HeroSection } from "@/components/homepage/HeroSection";
 import { ProblemSection } from "@/components/homepage/ProblemSection";
 import { HowItWorksSection } from "@/components/homepage/HowItWorksSection";
@@ -16,8 +15,6 @@ import { Footer } from "@/components/homepage/Footer";
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-white">
-      <AnnouncementBar />
-      <Navbar />
       <HeroSection />
       <ProblemSection />
       <HowItWorksSection />

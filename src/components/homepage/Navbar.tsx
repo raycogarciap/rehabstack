@@ -5,11 +5,15 @@
 // - Links de navegación desktop con dropdown "For Creators"
 // - Selector de idioma funcional con dropdown y useLocale
 // - Menú hamburguesa para móvil
+// - Se oculta automáticamente en rutas de dashboard, auth y admin
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { Menu, X, Globe, ChevronDown } from "lucide-react";
+
+// Rutas donde el navbar público no debe aparecer
+const HIDDEN_ON = ["/dashboard", "/login", "/register", "/creator", "/admin"];
 
 // Idiomas soportados con bandera y etiqueta — estáticos, no se traducen
 const LANGUAGES = [
@@ -26,6 +30,9 @@ export function Navbar() {
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("nav");
+
+  // Ocultar en rutas que tienen su propia navegación (dashboard, auth, admin)
+  if (HIDDEN_ON.some((route) => pathname.includes(route))) return null;
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [creatorDropdownOpen, setCreatorDropdownOpen] = useState(false);

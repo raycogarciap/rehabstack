@@ -2,9 +2,8 @@
 // Responsabilidades:
 //   - Validar que el locale de la URL esté soportado (404 si no lo está)
 //   - Proveer NextIntlClientProvider con los mensajes del locale activo
-//   - En esta fase de migración parcial, <html> y <body> siguen en app/layout.tsx.
-//     Cuando TODAS las rutas estén migradas a [locale], mover html/body aquí
-//     para poder setear lang={locale} y dir={rtlLocales.includes(locale) ? 'rtl' : 'ltr'}.
+//   - Renderizar AnnouncementBar, Navbar y Footer en todas las páginas públicas
+//     (ambos componentes se auto-ocultan en /dashboard, /login, /register, /creator, /admin)
 
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
@@ -12,6 +11,8 @@ import { notFound } from 'next/navigation'
 import { locales } from '@/i18n/config'
 import type { Locale } from '@/i18n/config'
 import { AssistantProvider } from '@/components/assistant/assistant-provider'
+import { AnnouncementBar } from '@/components/homepage/AnnouncementBar'
+import { Navbar } from '@/components/homepage/Navbar'
 
 interface Props {
   children: React.ReactNode
@@ -31,6 +32,9 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider messages={messages}>
+      {/* Navbar público — se oculta automáticamente en dashboard/auth/admin */}
+      <AnnouncementBar />
+      <Navbar />
       {children}
       {/* Asistente IA flotante — aparece en todas las páginas públicas.
           AssistantProvider se excluye automáticamente en /dashboard, /admin, /creator, /workspace */}
