@@ -9,6 +9,8 @@ import createNextIntlPlugin from 'next-intl/plugin'
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
 const nextConfig: NextConfig = {
+  // next-mdx-remote necesita ser transpilado para funcionar correctamente en Vercel
+  transpilePackages: ['next-mdx-remote'],
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'placehold.co' },

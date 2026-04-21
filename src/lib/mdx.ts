@@ -42,30 +42,40 @@ export function getAllPosts(): BlogPost[] {
     if (!fs.existsSync(categoryDir)) continue;
 
     // Solo archivos .mdx
-    const files = fs.readdirSync(categoryDir).filter((f) => f.endsWith(".mdx"));
+    let files: string[];
+    try {
+      files = fs.readdirSync(categoryDir).filter((f) => f.endsWith(".mdx"));
+    } catch (err) {
+      console.error(`Error leyendo categoría ${category}:`, err);
+      continue;
+    }
 
     for (const file of files) {
-      const filePath = path.join(categoryDir, file);
-      const raw = fs.readFileSync(filePath, "utf-8");
+      try {
+        const filePath = path.join(categoryDir, file);
+        const raw = fs.readFileSync(filePath, "utf-8");
 
-      // gray-matter separa el frontmatter YAML del contenido MDX
-      const { data, content } = matter(raw);
+        // gray-matter separa el frontmatter YAML del contenido MDX
+        const { data, content } = matter(raw);
 
-      // reading-time estima el tiempo de lectura del contenido
-      const rt = readingTime(content);
+        // reading-time estima el tiempo de lectura del contenido
+        const rt = readingTime(content);
 
-      posts.push({
-        slug: data.slug || file.replace(".mdx", ""),
-        title: data.title || "",
-        date: data.date || "",
-        category: (data.category as BlogCategory) || "articles",
-        tags: data.tags || [],
-        author: data.author || "",
-        description: data.description || "",
-        featuredImage: data.featuredImage || "",
-        readTime: data.readTime || rt.text,
-        content,
-      });
+        posts.push({
+          slug: data.slug || file.replace(".mdx", ""),
+          title: data.title || "",
+          date: data.date || "",
+          category: (data.category as BlogCategory) || "articles",
+          tags: data.tags || [],
+          author: data.author || "",
+          description: data.description || "",
+          featuredImage: data.featuredImage || "",
+          readTime: data.readTime || rt.text,
+          content,
+        });
+      } catch (err) {
+        console.error(`Error procesando ${file}:`, err);
+      }
     }
   }
 

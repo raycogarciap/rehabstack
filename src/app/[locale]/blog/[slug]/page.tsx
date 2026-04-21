@@ -10,10 +10,20 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 
-// Genera rutas estáticas para todos los posts en build time
+// force-static garantiza que todas las rutas se pre-rendericen en build time.
+// Evita accesos a fs en runtime dentro del entorno serverless de Vercel.
+export const dynamic = "force-static";
+
+// Locales soportados — deben coincidir con los de next-intl
+const LOCALES = ["en", "es", "pt", "fr", "de", "ar"];
+
+// Genera rutas estáticas para TODOS los locales × TODOS los posts.
+// La ruta es /[locale]/blog/[slug], por lo que ambos segmentos son necesarios.
 export async function generateStaticParams() {
   const posts = getAllPosts();
-  return posts.map((post) => ({ slug: post.slug }));
+  return LOCALES.flatMap((locale) =>
+    posts.map((post) => ({ locale, slug: post.slug }))
+  );
 }
 
 // Metadata dinámica por post para SEO y Open Graph
