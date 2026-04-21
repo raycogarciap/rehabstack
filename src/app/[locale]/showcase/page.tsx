@@ -1,154 +1,25 @@
 // src/app/[locale]/showcase/page.tsx
 // Página de showcase — Client Component por el tab switching con useState.
-// Tab 1: Practitioner Results — testimonios con avatar, cita, y agente usado.
-// Tab 2: Agent Demos — embeds de YouTube con descripción y tags.
+// Datos importados desde src/lib/demo-data.ts (compartido con la página de detalle).
+// Tab 1: Practitioner Results — tarjetas verde salvia con flag + agente icon.
+// Tab 2: Agent Demos — grid de demos con search y filtro por categoría.
 
 'use client'
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { ExternalLink } from 'lucide-react'
+import { ExternalLink, Search, Play } from 'lucide-react'
+import { PRACTITIONER_RESULTS, AGENT_DEMOS } from '@/lib/demo-data'
+import type { PractitionerResult, AgentDemo } from '@/lib/demo-data'
 
-// ── Datos mock — Practitioner Results ─────────────────────────────────────────
+// ── Helper: extrae el ID de YouTube desde una URL embed ───────────────────────
+function extractYouTubeId(url: string): string | null {
+  const match = url.match(/\/embed\/([^?&/]+)/)
+  return match ? match[1] : null
+}
 
-const PRACTITIONER_RESULTS = [
-  {
-    id: 1,
-    name: 'Sarah Mitchell',
-    specialty: 'Sports Physiotherapist',
-    location: 'London, UK',
-    agentUsed: 'Content Engine',
-    agentSlug: 'content-engine',
-    agentCategory: 'grow-your-practice',
-    result: '3x more patient inquiries in 6 weeks',
-    quote:
-      'I went from posting once a month to every day. My Instagram following doubled and I get 3x more new patient inquiries than before. The content sounds exactly like me.',
-    initials: 'SM',
-    avatarColor: '#4F46E5',
-    socialLinks: { instagram: '#', linkedin: '#' },
-    featured: true,
-  },
-  {
-    id: 2,
-    name: 'Carlos Mendoza',
-    specialty: 'Musculoskeletal Chiropractor',
-    location: 'Barcelona, Spain',
-    agentUsed: 'CE Concierge',
-    agentSlug: 'ce-matcher',
-    agentCategory: 'find-training',
-    result: 'Found 4 relevant courses in first week',
-    quote:
-      'It found a dry needling masterclass in Berlin I had zero idea existed. Registration closed the next day. I would have missed it completely without CE Concierge.',
-    initials: 'CM',
-    avatarColor: '#6B9E78',
-    socialLinks: { instagram: '#', linkedin: '#' },
-    featured: true,
-  },
-  {
-    id: 3,
-    name: 'Priya Sharma',
-    specialty: 'Pelvic Floor Physiotherapist',
-    location: 'Melbourne, Australia',
-    agentUsed: 'Course Creator',
-    agentSlug: 'course-creator',
-    agentCategory: 'monetize-expertise',
-    result: 'First course launched in 8 weeks',
-    quote:
-      'I recorded 6 voice notes during my lunch breaks. Eight weeks later I had a full pelvic floor rehab course ready to sell. I never thought it would be this fast.',
-    initials: 'PS',
-    avatarColor: '#F59E0B',
-    socialLinks: { instagram: '#', linkedin: '#' },
-    featured: false,
-  },
-  {
-    id: 4,
-    name: 'Marco Rossi',
-    specialty: 'Osteopath',
-    location: 'Milan, Italy',
-    agentUsed: 'Content Engine',
-    agentSlug: 'content-engine',
-    agentCategory: 'grow-your-practice',
-    result: '2,400 new Instagram followers in 3 months',
-    quote:
-      'My patients started telling me they saw my posts and finally understood what osteopathy actually does. The educational content has been incredible for my practice.',
-    initials: 'MR',
-    avatarColor: '#4F46E5',
-    socialLinks: { instagram: '#', linkedin: '#' },
-    featured: false,
-  },
-  {
-    id: 5,
-    name: 'Ana Lima',
-    specialty: 'Sports Physiotherapist',
-    location: 'São Paulo, Brazil',
-    agentUsed: 'CE Concierge',
-    agentSlug: 'ce-matcher',
-    agentCategory: 'find-training',
-    result: 'Saved 8 hours per month on course research',
-    quote:
-      'Finding courses in Brazil that count toward my international certification used to take me a whole weekend. Now CE Concierge does it in minutes and finds options I never knew existed.',
-    initials: 'AL',
-    avatarColor: '#6B9E78',
-    socialLinks: { instagram: '#', linkedin: '#' },
-    featured: false,
-  },
-  {
-    id: 6,
-    name: 'James Okafor',
-    specialty: 'Neurological Physiotherapist',
-    location: 'Lagos, Nigeria',
-    agentUsed: 'Course Creator',
-    agentSlug: 'course-creator',
-    agentCategory: 'monetize-expertise',
-    result: '€4,200 in first month of course sales',
-    quote:
-      'I\'ve been treating stroke patients for 14 years. Course Creator helped me turn that expertise into a structured online course in 6 weeks. The first month I made more from the course than a week of clinical work.',
-    initials: 'JO',
-    avatarColor: '#F59E0B',
-    socialLinks: { instagram: '#', linkedin: '#' },
-    featured: false,
-  },
-]
-
-// ── Datos mock — Agent Demos ───────────────────────────────────────────────────
-
-const AGENT_DEMOS = [
-  {
-    id: 1,
-    agentName: 'CE Matcher',
-    agentSlug: 'ce-matcher',
-    agentCategory: 'find-training',
-    categoryBadge: 'Find Training',
-    badgeColor: '#0EA5E9',
-    badgeBg: '#E0F2FE',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    title: 'CE Matcher in action: Finding a dry needling course in Europe',
-    description:
-      'Watch how CE Matcher scans providers across 12 countries, filters by specialty and recertification requirements, and builds a complete trip plan in under 3 minutes.',
-    datePosted: 'April 10, 2026',
-    tags: ['course-finding', 'dry-needling', 'europe'],
-  },
-  {
-    id: 2,
-    agentName: 'Content Engine',
-    agentSlug: 'content-engine',
-    agentCategory: 'grow-your-practice',
-    categoryBadge: 'Grow Your Practice',
-    badgeColor: '#4F46E5',
-    badgeBg: '#EEF2FF',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    title: 'Content Engine: From voice note to Instagram carousel in 4 minutes',
-    description:
-      'A sports physiotherapist records a 2-minute voice note about ACL rehabilitation. Watch what Content Engine produces: carousel, LinkedIn post, video script, and blog draft.',
-    datePosted: 'April 3, 2026',
-    tags: ['content-creation', 'instagram', 'sports-physio'],
-  },
-]
-
-// ── Sub-componentes ───────────────────────────────────────────────────────────
-
-// Formulario de email inline (reemplaza el import para evitar dependencia cross-tab)
-function InlineEmailForm({ placeholder = 'your@email.com', buttonText = 'Subscribe' }: { placeholder?: string; buttonText?: string }) {
+// ── Formulario de email inline ────────────────────────────────────────────────
+function InlineEmailForm() {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
 
@@ -165,7 +36,7 @@ function InlineEmailForm({ placeholder = 'your@email.com', buttonText = 'Subscri
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder={placeholder}
+        placeholder="your@email.com"
         className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#4F46E5] transition-colors"
         required
       />
@@ -173,58 +44,77 @@ function InlineEmailForm({ placeholder = 'your@email.com', buttonText = 'Subscri
         type="submit"
         className="bg-[#4F46E5] text-white rounded-lg px-4 py-2 text-sm font-semibold hover:bg-[#3730A3] transition-colors flex-shrink-0"
       >
-        {buttonText}
+        Subscribe
       </button>
     </form>
   )
 }
 
-// Tarjeta de resultado de practicante
-function PractitionerCard({ result }: { result: typeof PRACTITIONER_RESULTS[number] }) {
+// ── Tarjeta de practicante — diseño verde salvia ───────────────────────────────
+function PractitionerCard({ result }: { result: PractitionerResult }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md transition-shadow flex flex-col">
-      {/* Fila superior: avatar + nombre + especialidad + ubicación */}
-      <div className="flex items-start gap-3">
-        <div
-          className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 text-sm"
-          style={{ backgroundColor: result.avatarColor }}
-          aria-hidden="true"
-        >
-          {result.initials}
-        </div>
-        <div className="min-w-0">
-          <p className="font-semibold text-[#1E293B] leading-tight">{result.name}</p>
-          <p className="text-sm text-[#64748B]">{result.specialty}</p>
-          <p className="text-xs text-[#94A3B8]">{result.location}</p>
-        </div>
-      </div>
+    <div className="bg-[#F0F7F1] rounded-2xl border border-[#D1E8D5] shadow-sm p-6 hover:shadow-md transition-shadow flex flex-col">
 
-      {/* Badge del agente usado */}
-      <div className="mt-3 mb-2">
-        <Link href={`/agents/${result.agentCategory}/${result.agentSlug}`}>
-          <span className="bg-[#EEF2FF] text-[#4F46E5] text-xs font-semibold px-3 py-1 rounded-full inline-block hover:bg-[#E0E7FF] transition-colors">
-            Used: {result.agentUsed}
+      {/* Cabecera: avatar+info LEFT, flag+agente RIGHT */}
+      <div className="flex items-start justify-between mb-4">
+        {/* LEFT: avatar + nombre + especialidad */}
+        <div className="flex items-start gap-3">
+          <div
+            className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 text-sm"
+            style={{ backgroundColor: result.avatarColor }}
+            aria-hidden="true"
+          >
+            {result.initials}
+          </div>
+          <div className="min-w-0">
+            <p className="font-semibold text-[#1E293B] leading-tight">{result.name}</p>
+            <p className="text-sm text-[#64748B]">{result.specialty}</p>
+            <p className="text-xs text-[#94A3B8]">{result.location}</p>
+          </div>
+        </div>
+
+        {/* RIGHT: bandera + badge de agente */}
+        <div className="flex flex-col items-end gap-1.5 flex-shrink-0 ml-3">
+          <span className="text-3xl leading-none" role="img" aria-label={result.location}>
+            {result.flag}
           </span>
-        </Link>
+          <span
+            className="text-xs font-semibold px-2 py-1 rounded-full flex items-center gap-1"
+            style={{ backgroundColor: result.agentColor + '20', color: result.agentColor }}
+          >
+            <span aria-hidden="true">{result.agentIcon}</span>
+            {result.agentUsed}
+          </span>
+        </div>
       </div>
 
-      {/* Resultado clave */}
-      <p className="text-[#6B9E78] font-bold text-sm mb-3">{result.result}</p>
+      {/* Resultado clave — sobre fondo blanco */}
+      <div className="mb-3">
+        <span className="bg-white rounded-xl px-4 py-2 inline-block text-[#4A7A57] font-bold text-sm">
+          🏆 {result.result}
+        </span>
+      </div>
 
       {/* Cita */}
-      <div className="flex-1">
-        <span className="text-[#4F46E5] text-2xl leading-none font-serif">&ldquo;</span>
+      <div className="flex-1 mb-4">
+        <span className="text-[#6B9E78] text-3xl leading-none font-serif">&ldquo;</span>
         <p className="text-[#1E293B] text-sm leading-relaxed italic -mt-1">{result.quote}</p>
       </div>
 
       {/* Fila inferior: social links + "I want this" */}
-      <div className="mt-4 pt-4 border-t border-gray-50 flex items-center justify-between">
-        <div className="flex items-center gap-3 text-[#94A3B8]">
-          <a href={result.socialLinks.instagram} className="hover:text-[#4F46E5] transition-colors flex items-center gap-1 text-xs">
+      <div className="mt-auto pt-4 border-t border-[#D1E8D5] flex items-center justify-between">
+        <div className="flex items-center gap-3 text-[#6B9E78]">
+          <a
+            href={result.socialLinks.instagram}
+            className="hover:text-[#4A7A57] transition-colors flex items-center gap-1 text-xs"
+          >
             <ExternalLink className="size-3" aria-hidden="true" />
             Instagram
           </a>
-          <a href={result.socialLinks.linkedin} className="hover:text-[#4F46E5] transition-colors flex items-center gap-1 text-xs">
+          <a
+            href={result.socialLinks.linkedin}
+            className="hover:text-[#4A7A57] transition-colors flex items-center gap-1 text-xs"
+          >
             <ExternalLink className="size-3" aria-hidden="true" />
             LinkedIn
           </a>
@@ -240,20 +130,35 @@ function PractitionerCard({ result }: { result: typeof PRACTITIONER_RESULTS[numb
   )
 }
 
-// Tarjeta de demo de agente
-function DemoCard({ demo }: { demo: typeof AGENT_DEMOS[number] }) {
+// ── Tarjeta de demo — thumbnail YouTube → detail page ────────────────────────
+function DemoCard({ demo }: { demo: AgentDemo }) {
+  const videoId = extractYouTubeId(demo.videoUrl)
+  const detailUrl = `/showcase/demos/${demo.slug}`
+
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-      {/* Embed de YouTube — aspect ratio 16:9 */}
-      <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-        <iframe
-          src={demo.videoUrl}
-          title={demo.title}
-          className="absolute inset-0 w-full h-full"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        />
-      </div>
+      {/* Thumbnail clicable que lleva a la página de detalle */}
+      <Link href={detailUrl} className="block relative" style={{ paddingBottom: '56.25%' }}>
+        {videoId ? (
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+              alt={demo.title}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors">
+              <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+                <Play className="size-6 text-[#4F46E5] ml-1" aria-hidden="true" />
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-[#4F46E5] to-[#312E81] flex items-center justify-center">
+            <Play className="size-8 text-white/60" aria-hidden="true" />
+          </div>
+        )}
+      </Link>
 
       {/* Body de la tarjeta */}
       <div className="p-6">
@@ -269,7 +174,9 @@ function DemoCard({ demo }: { demo: typeof AGENT_DEMOS[number] }) {
         </div>
 
         {/* Título */}
-        <h3 className="font-bold text-[#1E293B] text-lg mt-3 mb-2 leading-snug">{demo.title}</h3>
+        <h3 className="font-bold text-[#1E293B] text-lg mt-3 mb-2 leading-snug">
+          {demo.title}
+        </h3>
 
         {/* Descripción */}
         <p className="text-sm text-[#64748B] leading-relaxed mb-4">{demo.description}</p>
@@ -286,12 +193,12 @@ function DemoCard({ demo }: { demo: typeof AGENT_DEMOS[number] }) {
           ))}
         </div>
 
-        {/* Link al agente */}
+        {/* Link a la página de detalle del demo */}
         <Link
-          href={`/agents/${demo.agentCategory}/${demo.agentSlug}`}
+          href={detailUrl}
           className="text-[#4F46E5] text-sm font-semibold hover:underline inline-block"
         >
-          View {demo.agentName} →
+          Watch {demo.agentName} demo →
         </Link>
       </div>
     </div>
@@ -302,8 +209,26 @@ function DemoCard({ demo }: { demo: typeof AGENT_DEMOS[number] }) {
 
 type Tab = 'results' | 'demos'
 
+// Categorías de filtro disponibles en el tab de demos
+const DEMO_CATEGORIES = ['All', 'Grow Your Practice', 'Find Training', 'Monetize Expertise']
+
 export default function ShowcasePage() {
-  const [activeTab, setActiveTab] = useState<Tab>('results')
+  // Tab activo — demos por defecto
+  const [activeTab, setActiveTab] = useState<Tab>('demos')
+
+  // Estado de búsqueda y filtro del tab de demos
+  const [demoSearch, setDemoSearch] = useState('')
+  const [demoCategory, setDemoCategory] = useState('All')
+
+  // Demos filtrados según búsqueda y categoría
+  const filteredDemos = AGENT_DEMOS.filter((demo) => {
+    const matchesSearch =
+      demoSearch === '' ||
+      demo.agentName.toLowerCase().includes(demoSearch.toLowerCase())
+    const matchesCategory =
+      demoCategory === 'All' || demo.categoryBadge === demoCategory
+    return matchesSearch && matchesCategory
+  })
 
   return (
     <>
@@ -360,7 +285,7 @@ export default function ShowcasePage() {
               ))}
             </div>
 
-            {/* CTA inferior del tab */}
+            {/* CTA inferior */}
             <div className="mt-12 text-center">
               <p className="text-[#64748B] text-base mb-4 font-medium">
                 Seeing results with RehabStack?
@@ -371,7 +296,6 @@ export default function ShowcasePage() {
               >
                 Share your story →
               </Link>
-
               <div className="mt-8">
                 <p className="text-[#64748B] text-sm mb-3">
                   Get inspired by more success stories.
@@ -385,21 +309,68 @@ export default function ShowcasePage() {
         {/* TAB 2: Agent Demos */}
         {activeTab === 'demos' && (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {AGENT_DEMOS.map((demo) => (
-                <DemoCard key={demo.id} demo={demo} />
-              ))}
+            {/* Barra de búsqueda y filtro */}
+            <div className="mb-8 flex flex-wrap gap-3 items-center">
+              {/* Search input con icono */}
+              <div className="relative w-full max-w-xs">
+                <Search
+                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-[#94A3B8]"
+                  aria-hidden="true"
+                />
+                <input
+                  type="search"
+                  placeholder="Search by agent name..."
+                  value={demoSearch}
+                  onChange={(e) => setDemoSearch(e.target.value)}
+                  className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/20 focus:border-[#4F46E5] transition-colors"
+                />
+              </div>
+
+              {/* Pills de categoría */}
+              <div className="flex flex-wrap gap-2">
+                {DEMO_CATEGORIES.map((cat) => (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => setDemoCategory(cat)}
+                    className={`px-4 py-2 rounded-full text-xs font-semibold cursor-pointer transition-colors ${
+                      demoCategory === cat
+                        ? 'bg-[#4F46E5] text-white'
+                        : 'bg-white border border-gray-200 text-[#64748B] hover:border-[#4F46E5] hover:text-[#4F46E5]'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
             </div>
+
+            {/* Grid de demos filtrados */}
+            {filteredDemos.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {filteredDemos.map((demo) => (
+                  <DemoCard key={demo.id} demo={demo} />
+                ))}
+              </div>
+            ) : (
+              <div className="py-16 text-center">
+                <p className="text-[#64748B] font-medium mb-2">No demos match your search.</p>
+                <button
+                  type="button"
+                  onClick={() => { setDemoSearch(''); setDemoCategory('All') }}
+                  className="text-[#4F46E5] text-sm font-semibold hover:underline"
+                >
+                  Clear filters
+                </button>
+              </div>
+            )}
 
             {/* CTA inferior del tab */}
             <div className="mt-12 text-center">
               <p className="text-[#64748B] text-sm mb-3">
                 Built an agent demo you want featured?
               </p>
-              <Link
-                href="/about"
-                className="text-[#4F46E5] font-semibold text-sm hover:underline"
-              >
+              <Link href="/about" className="text-[#4F46E5] font-semibold text-sm hover:underline">
                 Contact us →
               </Link>
             </div>
