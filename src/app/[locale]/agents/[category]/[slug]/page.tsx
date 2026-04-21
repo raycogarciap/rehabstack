@@ -296,7 +296,7 @@ export default async function AgentDetailPage({ params }: Props) {
       {/* ── 5. Segundo vídeo (condicional) ───────────────────────────── */}
       {secondVideo && (
         <div className="max-w-6xl mx-auto px-4 py-12 border-t border-gray-100">
-          <h2 className="text-2xl font-bold text-[#1E293B] mb-8">More about this assistant</h2>
+          <h2 className="text-2xl font-bold text-[#1E293B] mb-8">More About this AI Agent</h2>
           <div className="max-w-4xl mx-auto">
             <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-xl border border-gray-100">
               <iframe
