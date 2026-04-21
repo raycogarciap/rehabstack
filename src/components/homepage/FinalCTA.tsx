@@ -13,7 +13,7 @@ export function FinalCTA() {
 
         {/* Badge eyebrow */}
         <span className="inline-block bg-white/10 text-white text-xs font-semibold px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase">
-          Start Free — No Credit Card Needed for 48 Hours
+          48-Hour Free Trial · Card Required · Cancel Anytime
         </span>
 
         {/* Titular principal */}
@@ -39,7 +39,7 @@ export function FinalCTA() {
         <div className="mt-10">
           <p className="text-indigo-200 text-sm mb-3">Not ready yet?</p>
           <p className="text-white text-sm font-medium mb-4">
-            Get weekly insights on AI for rehabilitation professionals.
+            Get weekly insights on AI for rehabilitation professionals. No spam, unsubscribe anytime.
           </p>
           {/* Client Component para el formulario interactivo */}
           <EmailCaptureForm />
