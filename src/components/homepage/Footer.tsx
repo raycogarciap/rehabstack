@@ -1,6 +1,7 @@
 // Pie de página principal del sitio — Server Component
 // Cinco columnas: marca + Product + Resources + Company + Legal
 // Barra inferior con copyright y selector visual de idioma
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
 // SVG inline — lucide-react v1.8.0 no incluye iconos de redes sociales
@@ -31,47 +32,49 @@ function IconTwitter() {
   );
 }
 
-// Columnas de navegación del footer
-const FOOTER_COLUMNS = [
-  {
-    heading: "Product",
-    links: [
-      { label: "Agents", href: "/agents" },
-      { label: "Showcase", href: "/showcase" },
-      { label: "How It Works", href: "/how-it-works" },
-      { label: "Pricing", href: "/agents" },
-    ],
-  },
-  {
-    heading: "Resources",
-    links: [
-      { label: "Blog", href: "/blog" },
-      { label: "Documentation", href: "/docs" },
-      { label: "Community", href: "/about" },
-    ],
-  },
-  {
-    heading: "Company",
-    links: [
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/about" },
-      { label: "For Creators", href: "/for-creators" },
-    ],
-  },
-  {
-    heading: "Legal",
-    links: [
-      { label: "Terms of Service", href: "/terms" },
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Creator Agreement", href: "/creator-agreement" },
-    ],
-  },
-];
-
-// Idiomas disponibles — solo visual por ahora, funcionalidad real en fase i18n
+// Idiomas disponibles — solo visual en el footer
 const LANGUAGES = ["EN", "ES", "PT", "FR", "DE", "AR"];
 
-export function Footer() {
+export async function Footer() {
+  const t = await getTranslations("homepage");
+
+  // Columnas de navegación del footer — etiquetas traducidas
+  const FOOTER_COLUMNS = [
+    {
+      heading: t("footer.product"),
+      links: [
+        { label: t("footer.links.agents"), href: "/agents" },
+        { label: t("footer.links.showcase"), href: "/showcase" },
+        { label: t("footer.links.howItWorks"), href: "/how-it-works" },
+        { label: t("footer.links.pricing"), href: "/agents" },
+      ],
+    },
+    {
+      heading: t("footer.resources"),
+      links: [
+        { label: t("footer.links.blog"), href: "/blog" },
+        { label: t("footer.links.documentation"), href: "/docs" },
+        { label: t("footer.links.community"), href: "/about" },
+      ],
+    },
+    {
+      heading: t("footer.company"),
+      links: [
+        { label: t("footer.links.about"), href: "/about" },
+        { label: t("footer.links.contact"), href: "/about" },
+        { label: t("footer.links.forCreators"), href: "/for-creators" },
+      ],
+    },
+    {
+      heading: t("footer.legal"),
+      links: [
+        { label: t("footer.links.terms"), href: "/terms" },
+        { label: t("footer.links.privacy"), href: "/privacy" },
+        { label: t("footer.links.creatorAgreement"), href: "/creator-agreement" },
+      ],
+    },
+  ];
+
   return (
     <footer className="bg-[#0F172A] pt-16 pb-8 px-4">
       <div className="max-w-6xl mx-auto">
@@ -87,10 +90,9 @@ export function Footer() {
               <span className="text-xl font-bold text-[#818CF8]">Stack</span>
             </Link>
 
-            {/* Tagline */}
+            {/* Tagline traducida */}
             <p className="text-[#94A3B8] text-sm mt-2 mb-4 max-w-xs leading-relaxed">
-              AI assistants built exclusively for physiotherapists, chiropractors,
-              and osteopaths.
+              {t("footer.tagline")}
             </p>
 
             {/* Iconos de redes sociales */}
@@ -158,12 +160,12 @@ export function Footer() {
         {/* Barra inferior: copyright + selector de idioma */}
         <div className="border-t border-[#1E293B] pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
 
-          {/* Copyright */}
+          {/* Copyright traducido */}
           <p className="text-[#64748B] text-sm">
-            © 2026 Soulistica LLC · DBA RehabStack
+            {t("footer.copyright")}
           </p>
 
-          {/* Pills de idioma — solo visual, funcionalidad en fase i18n */}
+          {/* Pills de idioma — solo visual */}
           <div className="flex gap-4">
             {LANGUAGES.map((lang) => (
               <span

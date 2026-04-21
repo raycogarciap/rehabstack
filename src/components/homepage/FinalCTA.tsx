@@ -1,9 +1,12 @@
 // Sección de llamada a la acción final — Server Component
 // El formulario de email se delega a EmailCaptureForm (Client Component)
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { EmailCaptureForm } from "./EmailCaptureForm";
 
-export function FinalCTA() {
+export async function FinalCTA() {
+  const t = await getTranslations("homepage");
+
   return (
     <section
       id="final-cta"
@@ -13,18 +16,17 @@ export function FinalCTA() {
 
         {/* Badge eyebrow */}
         <span className="inline-block bg-white/10 text-white text-xs font-semibold px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase">
-          48-Hour Free Trial · Card Required · Cancel Anytime
+          {t("finalCta.badge")}
         </span>
 
         {/* Titular principal */}
         <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
-          Your practice growth shouldn&apos;t depend on how many hours you work.
+          {t("finalCta.headline")}
         </h2>
 
         {/* Subtítulo */}
         <p className="text-lg text-indigo-200 max-w-xl mx-auto mb-10 leading-relaxed">
-          Start with the Content Engine and see your first content package in
-          under 5 minutes.
+          {t("finalCta.subheadline")}
         </p>
 
         {/* CTA principal */}
@@ -32,18 +34,16 @@ export function FinalCTA() {
           href="/register"
           className="bg-white text-[#4F46E5] hover:bg-gray-50 px-10 py-4 rounded-xl font-bold text-lg transition-colors inline-block shadow-lg"
         >
-          Start Your Free Trial →
+          {t("finalCta.cta")}
         </Link>
 
-        {/* Bloque de captura de email */}
-        <div className="mt-10">
-          <p className="text-indigo-200 text-sm mb-3">Not ready yet?</p>
-          <p className="text-white text-sm font-medium mb-4">
-            Get weekly insights on AI for rehabilitation professionals. No spam, unsubscribe anytime.
-          </p>
-          {/* Client Component para el formulario interactivo */}
-          <EmailCaptureForm />
-        </div>
+        {/* Client Component para el formulario interactivo — recibe cadenas traducidas como props */}
+        <EmailCaptureForm
+          emailTeaser={t("finalCta.emailTeaser")}
+          emailSubtext={t("finalCta.emailSubtext")}
+          emailPlaceholder={t("finalCta.emailPlaceholder")}
+          emailButton={t("finalCta.emailButton")}
+        />
 
       </div>
     </section>
