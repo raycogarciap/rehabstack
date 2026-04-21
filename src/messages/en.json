@@ -2,7 +2,7 @@
   "nav": {
     "agents": "Agents",
     "pricing": "Pricing",
-    "forCreators": "For Creators",
+    "forCreators": "For Developers",
     "showcase": "Showcase",
     "signIn": "Sign in",
     "getStarted": "Get started",
@@ -826,7 +826,7 @@
         "community": "Community",
         "about": "About",
         "contact": "Contact",
-        "forCreators": "For Creators",
+        "forCreators": "For Developers",
         "terms": "Terms of Service",
         "privacy": "Privacy Policy",
         "creatorAgreement": "Creator Agreement"

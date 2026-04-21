@@ -2,7 +2,7 @@
   "nav": {
     "agents": "Agents",
     "pricing": "Tarifs",
-    "forCreators": "Pour les Créateurs",
+    "forCreators": "Pour les Développeurs",
     "showcase": "Vitrines",
     "signIn": "Se connecter",
     "getStarted": "Commencer",
@@ -748,7 +748,7 @@
       "links": {
         "agents": "Agents", "showcase": "Témoignages", "howItWorks": "Comment ça marche", "pricing": "Tarifs",
         "blog": "Blog", "documentation": "Documentation", "community": "Communauté",
-        "about": "À propos", "contact": "Contact", "forCreators": "Pour les créateurs",
+        "about": "À propos", "contact": "Contact", "forCreators": "Pour les Développeurs",
         "terms": "Conditions d'utilisation", "privacy": "Politique de confidentialité", "creatorAgreement": "Accord créateur"
       }
     }

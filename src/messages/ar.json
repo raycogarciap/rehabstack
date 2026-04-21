@@ -2,7 +2,7 @@
   "nav": {
     "agents": "الوكلاء",
     "pricing": "الأسعار",
-    "forCreators": "للمبدعين",
+    "forCreators": "للمطورين",
     "showcase": "المعرض",
     "signIn": "تسجيل الدخول",
     "getStarted": "ابدأ الآن",
@@ -748,7 +748,7 @@
       "links": {
         "agents": "الوكلاء", "showcase": "نماذج النجاح", "howItWorks": "كيف يعمل", "pricing": "الأسعار",
         "blog": "المدونة", "documentation": "التوثيق", "community": "المجتمع",
-        "about": "معلومات عنّا", "contact": "تواصل معنا", "forCreators": "للمبدعين",
+        "about": "معلومات عنّا", "contact": "تواصل معنا", "forCreators": "للمطورين",
         "terms": "شروط الخدمة", "privacy": "سياسة الخصوصية", "creatorAgreement": "اتفاقية المبدع"
       }
     }
