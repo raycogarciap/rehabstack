@@ -5,6 +5,18 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Colores de marca RehabStack — disponibles como clases Tailwind (bg-brand-indigo, text-brand-sage, etc.) */
+  --color-brand-indigo: var(--brand-indigo);
+  --color-brand-indigo-dark: var(--brand-indigo-dark);
+  --color-brand-indigo-light: var(--brand-indigo-light);
+  --color-brand-indigo-50: var(--brand-indigo-50);
+  --color-brand-sage: var(--brand-sage);
+  --color-brand-sage-dark: var(--brand-sage-dark);
+  --color-brand-sage-light: var(--brand-sage-light);
+  --color-brand-sage-50: var(--brand-sage-50);
+  --color-brand-amber: var(--brand-amber);
+  --color-brand-slate: var(--brand-slate);
+  --color-brand-slate-muted: var(--brand-slate-muted);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
@@ -49,6 +61,19 @@
 }
 
 :root {
+  /* Paleta de marca RehabStack */
+  --brand-indigo: #4F46E5;
+  --brand-indigo-dark: #3730A3;
+  --brand-indigo-light: #818CF8;
+  --brand-indigo-50: #EEF2FF;
+  --brand-sage: #6B9E78;
+  --brand-sage-dark: #4A7A57;
+  --brand-sage-light: #9DC4A7;
+  --brand-sage-50: #F0F7F1;
+  --brand-amber: #F59E0B;
+  --brand-slate: #1E293B;
+  --brand-slate-muted: #64748B;
+
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
