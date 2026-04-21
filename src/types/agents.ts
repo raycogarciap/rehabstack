@@ -1,6 +1,6 @@
 // src/types/agents.ts
 // Tipos TypeScript compartidos para agentes del marketplace.
-// Reflejan el esquema de la tabla agents + columnas nuevas de migración 007.
+// Reflejan el esquema de la tabla agents + columnas adicionales.
 
 // Acción rápida tal como se almacena en el campo JSONB quick_actions
 export interface QuickAction {
@@ -15,9 +15,24 @@ export interface WorkItemType {
   description: string
 }
 
-// Reseña verificada (solo las verificadas son públicas por RLS)
+// Video de demostración almacenado en el JSONB demo_videos
+export interface DemoVideo {
+  url: string
+  title: string
+}
+
+// Captura de pantalla almacenada en el JSONB screenshots
+export interface AgentScreenshot {
+  url: string
+  alt_text: string
+}
+
+// Reseña verificada con campos completos para la página de detalle
 export interface AgentReview {
   rating: number
+  text: string | null
+  created_at: string | null
+  verified: boolean
 }
 
 // Agente completo con joins resueltos — usado en la página de detalle
@@ -25,13 +40,18 @@ export interface AgentDetail {
   id: string
   name: string
   slug: string
+  tagline: string | null
   short_description: string | null
   description: string | null
+  long_description: string | null
   tier: string
   pricing_usd: number | null
+  pricing_annual_usd: number | null
   stripe_price_id: string | null
   creator_id: string | null
   creator_name: string | null
+  creator_bio: string | null
+  creator_verified: boolean
   compliance_badge: boolean
   languages: string[]
   category: string
@@ -39,6 +59,10 @@ export interface AgentDetail {
   supported_models: string[] | null
   hosting_type: string
   staff_delegation: boolean
+  free_trial_enabled: boolean
+  hero_image_url: string | null
+  demo_videos: DemoVideo[] | null
+  screenshots: AgentScreenshot[] | null
   quick_actions: QuickAction[]
   work_item_types: WorkItemType[]
   reviews: AgentReview[]
@@ -57,7 +81,7 @@ export interface AgentSummary {
   languages: string[]
   category: string
   model_provider: string | null
-  reviews: AgentReview[]
+  reviews: Pick<AgentReview, 'rating'>[]
 }
 
 // Categorías válidas del marketplace

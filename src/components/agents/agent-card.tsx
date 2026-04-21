@@ -1,8 +1,7 @@
 // src/components/agents/agent-card.tsx
 // Tarjeta reutilizable de agente para el grid del marketplace.
-// Server Component async — usa getTranslations para todos los labels de UI.
-// Para los 3 agentes de plataforma (content-engine, ce-matcher, course-creator),
-// la descripción corta se obtiene de las traducciones; para el resto, de la BD.
+// Server Component async — usa getTranslations para los labels de UI.
+// La descripción corta siempre se lee de la BD (agent.short_description).
 
 import Link from 'next/link'
 import { ShieldCheck, Star } from 'lucide-react'
@@ -16,14 +15,6 @@ import {
   CardFooter,
 } from '@/components/ui/card'
 import { type AgentSummary, CATEGORY_META } from '@/types/agents'
-
-// Slugs de agentes propios de la plataforma con contenido traducible
-const PLATFORM_SLUGS = ['content-engine', 'ce-matcher', 'course-creator'] as const
-type PlatformSlug = typeof PLATFORM_SLUGS[number]
-
-function isPlatformSlug(slug: string): slug is PlatformSlug {
-  return PLATFORM_SLUGS.includes(slug as PlatformSlug)
-}
 
 // Calcula el rating promedio redondeado a 1 decimal
 function avgRating(reviews: { rating: number }[]): number | null {
@@ -99,11 +90,9 @@ export async function AgentCard({ agent }: AgentCardProps) {
       </CardHeader>
 
       <CardContent className="flex flex-col gap-3">
-        {/* Descripción corta — traducida para agentes de plataforma, de BD para el resto */}
+        {/* Descripción corta — siempre de la BD, nunca una clave i18n */}
         <p className="line-clamp-2 text-sm text-neutral-600">
-          {isPlatformSlug(agent.slug)
-            ? t(`platformAgents.${agent.slug}.shortDescription`)
-            : (agent.short_description ?? '')}
+          {agent.short_description ?? ''}
         </p>
 
         {/* Rating o mensaje sin reseñas */}
