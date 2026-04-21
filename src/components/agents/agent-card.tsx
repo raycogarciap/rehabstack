@@ -1,20 +1,14 @@
 // src/components/agents/agent-card.tsx
-// Tarjeta reutilizable de agente para el grid del marketplace.
-// Server Component async — usa getTranslations para los labels de UI.
-// La descripción corta siempre se lee de la BD (agent.short_description).
+// Tarjeta de agente para el grid del marketplace — diseño enriquecido.
+// Muestra thumbnail de YouTube (si hay vídeo) o banda de color por categoría.
+// Logo del agente con overlap visual sobre el thumbnail (-mt-8).
+// Card completa es un link clickeable.
 
 import Link from 'next/link'
-import { ShieldCheck, Star } from 'lucide-react'
-import { getTranslations } from 'next-intl/server'
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from '@/components/ui/card'
-import { type AgentSummary, CATEGORY_META } from '@/types/agents'
+import { ShieldCheck, Star, Play } from 'lucide-react'
+import { CATEGORY_META, type AgentSummary } from '@/types/agents'
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 // Calcula el rating promedio redondeado a 1 decimal
 function avgRating(reviews: { rating: number }[]): number | null {
@@ -22,7 +16,7 @@ function avgRating(reviews: { rating: number }[]): number | null {
   return Math.round((reviews.reduce((s, r) => s + r.rating, 0) / reviews.length) * 10) / 10
 }
 
-// Renderiza estrellas (llenas/vacías) para el rating
+// Renderiza estrellas para el rating
 function StarRating({ rating }: { rating: number }) {
   return (
     <span className="flex items-center gap-0.5" aria-label={`${rating} out of 5 stars`}>
@@ -33,108 +27,136 @@ function StarRating({ rating }: { rating: number }) {
           aria-hidden="true"
         />
       ))}
-      <span className="ml-1 text-xs text-neutral-500">{rating}</span>
+      <span className="ml-1 text-xs text-[#64748B]">{rating}</span>
     </span>
   )
 }
 
-// Mapa de código de idioma → etiqueta abreviada (siempre en mayúsculas, universal)
-const LANGUAGE_LABELS: Record<string, string> = {
-  en: 'EN', es: 'ES', pt: 'PT', fr: 'FR', de: 'DE', ar: 'AR',
+// Extrae el ID de un vídeo de YouTube desde una URL embed
+// Ejemplo: "https://www.youtube.com/embed/dQw4w9WgXcQ" → "dQw4w9WgXcQ"
+function extractYouTubeId(url: string): string | null {
+  const match = url.match(/\/embed\/([^?&/]+)/)
+  return match ? match[1] : null
 }
+
+// Gradiente de fondo por categoría — se muestra si no hay vídeo
+const CATEGORY_GRADIENTS: Record<string, string> = {
+  'grow-your-practice': 'bg-gradient-to-br from-[#4F46E5] to-[#7C3AED]',
+  'find-training':      'bg-gradient-to-br from-[#0EA5E9] to-[#4F46E5]',
+  'monetize-expertise': 'bg-gradient-to-br from-[#F59E0B] to-[#EF4444]',
+}
+const DEFAULT_GRADIENT = 'bg-gradient-to-br from-[#4F46E5] to-[#6B9E78]'
+
+// ── Componente ────────────────────────────────────────────────────────────────
 
 interface AgentCardProps {
   agent: AgentSummary
 }
 
-// Componente async: puede llamar getTranslations directamente
-export async function AgentCard({ agent }: AgentCardProps) {
-  const t = await getTranslations('agents')
-
+export function AgentCard({ agent }: AgentCardProps) {
   const rating = avgRating(agent.reviews)
   const categoryMeta = CATEGORY_META[agent.category]
-  const displayLanguages = (agent.languages ?? []).slice(0, 3)
   const href = `/agents/${agent.category}/${agent.slug}`
 
+  // Primer vídeo disponible para thumbnail
+  const firstVideo =
+    Array.isArray(agent.demo_videos) && agent.demo_videos.length > 0
+      ? agent.demo_videos[0]
+      : null
+  const videoId = firstVideo ? extractYouTubeId(firstVideo.url) : null
+
+  const gradient = CATEGORY_GRADIENTS[agent.category] ?? DEFAULT_GRADIENT
+
   return (
-    <Card className="flex flex-col transition-shadow hover:shadow-md hover:ring-blue-200">
-      <CardHeader>
-        {/* Fila superior: badge de categoría + badge de cumplimiento */}
-        <div className="flex items-center justify-between">
-          <span className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700 ring-1 ring-blue-100">
-            {categoryMeta?.label ?? agent.category}
-          </span>
-          {agent.compliance_badge && (
-            <span
-              title={t('card.verified')}
-              aria-label={t('card.verified')}
-              className="flex items-center gap-1 text-xs font-medium text-emerald-600"
-            >
-              <ShieldCheck className="size-3.5" aria-hidden="true" />
-              {t('card.verified')}
-            </span>
+    <Link href={href} className="flex flex-col h-full group">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-xl hover:border-[#C7D2FE] hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
+
+        {/* ── 1. Thumbnail (YouTube) o banda de color ─────────────────── */}
+        <div className="relative h-44 overflow-hidden flex-shrink-0">
+          {videoId ? (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+                alt={`${agent.name} demo`}
+                className="w-full h-full object-cover"
+              />
+              {/* Overlay con botón de play */}
+              <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center">
+                  <Play className="size-5 text-[#4F46E5] ml-1" aria-hidden="true" />
+                </div>
+              </div>
+            </>
+          ) : (
+            // Banda de color con inicial del agente
+            <div className={`w-full h-full ${gradient} flex items-center justify-center`}>
+              <span className="text-6xl font-bold text-white/20" aria-hidden="true">
+                {agent.name[0]}
+              </span>
+            </div>
           )}
         </div>
 
-        {/* Nombre del agente — viene de la BD, no se traduce */}
-        <CardTitle className="mt-2 text-base font-semibold text-neutral-900">
-          {agent.name}
-        </CardTitle>
+        {/* ── 2. Card body ─────────────────────────────────────────────── */}
+        <div className="p-6 flex-1 flex flex-col">
 
-        {/* Creador */}
-        {agent.creator_name && (
-          <CardDescription className="text-xs text-neutral-500">
-            by {agent.creator_name}
-          </CardDescription>
-        )}
-      </CardHeader>
+          {/* Logo + nombre + creador */}
+          <div className="flex items-start gap-3 mb-3">
+            {/* Logo con overlap sobre el thumbnail (-mt-8) */}
+            {agent.hero_image_url ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={agent.hero_image_url}
+                alt={agent.name}
+                className="w-12 h-12 rounded-xl object-cover border border-gray-100 flex-shrink-0 -mt-8 relative z-10 shadow-md"
+              />
+            ) : (
+              <div className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-[#4F46E5] font-bold text-lg flex-shrink-0 -mt-8 relative z-10 shadow-md">
+                {agent.name[0]}
+              </div>
+            )}
 
-      <CardContent className="flex flex-col gap-3">
-        {/* Descripción corta — siempre de la BD, nunca una clave i18n */}
-        <p className="line-clamp-2 text-sm text-neutral-600">
-          {agent.short_description ?? ''}
-        </p>
-
-        {/* Rating o mensaje sin reseñas */}
-        {rating !== null ? (
-          <StarRating rating={rating} />
-        ) : (
-          <span className="text-xs text-neutral-400">{t('card.noReviews')}</span>
-        )}
-
-        {/* Idiomas soportados */}
-        {displayLanguages.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
-            {displayLanguages.map((lang) => (
-              <span
-                key={lang}
-                className="rounded bg-neutral-100 px-1.5 py-0.5 text-xs font-medium text-neutral-600"
-              >
-                {LANGUAGE_LABELS[lang] ?? lang.toUpperCase()}
-              </span>
-            ))}
+            {/* Nombre + creador */}
+            <div className="min-w-0 pt-1">
+              <p className="font-bold text-[#1E293B] text-lg leading-tight">{agent.name}</p>
+              {agent.creator_name && (
+                <p className="text-xs text-[#94A3B8] flex items-center gap-1 mt-0.5">
+                  by {agent.creator_name}
+                  {agent.creator_verified && (
+                    <ShieldCheck className="size-3 text-emerald-500 flex-shrink-0" aria-label="Verified creator" />
+                  )}
+                </p>
+              )}
+            </div>
           </div>
-        )}
-      </CardContent>
 
-      <CardFooter className="mt-auto flex items-center justify-between">
-        {/* Precio */}
-        <span className="text-sm font-semibold text-neutral-900">
-          {agent.pricing_usd != null && agent.pricing_usd > 0
-            ? `$${agent.pricing_usd}${t('card.perMonth')}`
-            : t('card.free')}
-        </span>
+          {/* Badge de categoría */}
+          <span className="inline-block bg-[#EEF2FF] text-[#4F46E5] text-xs font-semibold px-3 py-1 rounded-full mb-3 self-start">
+            {categoryMeta?.label ?? agent.category}
+          </span>
 
-        {/* Botón "Learn More" — Link envuelve el botón, sin asChild */}
-        <Link href={href}>
-          <button
-            type="button"
-            className="rounded-lg bg-blue-600 px-3.5 py-1.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+          {/* Descripción corta — clamped a 3 líneas */}
+          <p
+            className="text-sm text-[#64748B] leading-relaxed mb-4 flex-1"
+            style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
           >
-            {t('card.learnMore')}
-          </button>
-        </Link>
-      </CardFooter>
-    </Card>
+            {agent.short_description ?? ''}
+          </p>
+
+          {/* Fila inferior: rating + "Learn More →" */}
+          <div className="flex items-center justify-between mt-auto">
+            {rating !== null ? (
+              <StarRating rating={rating} />
+            ) : (
+              <span className="text-xs text-[#94A3B8]">No reviews yet</span>
+            )}
+            <span className="text-sm font-semibold text-[#4F46E5] group-hover:text-[#3730A3] transition-colors">
+              Learn More →
+            </span>
+          </div>
+        </div>
+      </div>
+    </Link>
   )
 }

@@ -77,10 +77,13 @@ export interface AgentSummary {
   tier: string
   pricing_usd: number | null
   creator_name: string | null
+  creator_verified: boolean
   compliance_badge: boolean
   languages: string[]
   category: string
   model_provider: string | null
+  hero_image_url: string | null
+  demo_videos: DemoVideo[] | null
   reviews: Pick<AgentReview, 'rating'>[]
 }
 
