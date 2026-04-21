@@ -1,40 +1,8 @@
-// Layout público para /[locale]/pricing — navbar + footer traducidos.
+// Layout para /[locale]/pricing — navbar proviene del [locale]/layout.tsx global.
+// Mantiene el footer simple para la página de precios.
 
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
-import { LocaleSwitcher } from '@/components/locale-switcher'
-
-async function PublicNav() {
-  const t = await getTranslations('nav')
-  return (
-    <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="text-xl font-bold tracking-tight text-neutral-900">
-          Rehab<span className="text-blue-600">Stack</span>
-        </Link>
-
-        <nav className="hidden items-center gap-6 text-sm font-medium text-neutral-600 sm:flex">
-          <Link href="/agents"      className="hover:text-neutral-900 transition-colors">{t('agents')}</Link>
-          <Link href="/pricing"     className="text-blue-600">{t('pricing')}</Link>
-          <Link href="/for-creators" className="hover:text-neutral-900 transition-colors">{t('forCreators')}</Link>
-          <Link href="/showcase"    className="hover:text-neutral-900 transition-colors">{t('showcase')}</Link>
-        </nav>
-
-        <div className="flex items-center gap-3 text-sm font-medium">
-          <LocaleSwitcher />
-          <Link href="/login"
-            className="hidden text-neutral-600 hover:text-neutral-900 transition-colors sm:block">
-            {t('signIn')}
-          </Link>
-          <Link href="/register"
-            className="rounded-lg bg-blue-600 px-3.5 py-1.5 text-white hover:bg-blue-700 transition-colors">
-            {t('getStarted')}
-          </Link>
-        </div>
-      </div>
-    </header>
-  )
-}
 
 async function PublicFooter() {
   const t = await getTranslations('nav')
@@ -62,7 +30,6 @@ async function PublicFooter() {
 export default function PricingLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-white">
-      <PublicNav />
       <main>{children}</main>
       <PublicFooter />
     </div>
