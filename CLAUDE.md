@@ -112,3 +112,20 @@ NEXT_PUBLIC_POSTHOG_KEY, NEXT_PUBLIC_POSTHOG_HOST, SENTRY_DSN
 - src/lib/supabase/server.ts — Server client
 - src/middleware.ts — Auth + session refresh (deprecated — rename to proxy.ts in Next.js 16)
 - supabase/migrations/ — Database migrations
+
+## Blog Image Upload Workflow
+
+Supabase Storage bucket: `blog` (public, 5 MB limit, JPEG/PNG/WebP/GIF/SVG)
+Public URL format: `https://gspbimlphifgmijrxmwk.supabase.co/storage/v1/object/public/blog/[filename]`
+
+To insert an image into a blog post:
+1. Copy the image file to `public/blog-images/` (gitignored — staging only)
+2. Tell Claude Code: "upload [filename] to Supabase blog bucket and insert into [post-slug].mdx before section [section-name]"
+3. Claude Code will:
+   a. Read the file from `public/blog-images/[filename]`
+   b. Upload it to Supabase Storage bucket `blog` via MCP (`mcp__supabase` tools or Storage API)
+   c. Construct the public URL: `https://gspbimlphifgmijrxmwk.supabase.co/storage/v1/object/public/blog/[filename]`
+   d. Edit the MDX file to insert `![alt text](url)` at the correct location
+4. After confirming the URL works, delete the local file from `public/blog-images/`
+
+Supported formats: JPEG, PNG, WebP, GIF, SVG. Max size: 5 MB per file.

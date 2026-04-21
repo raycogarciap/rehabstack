@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# blog image staging — imágenes se suben a Supabase Storage, no a git
+/public/blog-images/*
+!/public/blog-images/.gitkeep
