@@ -1,10 +1,9 @@
 // Página de detalle de un agente — /[locale]/agents/[category]/[slug]
 // Server Component. Fetch desde Supabase por slug + category.
-// Secciones: breadcrumb, hero 2-col, vídeos, screenshots, descripción, creator, reviews, CTA.
+// Secciones: breadcrumb, hero full-width, pricing card, vídeos, screenshots, descripción, creator, reviews, CTA.
 
 import { cache } from 'react'
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ShieldCheck, Star } from 'lucide-react'
@@ -31,10 +30,6 @@ function StarRow({ rating, size = 'sm' }: { rating: number; size?: 'sm' | 'md' }
       ))}
     </span>
   )
-}
-
-const LANGUAGE_LABELS: Record<string, string> = {
-  en: 'EN', es: 'ES', pt: 'PT', fr: 'FR', de: 'DE', ar: 'AR',
 }
 
 // ── Data fetching (memoizado por request) ─────────────────────────────────────
@@ -84,7 +79,8 @@ export default async function AgentDetailPage({ params }: Props) {
   const categoryMeta = CATEGORY_META[agent.category]
   const hasVideos = Array.isArray(agent.demo_videos) && agent.demo_videos.length > 0
   const hasScreenshots = Array.isArray(agent.screenshots) && agent.screenshots.length > 0
-  const videos = hasVideos ? agent.demo_videos!.slice(0, 2) : []
+  const firstVideo = hasVideos ? agent.demo_videos![0] : null
+  const secondVideo = hasVideos && agent.demo_videos!.length > 1 ? agent.demo_videos![1] : null
   const screenshots = hasScreenshots ? agent.screenshots!.slice(0, 2) : []
   const showTrial = agent.free_trial_enabled ?? false
 
@@ -130,163 +126,166 @@ export default async function AgentDetailPage({ params }: Props) {
         </nav>
       </div>
 
-      {/* ── 2. Hero — 2 columnas ──────────────────────────────────────── */}
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      {/* ── 2. Hero — full width ──────────────────────────────────────── */}
+      <div className="bg-white pt-8 pb-0">
+        <div className="max-w-6xl mx-auto px-4">
 
-          {/* Columna izquierda: info del agente */}
-          <div>
-            {/* Badge de categoría */}
-            <span className="inline-block bg-[#EEF2FF] text-[#4F46E5] text-xs font-semibold px-3 py-1 rounded-full mb-4">
-              {categoryMeta?.label ?? agent.category}
-            </span>
-
-            {/* Nombre */}
-            <h1 className="text-4xl font-bold text-[#1E293B] mb-2">{agent.name}</h1>
-
-            {/* Creador + badge de verificación */}
-            {agent.creator_name && (
-              <p className="text-sm text-[#64748B] flex items-center gap-1 mb-4">
-                by <span className="font-medium text-[#1E293B]">{agent.creator_name}</span>
-                {agent.creator_verified && (
-                  <ShieldCheck className="size-4 text-emerald-500" aria-label="Verified creator" />
-                )}
-              </p>
-            )}
-
-            {/* Rating */}
-            {rating !== null ? (
-              <div className="flex items-center gap-2 mb-4">
-                <StarRow rating={rating} />
-                <span className="text-sm text-[#64748B]">
-                  {rating} ({agent.reviews.length} {agent.reviews.length === 1 ? 'review' : 'reviews'})
-                </span>
-              </div>
+          {/* Fila 1: Logo + nombre + categoría */}
+          <div className="flex items-center gap-6 mb-6">
+            {/* Logo del agente o placeholder con inicial */}
+            {agent.hero_image_url ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={agent.hero_image_url}
+                alt={agent.name}
+                className="w-20 h-20 rounded-2xl object-cover border border-gray-100 shadow-sm flex-shrink-0"
+              />
             ) : (
-              <p className="text-sm text-[#94A3B8] mb-4">No reviews yet</p>
+              <div className="w-20 h-20 rounded-2xl bg-[#EEF2FF] flex items-center justify-center text-[#4F46E5] text-3xl font-bold flex-shrink-0">
+                {agent.name[0]}
+              </div>
             )}
 
-            {/* Tagline */}
-            {agent.tagline && (
-              <p className="text-xl text-[#6B9E78] font-semibold mb-6">{agent.tagline}</p>
-            )}
+            {/* Información a la derecha del logo */}
+            <div className="min-w-0">
+              {/* Badge de categoría + creador en la misma fila */}
+              <div className="flex items-center flex-wrap gap-3 mb-1">
+                <span className="inline-block bg-[#EEF2FF] text-[#4F46E5] text-xs font-semibold px-3 py-1 rounded-full">
+                  {categoryMeta?.label ?? agent.category}
+                </span>
+                {agent.creator_name && (
+                  <span className="text-sm text-[#64748B] flex items-center gap-1">
+                    by <span className="font-medium text-[#1E293B]">{agent.creator_name}</span>
+                    {agent.creator_verified && (
+                      <ShieldCheck className="size-4 text-emerald-500" aria-label="Verified creator" />
+                    )}
+                  </span>
+                )}
+              </div>
 
-            {/* Descripción corta — siempre de la BD, sin t() */}
-            {agent.short_description && (
-              <p className="text-xl text-[#64748B] leading-relaxed mb-8">{agent.short_description}</p>
+              {/* Nombre del agente */}
+              <h1 className="text-4xl font-bold text-[#1E293B] mt-1">{agent.name}</h1>
+
+              {/* Rating */}
+              {rating !== null ? (
+                <div className="flex items-center gap-2 mt-2">
+                  <StarRow rating={rating} />
+                  <span className="text-sm text-[#64748B]">
+                    {rating} ({agent.reviews.length} {agent.reviews.length === 1 ? 'review' : 'reviews'})
+                  </span>
+                </div>
+              ) : (
+                <p className="text-sm text-[#94A3B8] mt-2">No reviews yet</p>
+              )}
+            </div>
+          </div>
+
+          {/* Fila 2: Descripción corta grande y legible */}
+          {agent.short_description && (
+            <p className="text-xl text-[#64748B] leading-relaxed mb-6 max-w-3xl">
+              {agent.short_description}
+            </p>
+          )}
+
+          {/* Fila 3: Primer vídeo embed (full width del contenedor) */}
+          {firstVideo && (
+            <div className="max-w-4xl mx-auto mb-0">
+              <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-xl border border-gray-100">
+                <iframe
+                  src={firstVideo.url}
+                  title={firstVideo.title}
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                />
+              </div>
+              <p className="text-sm text-[#94A3B8] text-center mt-2">{firstVideo.title}</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ── 3. Pricing card — horizontal compacto ────────────────────── */}
+      <div className="max-w-6xl mx-auto px-4 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center bg-white rounded-2xl border border-gray-200 shadow-md p-6">
+
+          {/* Col izquierda: precio */}
+          <div>
+            {showTrial && (
+              <div className="bg-[#F0F7F1] text-[#4A7A57] text-sm font-semibold px-4 py-2 rounded-lg inline-block mb-4">
+                48-Hour Free Trial
+              </div>
+            )}
+            {agent.pricing_usd != null && agent.pricing_usd > 0 ? (
+              <>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-bold text-[#1E293B]">${agent.pricing_usd}</span>
+                  <span className="text-[#64748B]">/month</span>
+                </div>
+                {agent.pricing_annual_usd != null && (
+                  <p className="text-sm text-[#64748B] mt-1">
+                    or ${agent.pricing_annual_usd}/mo billed annually
+                  </p>
+                )}
+              </>
+            ) : (
+              <span className="text-3xl font-bold text-[#1E293B]">Free</span>
             )}
           </div>
 
-          {/* Columna derecha: tarjeta de precio sticky */}
-          <div className="lg:sticky lg:top-24">
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-lg p-8">
+          {/* Col central: qué incluye */}
+          <div>
+            <p className="text-sm font-semibold text-[#1E293B] mb-2">What&apos;s included</p>
+            <ul className="flex flex-col gap-1.5">
+              {Array.isArray(agent.quick_actions) && agent.quick_actions.length > 0
+                ? agent.quick_actions.map((qa) => (
+                  <li key={qa.id} className="flex items-start gap-2 text-sm text-[#1E293B]">
+                    <span className="text-[#6B9E78] font-semibold flex-shrink-0">✓</span>
+                    {qa.label}
+                  </li>
+                ))
+                : ['AI-powered assistance', 'Works in your language', '48-hour free trial'].map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-sm text-[#1E293B]">
+                    <span className="text-[#6B9E78] font-semibold flex-shrink-0">✓</span>
+                    {item}
+                  </li>
+                ))}
+            </ul>
+          </div>
 
-              {/* Badge de trial */}
-              {showTrial && (
-                <div className="bg-[#F0F7F1] text-[#4A7A57] text-sm font-semibold px-4 py-2 rounded-lg inline-block mb-6">
-                  48-Hour Free Trial
-                </div>
-              )}
-
-              {/* Precio */}
-              <div className="mb-2">
-                {agent.pricing_usd != null && agent.pricing_usd > 0 ? (
-                  <>
-                    <span className="text-4xl font-bold text-[#1E293B]">${agent.pricing_usd}</span>
-                    <span className="text-[#64748B]">/month</span>
-                    {agent.pricing_annual_usd != null && (
-                      <p className="text-sm text-[#64748B] mt-1">
-                        or ${agent.pricing_annual_usd}/mo billed annually
-                      </p>
-                    )}
-                  </>
-                ) : (
-                  <span className="text-4xl font-bold text-[#1E293B]">Free</span>
-                )}
-              </div>
-
-              {/* CTA primario */}
-              <Link
-                href="/register"
-                className="block w-full bg-[#4F46E5] text-white hover:bg-[#3730A3] py-4 rounded-xl font-bold text-lg transition-colors text-center mt-6 mb-3"
-              >
-                {showTrial
-                  ? 'Start 48-Hour Free Trial'
-                  : agent.pricing_usd != null && agent.pricing_usd > 0
-                    ? `Subscribe for $${agent.pricing_usd}/month`
-                    : 'Get Started Free'}
-              </Link>
-
-              {showTrial && (
-                <p className="text-xs text-[#94A3B8] text-center">
-                  Card required. You won&apos;t be charged until your trial ends.
-                </p>
-              )}
-
-              {/* Divider */}
-              <hr className="my-6 border-gray-100" />
-
-              {/* What's included */}
-              <p className="text-sm font-semibold text-[#1E293B] mb-3">What&apos;s included</p>
-              <ul className="flex flex-col gap-2">
-                {Array.isArray(agent.quick_actions) && agent.quick_actions.length > 0
-                  ? agent.quick_actions.map((qa) => (
-                    <li key={qa.id} className="flex items-start gap-2 text-sm text-[#1E293B]">
-                      <span className="text-[#6B9E78] font-semibold flex-shrink-0">✓</span>
-                      {qa.label}
-                    </li>
-                  ))
-                  : ['AI-powered assistance', 'Works in your language', '48-hour free trial'].map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-[#1E293B]">
-                      <span className="text-[#6B9E78] font-semibold flex-shrink-0">✓</span>
-                      {item}
-                    </li>
-                  ))}
-              </ul>
-            </div>
+          {/* Col derecha: CTA */}
+          <div>
+            <Link
+              href="/register"
+              className="block w-full bg-[#4F46E5] text-white hover:bg-[#3730A3] py-4 rounded-xl font-bold text-lg transition-colors text-center mb-2"
+            >
+              {showTrial
+                ? 'Start 48-Hour Free Trial'
+                : agent.pricing_usd != null && agent.pricing_usd > 0
+                  ? `Subscribe for $${agent.pricing_usd}/month`
+                  : 'Get Started Free'}
+            </Link>
+            {showTrial && (
+              <p className="text-xs text-[#94A3B8] text-center">
+                Card required. You won&apos;t be charged until your trial ends.
+              </p>
+            )}
           </div>
         </div>
       </div>
 
-      {/* ── 3. Vídeos de demostración (condicional) ───────────────────── */}
-      {hasVideos && (
-        <div className="max-w-6xl mx-auto px-4 py-12 border-t border-gray-100">
-          <h2 className="text-2xl font-bold text-[#1E293B] mb-8">See it in action</h2>
-          <div className={videos.length === 2 ? 'grid grid-cols-1 md:grid-cols-2 gap-8' : ''}>
-            {videos.map((video) => (
-              <div key={video.url}>
-                <p className="font-semibold text-[#1E293B] mb-3">{video.title}</p>
-                <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-md">
-                  <iframe
-                    src={video.url}
-                    title={video.title}
-                    allow="autoplay; encrypted-media"
-                    allowFullScreen
-                    className="absolute inset-0 w-full h-full"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* ── 4. Screenshots (condicional) ──────────────────────────────── */}
+      {/* ── 4. Screenshots ────────────────────────────────────────────── */}
       {hasScreenshots && (
-        <div className="max-w-6xl mx-auto px-4 py-12 border-t border-gray-100">
+        <div className="max-w-6xl mx-auto px-4 py-12 border-t border-gray-100 mt-8">
           <h2 className="text-2xl font-bold text-[#1E293B] mb-8">Example outputs</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {screenshots.map((shot) => (
-              <div
-                key={shot.url}
-                className="relative rounded-xl overflow-hidden shadow-md border border-gray-100 aspect-video"
-              >
-                <Image
+              <div key={shot.url}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src={shot.url}
                   alt={shot.alt_text}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="w-full h-auto rounded-xl border border-gray-100 shadow-md"
                 />
               </div>
             ))}
@@ -294,35 +293,54 @@ export default async function AgentDetailPage({ params }: Props) {
         </div>
       )}
 
-      {/* ── 5. Descripción completa ────────────────────────────────────── */}
+      {/* ── 5. Segundo vídeo (condicional) ───────────────────────────── */}
+      {secondVideo && (
+        <div className="max-w-6xl mx-auto px-4 py-12 border-t border-gray-100">
+          <h2 className="text-2xl font-bold text-[#1E293B] mb-8">More about this assistant</h2>
+          <div className="max-w-4xl mx-auto">
+            <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-xl border border-gray-100">
+              <iframe
+                src={secondVideo.url}
+                title={secondVideo.title}
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
+              />
+            </div>
+            <p className="text-sm text-[#94A3B8] text-center mt-2">{secondVideo.title}</p>
+          </div>
+        </div>
+      )}
+
+      {/* ── 6. Descripción completa — About this AI Agent ────────────── */}
       {(agent.long_description ?? agent.description) && (
         <div className="max-w-4xl mx-auto px-4 py-12 border-t border-gray-100">
-          <h2 className="text-2xl font-bold text-[#1E293B] mb-6">About this assistant</h2>
-          <p className="text-[#64748B] leading-relaxed whitespace-pre-wrap">
+          <h2 className="text-2xl font-bold text-[#1E293B] mb-6">About this AI Agent</h2>
+          <p className="text-lg text-[#1E293B] leading-relaxed whitespace-pre-wrap">
             {agent.long_description ?? agent.description}
           </p>
         </div>
       )}
 
-      {/* ── 6. Sección del creador ────────────────────────────────────── */}
+      {/* ── 7. Sección del creador — About the Developer ─────────────── */}
       {agent.creator_name && (
         <div className="max-w-4xl mx-auto px-4 py-12 border-t border-gray-100">
           <div className="bg-[#F8FAFC] rounded-2xl p-8">
-            <h2 className="text-xl font-bold text-[#1E293B] mb-4">About the creator</h2>
-            <p className="font-semibold text-[#1E293B] flex items-center gap-2 mb-3">
+            <h2 className="text-2xl font-bold text-[#1E293B] mb-4">About the Developer</h2>
+            <p className="text-xl font-bold text-[#1E293B] flex items-center gap-2 mb-3">
               {agent.creator_name}
               {agent.creator_verified && (
-                <ShieldCheck className="size-4 text-emerald-500" aria-hidden="true" />
+                <ShieldCheck className="size-5 text-emerald-500" aria-hidden="true" />
               )}
             </p>
-            <p className="text-[#64748B] leading-relaxed">
+            <p className="text-lg text-[#1E293B] leading-relaxed">
               {agent.creator_bio ?? `Created by ${agent.creator_name} for RehabStack.`}
             </p>
           </div>
         </div>
       )}
 
-      {/* ── 7. Reseñas ────────────────────────────────────────────────── */}
+      {/* ── 8. Reseñas ────────────────────────────────────────────────── */}
       <div className="max-w-4xl mx-auto px-4 py-12 border-t border-gray-100">
         <h2 className="text-2xl font-bold text-[#1E293B] mb-8">Reviews</h2>
 
@@ -357,7 +375,7 @@ export default async function AgentDetailPage({ params }: Props) {
         )}
       </div>
 
-      {/* ── 8. CTA strip final ────────────────────────────────────────── */}
+      {/* ── 9. CTA strip final ────────────────────────────────────────── */}
       <div className="bg-[#4F46E5] py-12 px-4 text-center">
         <h2 className="text-2xl font-bold text-white mb-4">
           Ready to try {agent.name}?
