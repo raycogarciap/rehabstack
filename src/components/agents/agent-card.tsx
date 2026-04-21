@@ -72,7 +72,7 @@ export function AgentCard({ agent }: AgentCardProps) {
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-xl hover:border-[#C7D2FE] hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
 
         {/* ── 1. Thumbnail (YouTube) o banda de color ─────────────────── */}
-        <div className="relative h-44 overflow-hidden flex-shrink-0">
+        <div className="relative h-52 overflow-hidden flex-shrink-0">
           {videoId ? (
             <>
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -99,7 +99,7 @@ export function AgentCard({ agent }: AgentCardProps) {
         </div>
 
         {/* ── 2. Card body ─────────────────────────────────────────────── */}
-        <div className="p-6 flex-1 flex flex-col">
+        <div className="p-8 flex-1 flex flex-col">
 
           {/* Logo + nombre + creador */}
           <div className="flex items-start gap-3 mb-3">
@@ -119,7 +119,7 @@ export function AgentCard({ agent }: AgentCardProps) {
 
             {/* Nombre + creador */}
             <div className="min-w-0 pt-1">
-              <p className="font-bold text-[#1E293B] text-lg leading-tight">{agent.name}</p>
+              <p className="font-bold text-[#1E293B] text-xl leading-tight">{agent.name}</p>
               {agent.creator_name && (
                 <p className="text-xs text-[#94A3B8] flex items-center gap-1 mt-0.5">
                   by {agent.creator_name}

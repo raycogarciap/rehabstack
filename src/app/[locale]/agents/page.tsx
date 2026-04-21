@@ -106,14 +106,14 @@ export default async function AgentsPage({ searchParams }: Props) {
 
       {/* ── 1. Hero oscuro full-width ────────────────────────────────── */}
       <div className="bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#312E81] py-16 px-4 text-center">
-        <p className="text-[#818CF8] uppercase tracking-widest text-xs font-semibold mb-4">
-          The Marketplace
+        <p className="text-[#818CF8] uppercase tracking-widest text-sm font-semibold mb-4">
+          Agent-as-a-Service Marketplace
         </p>
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 max-w-3xl mx-auto leading-tight">
           AI Agents for Physiotherapists, Chiropractors and Osteopaths
         </h1>
-        <p className="text-lg text-[#94A3B8] max-w-2xl mx-auto">
-          Browse specialized AI assistants built to grow your practice, find your next course, and monetize your expertise.
+        <p className="text-xl text-[#94A3B8] max-w-2xl mx-auto">
+          Browse specialized AI assistants built to serve you in many ways: grow your business, document better, save time, stay relevant, create content, sell your expertise, improve the performance of your staff, and much more.
         </p>
       </div>
 
@@ -164,15 +164,15 @@ export default async function AgentsPage({ searchParams }: Props) {
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
 
           {/* CTA 1: Para desarrolladores */}
-          <div className="bg-[#0F172A] rounded-2xl p-8 text-white">
-            <div className="bg-[#1E293B] rounded-xl p-3 inline-flex mb-4">
+          <div className="bg-[#0F172A] rounded-2xl p-6 text-white text-center">
+            <div className="bg-[#1E293B] rounded-xl p-3 mx-auto flex w-fit mb-4">
               <Code className="size-6 text-white" aria-hidden="true" />
             </div>
             <h3 className="font-bold text-xl mb-3">Build and list your own AI agent</h3>
             <p className="text-[#94A3B8] text-sm mb-6">
               Join the marketplace. Keep 75–80% of every subscription. List in 24 hours.
             </p>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center justify-center gap-4">
               <Link
                 href="/for-creators"
                 className="text-[#818CF8] font-semibold text-sm hover:text-white transition-colors"
@@ -189,8 +189,8 @@ export default async function AgentsPage({ searchParams }: Props) {
           </div>
 
           {/* CTA 2: Newsletter */}
-          <div className="bg-white rounded-2xl p-8 border border-gray-100">
-            <div className="bg-[#EEF2FF] rounded-xl p-3 inline-flex mb-4">
+          <div className="bg-white rounded-2xl p-6 border border-gray-100 text-center">
+            <div className="bg-[#EEF2FF] rounded-xl p-3 mx-auto flex w-fit mb-4">
               <Mail className="size-6 text-[#4F46E5]" aria-hidden="true" />
             </div>
             <h3 className="font-bold text-xl text-[#1E293B] mb-3">Stay ahead of the curve</h3>
@@ -201,8 +201,8 @@ export default async function AgentsPage({ searchParams }: Props) {
           </div>
 
           {/* CTA 3: Comunidad */}
-          <div className="bg-gradient-to-br from-[#6B9E78] to-[#4A7A57] rounded-2xl p-8 text-white">
-            <div className="bg-white/20 rounded-xl p-3 inline-flex mb-4">
+          <div className="bg-gradient-to-br from-[#6B9E78] to-[#4A7A57] rounded-2xl p-6 text-white text-center">
+            <div className="bg-white/20 rounded-xl p-3 mx-auto flex w-fit mb-4">
               <Users className="size-6 text-white" aria-hidden="true" />
             </div>
             <h3 className="font-bold text-xl mb-3">Join our community</h3>
