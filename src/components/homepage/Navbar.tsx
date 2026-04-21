@@ -3,11 +3,12 @@
 // Navbar principal de RehabStack
 // - Logo con "Rehab" en slate y "Stack" en indigo
 // - Links de navegación desktop con dropdown "For Creators"
-// - Botón "Get Started", icono de idioma
+// - Selector de idioma funcional con dropdown y useLocale
 // - Menú hamburguesa para móvil
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 import { Menu, X, Globe, ChevronDown } from "lucide-react";
 
 // Items del menú principal (sin "For Creators" que tiene dropdown propio)
@@ -26,11 +27,27 @@ const CREATOR_LINKS = [
   { label: "Creator Dashboard", href: "/creator" },
 ];
 
+// Idiomas soportados con bandera y etiqueta
+const LANGUAGES = [
+  { code: "en", label: "English", flag: "🇬🇧" },
+  { code: "es", label: "Español", flag: "🇪🇸" },
+  { code: "pt", label: "Português", flag: "🇧🇷" },
+  { code: "fr", label: "Français", flag: "🇫🇷" },
+  { code: "de", label: "Deutsch", flag: "🇩🇪" },
+  { code: "ar", label: "العربية", flag: "🇸🇦" },
+];
+
 export function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const locale = useLocale();
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [creatorDropdownOpen, setCreatorDropdownOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const langRef = useRef<HTMLDivElement>(null);
 
   // Cierra el dropdown de creadores al hacer clic fuera
   useEffect(() => {
@@ -43,9 +60,38 @@ export function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Cierra el dropdown de idioma al hacer clic fuera
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setLangOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   // Determina si un link está activo comparando con el pathname actual
   function isActive(href: string) {
     return pathname === href || pathname.startsWith(href + "/");
+  }
+
+  // Navega al mismo path pero con el nuevo locale como prefijo
+  function switchLocale(code: string) {
+    const withoutLocale = pathname.replace(/^\/[a-z]{2}/, "");
+    router.push("/" + code + withoutLocale);
+    setLangOpen(false);
+  }
+
+  // Al abrir el menú móvil, cierra los dropdowns desktop y viceversa
+  function toggleMobile() {
+    setMobileOpen((prev) => {
+      if (!prev) {
+        setCreatorDropdownOpen(false);
+        setLangOpen(false);
+      }
+      return !prev;
+    });
   }
 
   return (
@@ -95,7 +141,7 @@ export function Navbar() {
                 />
               </button>
 
-              {/* Panel del dropdown */}
+              {/* Panel del dropdown de creadores */}
               {creatorDropdownOpen && (
                 <div className="absolute left-0 mt-1 w-48 rounded-lg bg-white shadow-lg border border-gray-100 py-1 z-50">
                   {CREATOR_LINKS.map((link) => (
@@ -127,13 +173,44 @@ export function Navbar() {
               Log in
             </Link>
 
-            {/* Icono de cambio de idioma (sin funcionalidad por ahora) */}
-            <button
-              aria-label="Change language"
-              className="p-2 rounded-md text-[#64748B] hover:text-[#1E293B] transition-colors"
-            >
-              <Globe className="h-5 w-5" />
-            </button>
+            {/* Selector de idioma con dropdown funcional */}
+            <div className="relative" ref={langRef}>
+              <button
+                onClick={() => setLangOpen((prev) => !prev)}
+                aria-label="Change language"
+                aria-expanded={langOpen}
+                aria-haspopup="true"
+                className="flex items-center gap-1 text-sm text-[#64748B] hover:text-[#4F46E5] transition-colors px-2 py-1 rounded-md hover:bg-[#EEF2FF]"
+              >
+                <Globe className="h-4 w-4" />
+                <span className="font-medium">{locale.toUpperCase()}</span>
+                <ChevronDown
+                  className={`h-3.5 w-3.5 transition-transform ${
+                    langOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {/* Panel del dropdown de idiomas */}
+              {langOpen && (
+                <div className="absolute right-0 top-full mt-2 z-50 bg-white border border-gray-100 rounded-xl shadow-lg py-2 min-w-[160px]">
+                  {LANGUAGES.map(({ code, label, flag }) => (
+                    <button
+                      key={code}
+                      onClick={() => switchLocale(code)}
+                      className={`flex items-center gap-3 w-full px-4 py-2.5 text-sm cursor-pointer transition-colors text-left ${
+                        code === locale
+                          ? "text-[#4F46E5] font-semibold bg-[#EEF2FF]"
+                          : "text-[#1E293B] hover:bg-gray-50"
+                      }`}
+                    >
+                      <span>{flag}</span>
+                      <span>{label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
 
             {/* Botón "Get Started" */}
             <Link
@@ -147,7 +224,7 @@ export function Navbar() {
           {/* Botón hamburguesa — móvil */}
           <button
             className="md:hidden p-2 rounded-md text-[#64748B] hover:text-[#1E293B] transition-colors"
-            onClick={() => setMobileOpen((prev) => !prev)}
+            onClick={toggleMobile}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
           >
@@ -207,6 +284,29 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
+            </div>
+
+            {/* Selector de idioma en móvil — grid de pills */}
+            <div className="pt-2 pb-1">
+              <p className="px-3 py-1 text-xs font-semibold text-[#64748B] uppercase tracking-wider mb-2">
+                Language
+              </p>
+              <div className="grid grid-cols-3 gap-2 px-3">
+                {LANGUAGES.map(({ code, label, flag }) => (
+                  <button
+                    key={code}
+                    onClick={() => { switchLocale(code); setMobileOpen(false); }}
+                    className={`flex items-center gap-1.5 px-2 py-2 rounded-lg text-xs font-medium transition-colors ${
+                      code === locale
+                        ? "bg-[#EEF2FF] text-[#4F46E5]"
+                        : "bg-gray-50 text-[#64748B] hover:bg-[#EEF2FF] hover:text-[#4F46E5]"
+                    }`}
+                  >
+                    <span>{flag}</span>
+                    <span>{label.split(" ")[0]}</span>
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* Botón "Get Started" en móvil */}
