@@ -173,22 +173,7 @@ export default async function AgentDetailPage({ params }: Props) {
 
             {/* Descripción corta — siempre de la BD, sin t() */}
             {agent.short_description && (
-              <p className="text-[#64748B] leading-relaxed mb-8">{agent.short_description}</p>
-            )}
-
-            {/* Idiomas soportados */}
-            {agent.languages && agent.languages.length > 0 && (
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-sm text-[#64748B] mr-1">Available in:</span>
-                {agent.languages.map((lang) => (
-                  <span
-                    key={lang}
-                    className="bg-[#F1F5F9] text-[#475569] text-xs px-2 py-0.5 rounded font-medium"
-                  >
-                    {LANGUAGE_LABELS[lang] ?? lang.toUpperCase()}
-                  </span>
-                ))}
-              </div>
+              <p className="text-xl text-[#64748B] leading-relaxed mb-8">{agent.short_description}</p>
             )}
           </div>
 
