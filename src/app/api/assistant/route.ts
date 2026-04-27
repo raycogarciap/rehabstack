@@ -2,10 +2,10 @@
 // POST /api/assistant — Asistente IA del sitio web.
 // Sin autenticación requerida (endpoint público).
 // Rate limited: 100 mensajes por IP cada 24 horas usando Upstash Redis.
-// Usa Claude Sonnet para responder en streaming via SSE (Server-Sent Events).
+// Usa OpenAI gpt-4o-mini para responder en streaming via SSE (Server-Sent Events).
 
 import { NextRequest } from 'next/server'
-import Anthropic from '@anthropic-ai/sdk'
+import OpenAI from 'openai'
 import { Redis } from '@upstash/redis'
 import { buildKnowledgeBase } from '@/lib/assistant-knowledge'
 import { createAdminClient } from '@/lib/supabase/admin'
@@ -83,10 +83,10 @@ export async function POST(req: NextRequest): Promise<Response> {
   const messages = rawMessages.slice(-50)
 
   // -------------------------------------------------------------------------
-  // 2. Verificar que la API key de Anthropic esté configurada
+  // 2. Verificar que la API key de OpenAI esté configurada
   // -------------------------------------------------------------------------
 
-  if (!process.env.ANTHROPIC_API_KEY) {
+  if (!process.env.OPENAI_API_KEY) {
     return new Response(
       'data: {"type":"error","message":"AI assistant is not configured."}\n\ndata: {"type":"done"}\n\n',
       { status: 500, headers: { 'Content-Type': 'text/event-stream' } }
@@ -173,17 +173,20 @@ ${knowledge}
 - Tertiary: Capture visitor email for follow-up`
 
   // -------------------------------------------------------------------------
-  // 6. Crear la solicitud de streaming a Anthropic
+  // 6. Crear la solicitud de streaming a OpenAI
   // -------------------------------------------------------------------------
 
-  const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
-  // Iniciar el stream con Claude Sonnet (modelo especificado en los requisitos)
-  const stream = await anthropic.messages.stream({
-    model: 'claude-sonnet-4-6',
+  // Iniciar el stream con gpt-4o-mini — coste-eficiente para el asistente web
+  const stream = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
     max_tokens: 1024,
-    system: systemPrompt,
-    messages: messages as Anthropic.MessageParam[],
+    stream: true,
+    messages: [
+      { role: 'system', content: systemPrompt },
+      ...messages,
+    ],
   })
 
   // -------------------------------------------------------------------------
@@ -195,19 +198,16 @@ ${knowledge}
   const readable = new ReadableStream({
     async start(controller) {
       try {
-        // Iterar sobre los eventos del stream de Anthropic
-        for await (const event of stream) {
-          // Solo nos interesan los deltas de texto del contenido
-          if (
-            event.type === 'content_block_delta' &&
-            event.delta.type === 'text_delta'
-          ) {
+        // Iterar sobre los chunks del stream de OpenAI
+        for await (const chunk of stream) {
+          const delta = chunk.choices[0]?.delta?.content
+          if (delta) {
             // Enviar cada token como un evento SSE con formato JSON
             controller.enqueue(
               encoder.encode(
                 `data: ${JSON.stringify({
                   type: 'token',
-                  content: event.delta.text,
+                  content: delta,
                 })}\n\n`
               )
             )
