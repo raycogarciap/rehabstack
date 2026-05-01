@@ -23,7 +23,7 @@ DBA "RehabStack". Deployed at rehabstack.vercel.app.
 - Rate limiting: Upstash Redis
 - AI agents: Anthropic Managed Agents API (beta header: managed-agents-2026-04-01)
 - Platform Copilot: Claude Messages API (claude-sonnet-4-6)
-- AI Website Assistant: Claude Messages API (claude-sonnet-4-6)
+- AI Website Assistant: multi-provider (ASSISTANT_AI_PROVIDER env var: "anthropic" → claude-sonnet-4-6, "openai" → gpt-4o-mini); abstraction in src/lib/assistant-llm.ts
 
 ## Coding Rules — Never Break These
 - Always TypeScript, never plain JavaScript
@@ -101,7 +101,8 @@ All sections generic — agent-specific content comes from database fields only
 NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY,
 SUPABASE_SERVICE_ROLE_KEY, NEXT_PUBLIC_SITE_URL,
 STRIPE_SECRET_KEY, STRIPE_PUBLISHABLE_KEY, STRIPE_WEBHOOK_SECRET,
-ANTHROPIC_API_KEY, RESEND_API_KEY, TWILIO_ACCOUNT_SID,
+ANTHROPIC_API_KEY, OPENAI_API_KEY, ASSISTANT_AI_PROVIDER,
+RESEND_API_KEY, TWILIO_ACCOUNT_SID,
 TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER,
 UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN,
 NEXT_PUBLIC_POSTHOG_KEY, NEXT_PUBLIC_POSTHOG_HOST, SENTRY_DSN

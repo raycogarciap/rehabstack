@@ -2,13 +2,17 @@
 // POST /api/assistant — Asistente IA del sitio web.
 // Sin autenticación requerida (endpoint público).
 // Rate limited: 100 mensajes por IP cada 24 horas usando Upstash Redis.
-// Usa OpenAI gpt-4o-mini para responder en streaming via SSE (Server-Sent Events).
+//
+// El proveedor de LLM se controla con ASSISTANT_AI_PROVIDER:
+//   "anthropic" → claude-sonnet-4-6   (default)
+//   "openai"    → gpt-4o-mini
+// La abstracción vive en src/lib/assistant-llm.ts.
 
 import { NextRequest } from 'next/server'
-import OpenAI from 'openai'
 import { Redis } from '@upstash/redis'
 import { buildKnowledgeBase } from '@/lib/assistant-knowledge'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { streamAssistantResponse } from '@/lib/assistant-llm'
 
 // ---------------------------------------------------------------------------
 // Helper: instancia de Redis (devuelve null si no está configurado)
@@ -18,7 +22,6 @@ function getRedis(): Redis | null {
   const url = process.env.UPSTASH_REDIS_REST_URL
   const token = process.env.UPSTASH_REDIS_REST_TOKEN
 
-  // Si las variables no existen o contienen placeholders, retorna null
   if (!url || !token || url.includes('placeholder')) return null
 
   return new Redis({ url, token })
@@ -44,6 +47,12 @@ interface RequestBody {
 // ---------------------------------------------------------------------------
 
 export async function POST(req: NextRequest): Promise<Response> {
+  const SSE_HEADERS = {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    Connection: 'keep-alive',
+  }
+
   // -------------------------------------------------------------------------
   // 1. Parsear y validar el body
   // -------------------------------------------------------------------------
@@ -53,43 +62,44 @@ export async function POST(req: NextRequest): Promise<Response> {
   try {
     body = await req.json()
   } catch {
-    // Si el JSON es inválido, retornamos SSE de error
     return new Response(
       'data: {"type":"error","message":"Cuerpo de solicitud inválido."}\n\ndata: {"type":"done"}\n\n',
-      { status: 400, headers: { 'Content-Type': 'text/event-stream' } }
+      { status: 400, headers: SSE_HEADERS }
     )
   }
 
-  // Validar que messages sea un array no vacío
   if (!Array.isArray(body.messages) || body.messages.length === 0) {
     return new Response(
       'data: {"type":"error","message":"Se requiere un array de mensajes no vacío."}\n\ndata: {"type":"done"}\n\n',
-      { status: 400, headers: { 'Content-Type': 'text/event-stream' } }
+      { status: 400, headers: SSE_HEADERS }
     )
   }
 
-  // Locale por defecto 'en' si no se provee
   const locale = body.locale ?? 'en'
   const visitorEmail = body.visitorEmail
 
-  // Filtrar y validar mensajes: solo role 'user' o 'assistant' con content string
-  const rawMessages = body.messages.filter(
-    (m) =>
-      (m.role === 'user' || m.role === 'assistant') &&
-      typeof m.content === 'string'
-  )
-
-  // Máximo 50 mensajes en el historial
-  const messages = rawMessages.slice(-50)
+  // Filtrar roles válidos y truncar a los últimos 50 mensajes
+  const messages = body.messages
+    .filter(
+      (m) =>
+        (m.role === 'user' || m.role === 'assistant') &&
+        typeof m.content === 'string'
+    )
+    .slice(-50)
 
   // -------------------------------------------------------------------------
-  // 2. Verificar que la API key de OpenAI esté configurada
+  // 2. Verificar que al menos una API key esté disponible para el proveedor activo
   // -------------------------------------------------------------------------
 
-  if (!process.env.OPENAI_API_KEY) {
+  const provider = process.env.ASSISTANT_AI_PROVIDER?.toLowerCase() ?? 'anthropic'
+  const keyMissing =
+    (provider === 'openai' && !process.env.OPENAI_API_KEY) ||
+    (provider !== 'openai' && !process.env.ANTHROPIC_API_KEY)
+
+  if (keyMissing) {
     return new Response(
       'data: {"type":"error","message":"AI assistant is not configured."}\n\ndata: {"type":"done"}\n\n',
-      { status: 500, headers: { 'Content-Type': 'text/event-stream' } }
+      { status: 500, headers: SSE_HEADERS }
     )
   }
 
@@ -97,7 +107,6 @@ export async function POST(req: NextRequest): Promise<Response> {
   // 3. Rate limiting por IP usando Upstash Redis
   // -------------------------------------------------------------------------
 
-  // Extraer la IP del cliente del header x-forwarded-for (Vercel/proxies)
   const ip =
     req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
 
@@ -105,28 +114,22 @@ export async function POST(req: NextRequest): Promise<Response> {
 
   if (redis) {
     const rlKey = `assistant_rl_${ip}`
-
-    // Incrementar el contador; en la primera llamada del día, establecer TTL de 24h
     const count = await redis.incr(rlKey)
     if (count === 1) await redis.expire(rlKey, 86400)
 
     if (count > 100) {
-      // Límite superado → retornar error SSE con código 429
       return new Response(
         'data: {"type":"error","message":"Rate limit exceeded. Please try again tomorrow."}\n\ndata: {"type":"done"}\n\n',
-        { status: 429, headers: { 'Content-Type': 'text/event-stream' } }
+        { status: 429, headers: SSE_HEADERS }
       )
     }
   }
 
   // -------------------------------------------------------------------------
-  // 4. Captura de lead (fire-and-forget, no bloquea el streaming)
+  // 4. Captura de lead (fire-and-forget)
   // -------------------------------------------------------------------------
-  // Si el visitante proporcionó su email, lo guardamos en la tabla `leads`.
-  // No esperamos la respuesta para no retrasar el inicio del stream.
 
   if (visitorEmail && visitorEmail.includes('@')) {
-    // Guardado asíncrono sin await — los errores no afectan la respuesta
     ;(async () => {
       try {
         const supabase = createAdminClient()
@@ -173,70 +176,17 @@ ${knowledge}
 - Tertiary: Capture visitor email for follow-up`
 
   // -------------------------------------------------------------------------
-  // 6. Crear la solicitud de streaming a OpenAI
+  // 6. Delegar al proveedor activo y retornar el stream SSE
   // -------------------------------------------------------------------------
 
-  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-
-  // Iniciar el stream con gpt-4o-mini — coste-eficiente para el asistente web
-  const stream = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
-    max_tokens: 1024,
-    stream: true,
-    messages: [
-      { role: 'system', content: systemPrompt },
-      ...messages,
-    ],
-  })
-
-  // -------------------------------------------------------------------------
-  // 7. Crear y retornar el ReadableStream SSE
-  // -------------------------------------------------------------------------
-
-  const encoder = new TextEncoder()
-
-  const readable = new ReadableStream({
-    async start(controller) {
-      try {
-        // Iterar sobre los chunks del stream de OpenAI
-        for await (const chunk of stream) {
-          const delta = chunk.choices[0]?.delta?.content
-          if (delta) {
-            // Enviar cada token como un evento SSE con formato JSON
-            controller.enqueue(
-              encoder.encode(
-                `data: ${JSON.stringify({
-                  type: 'token',
-                  content: delta,
-                })}\n\n`
-              )
-            )
-          }
-        }
-
-        // Señal de finalización del stream
-        controller.enqueue(encoder.encode('data: {"type":"done"}\n\n'))
-      } catch (err) {
-        // En caso de error, enviar mensaje de error SSE antes de cerrar
-        const msg = err instanceof Error ? err.message : 'Stream error'
-        controller.enqueue(
-          encoder.encode(
-            `data: ${JSON.stringify({ type: 'error', message: msg })}\n\ndata: {"type":"done"}\n\n`
-          )
-        )
-      } finally {
-        // Siempre cerrar el controlador del stream
-        controller.close()
-      }
-    },
-  })
-
-  // Retornar la respuesta SSE con los headers apropiados
-  return new Response(readable, {
-    headers: {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      Connection: 'keep-alive',
-    },
-  })
+  try {
+    const stream = await streamAssistantResponse(messages, systemPrompt)
+    return new Response(stream, { headers: SSE_HEADERS })
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Failed to start stream'
+    return new Response(
+      `data: ${JSON.stringify({ type: 'error', message: msg })}\n\ndata: {"type":"done"}\n\n`,
+      { status: 500, headers: SSE_HEADERS }
+    )
+  }
 }
